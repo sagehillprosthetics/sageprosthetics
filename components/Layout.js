@@ -46,8 +46,7 @@ class Layout extends Component {
                         dropAlign={{ right: 'right' }}
                     >
                         <Anchor href="/privacy-policy">Privacy Policy</Anchor>
-                        <Anchor href="#">Support</Anchor>
-                        <Anchor href="#">Contact</Anchor>
+                        <Anchor href="/contact">Contact</Anchor>
                         <Anchor href="#">About</Anchor>
                     </Menu>
                 </Box>
@@ -199,8 +198,8 @@ class Layout extends Component {
                         </li>
 
                         <li className="nav-item" style={styles.navlink}>
-                            <Link href="/">
-                                <a style={{ color: '#7ed4c6' }}>
+                            <Link href="/gallery">
+                                <a style={{ color: '#7ed4c6' }} href="/gallery">
                                     <div className="text">Gallery</div>
                                 </a>
                             </Link>
@@ -215,8 +214,8 @@ class Layout extends Component {
                         </li>
 
                         <li className="nav-item" style={styles.navlink}>
-                            <Link href="/">
-                                <a style={{ color: '#7ed4c6' }}>
+                            <Link href="/contact">
+                                <a style={{ color: '#7ed4c6' }} href="/contact">
                                     <div className="text">Contact</div>
                                 </a>
                             </Link>
