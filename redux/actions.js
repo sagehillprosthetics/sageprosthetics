@@ -10,6 +10,7 @@ export const getGroup = () => async dispatch => {
             snapshot.forEach(doc => {
                 reformat.push({ ...doc.data(), id: doc.id });
             });
+            console.log(reformat);
             dispatch({
                 type: types.GET_GROUP,
                 payload: reformat

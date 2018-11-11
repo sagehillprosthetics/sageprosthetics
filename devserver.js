@@ -1,17 +1,41 @@
 const { createServer } = require('http');
+const express = require('express');
+
 const next = require('next');
+const admin = require('firebase-admin');
+const serviceAccount = require('./firebasekeys.json');
 
-const app = next({
-    dev: process.env.NODE_ENV !== 'development'
-});
+const port = parseInt(process.env.PORT, 10) || 3000;
+const dev = process.env.NODE_ENV !== 'production';
+const app = next({ dev });
 
-console.log(process.env.NODE_ENV);
-
+//const handle = app.getRequestHandler();
 const routes = require('./routes');
 const handler = routes.getRequestHandler(app);
 
+const firebase = admin.initializeApp(
+    {
+        credential: admin.credential.cert(serviceAccount),
+        databaseURL: 'https://sage-prosthetics.firebaseio.com'
+    },
+    'server'
+);
+
+console.log(process.env.NODE_ENV);
+
 app.prepare().then(() => {
-    createServer(handler).listen(3001, err => {
+    const server = express();
+
+    server.use((req, res, next) => {
+        req.firebaseServer = firebase;
+        next();
+    });
+
+    server.get('*', (req, res) => {
+        return handler(req, res);
+    });
+
+    server.listen(3001, err => {
         if (err) throw err;
         console.log('Ready on http://localhost:3001 (with a custom server)');
     });

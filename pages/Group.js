@@ -8,7 +8,51 @@ import serviceAccount from '../firebasekeys.json';
 import * as types from '../redux/types.js';
 
 class Group extends Component {
-    static async getInitialProps({ store }) {
+    static async getInitialProps({ req, query, store }) {
+        //console.log(req.firebaseServer);
+
+        const faculty = [];
+        req.firebaseServer
+            .database()
+            .ref('faculty')
+            .once('value')
+            .then(datasnapshot => {
+                datasnapshot.forEach(child => {
+                    faculty.push({
+                        id: child.key,
+                        name: child.key,
+                        src: child.val()
+                    });
+                });
+            });
+
+        const reformat = [];
+        await req.firebaseServer
+            .database()
+            .ref('group')
+            .once('value')
+            .then(datasnapshot => {
+                datasnapshot.forEach(child => {
+                    reformat.push({
+                        id: child.key,
+                        name: child.key,
+                        src: child.val()
+                    });
+                });
+            });
+
+        store.dispatch({
+            type: types.GET_GROUP,
+            payload: reformat
+        });
+
+        store.dispatch({
+            type: types.GET_FACULTY,
+            payload: faculty
+        });
+
+        //console.log(help);
+
         // admin.initializeApp({
         //     credential: admin.credential.cert(serviceAccount),
         //     databaseURL: 'https://sage-prosthetics.firebaseio.com'
@@ -25,10 +69,10 @@ class Group extends Component {
         //         snapshot.forEach(doc => {
         //             reformat.push({ ...doc.data(), id: doc.id });
         //         });
-        //         store.dispatch({
-        //             type: types.GET_GROUP,
-        //             payload: reformat
-        //         });
+        // store.dispatch({
+        //     type: types.GET_GROUP,
+        //     payload: reformat
+        // });
         //     })
         //     .catch(err => {
         //         console.log('Error getting documents', err);
@@ -50,9 +94,9 @@ class Group extends Component {
         //     });
     }
 
-    componentDidMount() {
-        this.props.getGroup();
-    }
+    // componentDidMount() {
+    //     this.props.getGroup();
+    // }
 
     renderFaculty = () => {
         if (!this.props.faculty) {
@@ -155,7 +199,7 @@ class Group extends Component {
     };
 
     render() {
-        console.log(this.props.faculty);
+        console.log(this.props.group);
         return (
             <div style={{ margin: '0% 15% 0% 15%' }}>
                 <h2 style={{ textAlign: 'center' }}>
@@ -192,10 +236,10 @@ class Group extends Component {
     }
 }
 
-const mapStateToProps = store => {
+const mapStateToProps = state => {
     return {
-        group: store.group,
-        faculty: store.faculty
+        group: state.group,
+        faculty: state.faculty
     };
 };
 

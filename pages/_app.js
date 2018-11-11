@@ -44,11 +44,9 @@ export default withRedux(initStore)(
             return (
                 <Container>
                     <Provider store={store}>
-                        <>
-                            <Layout>
-                                <Component {...pageProps} />
-                            </Layout>
-                        </>
+                        <Layout>
+                            <Component {...pageProps} />
+                        </Layout>
                     </Provider>
                 </Container>
             );

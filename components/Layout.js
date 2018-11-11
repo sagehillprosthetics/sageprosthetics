@@ -15,6 +15,10 @@ import '../styles.scss';
 import React, { Component } from 'react';
 
 class Layout extends Component {
+    static getInitialProps() {
+        console.log('layout getinitialprops');
+    }
+
     state = {
         dropdown: false,
         secondDropdown: ''

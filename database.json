@@ -1,0 +1,48 @@
+{
+    "group": [
+        {"name": "Aaron Bergen", "src": "IMG_4926-e1510555983904", "id": "aaronbergen"},
+        {"name": "Alex Desbans", "src": "FullSizeRender-6", "id": "alexdesbans"}
+        {"name": "Alex Kwon", "src": "Screen_Shot_2018-11-06_at_10.12.38_PM", "id": "alexkwon"}
+    ]
+}
+
+1: 
+2: 
+3: {name: "Anika Arora", src: "AnikaArora", id: "anikaarora"
+}
+4: {name: "Ashley Zeng", src: "20180901_192217_HDR", id: "ashleyzeng"
+}
+5: {name: "Brandon Phan", src: "Screen_Shot_2018-11-06_at_10.16.39_PM", id: "brandonphan"
+}
+6: {name: "Cammi Phillips", src: "IMG_5538-e1511729257888", id: "cammiphillips"
+}
+7: {name: "Eamon Niknafs", src: "IMG_0132", id: "eamonniknafs"
+}
+8: {name: "Emir Karabeg", src: "IMG_4697", id: "emirkarabeg"
+}
+9: {name: "Ian Grimm", src: "Ian_Grimm", id: "iangrimm"
+}
+10: {name: "Jackie Ni", src: "UNADJUSTEDNONRAW_thumb_11fb", id: "jackieni"
+}
+11: {name: "Jenny King", src: "IMG_7681", id: "jennyking"
+}
+12: {name: "John King", src: "IMG_4130", id: "johnking"
+}
+13: {name: "Jonathan Stark", src: "IMG_4036-e1512758206108", id: "jonathanstark"
+}
+14: {name: "Julia Yuen", src: "JuliaYuen", id: "juliayuen"
+}
+15: {name: "Karishma Raghuram", src: "DSC_6277-e1511729414346", id: "karishmaraghuram"
+}
+16: {name: "Kelly Hong", src: "Screen_Shot_2018-11-06_at_10.17.52_PM", id: "kellyhong"
+}
+17: {name: "Lexi Brooks", src: "Screen-Shot-2017-11-16-at-12.53.07-PM", id: "lexibrooks"
+}
+18: {name: "Sasha Ronaghi", src: "Screen_Shot_2018-11-06_at_10.40.45_PM", id: "sasharonaghi"
+}
+19: {name: "Timothy Guo", src: "APC_0293", id: "timothyguo"
+}
+20: {name: "Trinity Cha", src: "Trinitycha", id: "trinitycha"
+}
+21: {name: "William Stomber", src: "Photo-on-5-18-17-at-5.09-PM", id: "williamstomber"
+}
