@@ -1,25 +1,38 @@
 {
-  "name": "next-grommet",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "dependencies": {
-    "@zeit/next-sass": "^1.0.1",
-    "eslint-config-react-app": "^3.0.5",
-    "grommet": "^1.11.0",
-    "next": "^7.0.1",
-    "next-redux-wrapper": "^2.0.0",
-    "next-routes": "^1.4.2",
-    "node-sass": "^4.10.0",
-    "react": "^16.6.1",
-    "react-dom": "^16.6.1",
-    "react-redux": "^5.1.0",
-    "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
-  },
-  "scripts": {
-    "dev": "node devserver.js NODE_ENV=development",
-    "build": "next build",
-    "start": " node server.js NODE_ENV=production "
-  }
+    "name": "next-grommet",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "dependencies": {
+        "@zeit/next-sass": "^1.0.1",
+        "cloudinary-react": "^1.0.6",
+        "eslint-config-react-app": "^3.0.5",
+        "firebase": "^5.5.8",
+        "grommet": "^1.11.0",
+        "next": "^7.0.1",
+        "next-redux-wrapper": "^2.0.0",
+        "next-routes": "^1.4.2",
+        "node-sass": "^4.10.0",
+        "react": "^16.6.1",
+        "react-dom": "^16.6.1",
+        "react-redux": "^5.1.0",
+        "react-simple-dropdown": "^3.2.3",
+        "react-simple-popover": "^0.2.4",
+        "redux": "^4.0.1",
+        "redux-thunk": "^2.3.0"
+    },
+    "devDependencies": {
+        "babel-eslint": "^8.2.5",
+        "eslint": "^5.0.0-rc.0",
+        "eslint-config-react-app": "^2.1.0",
+        "eslint-plugin-flowtype": "^2.49.3",
+        "eslint-plugin-import": "^2.12.0",
+        "eslint-plugin-jsx-a11y": "^6.0.3",
+        "eslint-plugin-react": "^7.9.1"
+    },
+    "scripts": {
+        "dev": "node devserver.js NODE_ENV=development",
+        "build": "next build",
+        "start": " node server.js NODE_ENV=production "
+    }
 }

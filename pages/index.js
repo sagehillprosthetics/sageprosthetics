@@ -22,8 +22,8 @@ export default () => (
         <hr />
         <Button
             label="Sample Grommet Button"
-            primary={true}
             onClick={function() {}}
+            critical={true}
         />
         <hr />
         <Button

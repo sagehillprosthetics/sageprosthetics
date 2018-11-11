@@ -5,21 +5,30 @@ import Box from 'grommet/components/Box';
 import Paragraph from 'grommet/components/Paragraph';
 import Anchor from 'grommet/components/Anchor';
 import Menu from 'grommet/components/Menu';
-import Actions from 'grommet/components/icons/base/Actions';
 import Header from 'grommet/components/Header';
 import Article from 'grommet/components/Article';
+import Popover from 'react-simple-popover';
 
 import Link from 'next/link';
+import '../styles.scss';
 
 import React, { Component } from 'react';
 
 class Layout extends Component {
+    state = {
+        dropdown: false,
+        secondDropdown: ''
+    };
+
     renderFooter() {
         return (
             <Footer
                 justify="between"
                 size="small"
-                style={{ padding: '0% 1.5% 0% 1.5%' }}
+                style={{
+                    padding: '0% 1.5% 0% 1.5%',
+                    margin: '2.5vh 0 1.5vh 0'
+                }}
             >
                 <Title>
                     <s />
@@ -32,7 +41,7 @@ class Layout extends Component {
                         size="small"
                         dropAlign={{ right: 'right' }}
                     >
-                        <Anchor href="#">Privacy Policy</Anchor>
+                        <Anchor href="/privacy-policy">Privacy Policy</Anchor>
                         <Anchor href="#">Support</Anchor>
                         <Anchor href="#">Contact</Anchor>
                         <Anchor href="#">About</Anchor>
@@ -43,11 +52,12 @@ class Layout extends Component {
     }
 
     renderHeader() {
+        console.log(this.state.dropdown);
         return (
             <Header
                 fixed={true}
                 width="full"
-                style={{ padding: '0% 1.5% 0% 1.5%', height: '7vw' }}
+                style={{ padding: '0% 1.5% 0% 1.5%', height: '7vw', zIndex: 1 }}
             >
                 <Title>
                     <a style={{ fontSize: '30px', margin: 0 }} href="/">
@@ -69,9 +79,89 @@ class Layout extends Component {
                         style={{
                             display: 'flex',
                             flexDirection: 'row',
-                            marginTop: '15px'
+                            marginTop: '2.5vw'
                         }}
                     >
+                        <li className="nav-item" style={styles.navlink}>
+                            <a
+                                ref="target"
+                                style={{ color: '#7ed4c6' }}
+                                href="#"
+                                onClick={() =>
+                                    this.setState({ dropdown: true })
+                                }
+                            >
+                                <div className="text">Recipients</div>
+                            </a>
+                            <Popover
+                                placement="bottom"
+                                container={this}
+                                target={this.refs.target}
+                                show={this.state.dropdown}
+                                onHide={() => this.setState({ dropdown: true })}
+                                style={{
+                                    marginTop: '2.5vw',
+                                    zIndex: 40,
+                                    opacity: '1'
+                                }}
+                            >
+                                <Link href="/">
+                                    <a style={{ color: '#7ed4c6' }}>
+                                        <div className="text">link1</div>
+                                    </a>
+                                </Link>
+                                <Link href="/">
+                                    <a style={{ color: '#7ed4c6' }}>
+                                        <div className="text">link2</div>
+                                    </a>
+                                </Link>
+                                <a
+                                    ref="target2"
+                                    style={{
+                                        color: '#7ed4c6',
+                                        display: 'flex',
+                                        flexDirection: 'row',
+                                        justifyContent: 'space-between'
+                                    }}
+                                    href="#"
+                                    onClick={() =>
+                                        this.setState({ secondDropdown: 'a' })
+                                    }
+                                >
+                                    <div className="text">Archive</div>
+                                    <div className="text">></div>
+                                </a>
+                                <Popover
+                                    placement="right"
+                                    container={this}
+                                    target={this.refs.target2}
+                                    show={this.state.secondDropdown === 'a'}
+                                    onHide={() =>
+                                        this.setState({
+                                            secondDropdown: '',
+                                            dropdown: false
+                                        })
+                                    }
+                                    style={{
+                                        marginTop: '2.5vw',
+                                        zIndex: 40,
+                                        opacity: '1'
+                                    }}
+                                >
+                                    <Link href="/">
+                                        <a style={{ color: '#7ed4c6' }}>
+                                            <div className="text">link1</div>
+                                        </a>
+                                    </Link>
+                                    <Link href="/">
+                                        <a style={{ color: '#7ed4c6' }}>
+                                            <div className="text">link2</div>
+                                        </a>
+                                    </Link>
+                                </Popover>
+                            </Popover>
+                        </li>
+
                         <li className="nav-item" style={styles.navlink}>
                             <Link href="/">
                                 <a
@@ -90,16 +180,8 @@ class Layout extends Component {
                                         }}
                                         className="text"
                                     >
-                                        Recipients
+                                        Hand Designs
                                     </div>
-                                </a>
-                            </Link>
-                        </li>
-
-                        <li className="nav-item" style={styles.navlink}>
-                            <Link href="/">
-                                <a style={{ color: '#7ed4c6' }}>
-                                    <div className="text">Hand Designs</div>
                                 </a>
                             </Link>
                         </li>
@@ -121,8 +203,8 @@ class Layout extends Component {
                         </li>
 
                         <li className="nav-item" style={styles.navlink}>
-                            <Link href="/">
-                                <a style={{ color: '#7ed4c6' }}>
+                            <Link href="/group">
+                                <a style={{ color: '#7ed4c6' }} href="/group">
                                     <div className="text">Our Group</div>
                                 </a>
                             </Link>
@@ -135,18 +217,6 @@ class Layout extends Component {
                                 </a>
                             </Link>
                         </li>
-
-                        <Menu
-                            responsive={true}
-                            label="Menu Demo"
-                            style={{ background: 'white' }}
-                        >
-                            <Anchor href="#" className="active">
-                                First action
-                            </Anchor>
-                            <Anchor href="#">Second action</Anchor>
-                            <Anchor href="#">Third action</Anchor>
-                        </Menu>
                     </ul>
                 </Box>
                 <style jsx>{`
@@ -181,7 +251,9 @@ class Layout extends Component {
                 >
                     {this.renderHeader()}
 
-                    {this.props.children}
+                    <div style={{ minHeight: '81vh' }}>
+                        {this.props.children}
+                    </div>
 
                     {this.renderFooter()}
                 </Article>

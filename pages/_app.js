@@ -2,10 +2,23 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import App, { Container } from 'next/app';
 import withRedux from 'next-redux-wrapper';
+import * as firebase from 'firebase';
+
+import '../styles.scss';
 import { initStore } from '../redux/store';
 import Layout from '../components/Layout';
 
-// import * as firebase from 'firebase';
+if (!firebase.apps.length) {
+    firebase.initializeApp({
+        apiKey: 'AIzaSyBn97XtxibfzEfqvY9-xUdJ26xHT7wSIg0',
+        authDomain: 'sage-prosthetics.firebaseapp.com',
+        databaseURL: 'https://sage-prosthetics.firebaseio.com',
+        projectId: 'sage-prosthetics',
+        storageBucket: 'sage-prosthetics.appspot.com',
+        messagingSenderId: '62889057271'
+    });
+}
+
 // import * as types from '../redux/types';
 //import { initGA, logPageView } from '../components/general/analytics';
 
