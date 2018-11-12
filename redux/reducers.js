@@ -8,7 +8,6 @@ const INITIAL_STATE = {
 };
 
 export default function(state = INITIAL_STATE, action) {
-    console.log(action.type);
     switch (action.type) {
         case types.GET_GROUP:
             console.log(action.payload);
