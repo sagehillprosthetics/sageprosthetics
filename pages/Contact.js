@@ -10,7 +10,23 @@ import FormField from 'grommet/components/FormField';
 import Button from 'grommet/components/Button';
 
 class Contact extends Component {
-    static async getInitialProps({ req, query, store }) {}
+    static async getInitialProps({ req, query, store }) {
+        const links = [];
+        await req.firebaseServer
+            .database()
+            .ref('recipients')
+            .once('value')
+            .then(datasnapshot => {
+                datasnapshot.forEach(child => {
+                    links.push(child.key);
+                });
+            });
+
+        store.dispatch({
+            type: types.GET_RECIPIENTS,
+            payload: links
+        });
+    }
 
     state = {
         name: '',

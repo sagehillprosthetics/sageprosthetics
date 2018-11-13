@@ -6,7 +6,8 @@ import * as firebase from 'firebase';
 
 import '../styles.scss';
 import { initStore } from '../redux/store';
-import Layout from '../components/Layout';
+import Layout from './Layout';
+import * as types from '../redux/types';
 
 if (!firebase.apps.length) {
     firebase.initializeApp({
@@ -25,7 +26,9 @@ if (!firebase.apps.length) {
 //Custom app.js to add Redux and a universal toolbar --> DO NOT RENAME
 export default withRedux(initStore)(
     class MyApp extends App {
-        static async getInitialProps({ Component, ctx }) {
+        static async getInitialProps({ Component, ctx, req, query, store }) {
+            // store.dispatch({ type: types.GET_RECIPIENTS, payload: 'help' });
+
             return {
                 pageProps: Component.getInitialProps
                     ? await Component.getInitialProps(ctx)

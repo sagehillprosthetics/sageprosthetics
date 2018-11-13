@@ -5,7 +5,9 @@ const INITIAL_STATE = {
     group: {},
     faculty: {},
     gallery: [],
-    designs: {}
+    designs: {},
+    recipients: ['Internal Server Error!'],
+    selectedRecipient: {}
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -20,6 +22,10 @@ export default function(state = INITIAL_STATE, action) {
             return { ...state, gallery: action.payload };
         case types.GET_DESIGNS:
             return { ...state, designs: action.payload };
+        case types.GET_RECIPIENTS:
+            return { ...state, recipients: action.payload };
+        case types.GET_SELECTED_RECIPIENT:
+            return { ...state, selectedRecipient: action.payload };
         default:
             return state;
     }

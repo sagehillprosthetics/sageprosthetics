@@ -10,6 +10,17 @@ class Group extends Component {
     static async getInitialProps({ req, query, store }) {
         //console.log(req.firebaseServer);
 
+        const links = [];
+        req.firebaseServer
+            .database()
+            .ref('recipients')
+            .once('value')
+            .then(datasnapshot => {
+                datasnapshot.forEach(child => {
+                    links.push(child.key);
+                });
+            });
+
         const faculty = [];
         req.firebaseServer
             .database()
@@ -43,6 +54,11 @@ class Group extends Component {
         store.dispatch({
             type: types.GET_GROUP,
             payload: reformat
+        });
+
+        store.dispatch({
+            type: types.GET_RECIPIENTS,
+            payload: links
         });
 
         store.dispatch({
@@ -92,10 +108,6 @@ class Group extends Component {
         //         console.log('Error getting documents', err);
         //     });
     }
-
-    // componentDidMount() {
-    //     this.props.getGroup();
-    // }
 
     renderFaculty = () => {
         if (!this.props.faculty) {

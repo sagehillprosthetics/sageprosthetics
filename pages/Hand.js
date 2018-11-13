@@ -6,10 +6,10 @@ import * as types from '../redux/types.js';
 import Card from 'grommet/components/Card';
 import Anchor from 'grommet/components/Anchor';
 
-class Gallery extends Component {
+class Hand extends Component {
     static async getInitialProps({ req, query, store }) {
         const pictures = [];
-        await req.firebaseServer
+        req.firebaseServer
             .database()
             .ref('hands')
             .once('value')
@@ -18,6 +18,22 @@ class Gallery extends Component {
                     pictures.push({ name: child.key, ...child.val() });
                 });
             });
+
+        const links = [];
+        await req.firebaseServer
+            .database()
+            .ref('recipients')
+            .once('value')
+            .then(datasnapshot => {
+                datasnapshot.forEach(child => {
+                    links.push(child.key);
+                });
+            });
+
+        store.dispatch({
+            type: types.GET_RECIPIENTS,
+            payload: links
+        });
 
         store.dispatch({
             type: types.GET_DESIGNS,
@@ -102,4 +118,4 @@ const mapStateToProps = state => {
 export default connect(
     mapStateToProps,
     { getGroup }
-)(Gallery);
+)(Hand);

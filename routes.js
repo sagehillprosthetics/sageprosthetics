@@ -7,5 +7,6 @@ routes.add('/group', 'Group');
 routes.add('/gallery', 'Gallery');
 routes.add('/contact', 'Contact');
 routes.add('/hand-designs', 'Hand');
+routes.add('/recipient/:id', 'Recipient');
 
 module.exports = routes;

@@ -10,6 +10,17 @@ import ImageModal from '../components/ImageModal';
 
 class Gallery extends Component {
     static async getInitialProps({ req, query, store }) {
+        const links = [];
+        req.firebaseServer
+            .database()
+            .ref('recipients')
+            .once('value')
+            .then(datasnapshot => {
+                datasnapshot.forEach(child => {
+                    links.push(child.key);
+                });
+            });
+
         const pictures = [];
         await req.firebaseServer
             .database()
@@ -24,6 +35,11 @@ class Gallery extends Component {
         store.dispatch({
             type: types.GET_GALLERY,
             payload: pictures
+        });
+
+        store.dispatch({
+            type: types.GET_RECIPIENTS,
+            payload: links
         });
     }
 

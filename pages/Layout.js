@@ -8,6 +8,7 @@ import Menu from 'grommet/components/Menu';
 import Header from 'grommet/components/Header';
 import Article from 'grommet/components/Article';
 import Popover from 'react-simple-popover';
+import { connect } from 'react-redux';
 
 import Link from 'next/link';
 import '../styles.scss';
@@ -15,10 +16,6 @@ import '../styles.scss';
 import React, { Component } from 'react';
 
 class Layout extends Component {
-    static getInitialProps() {
-        console.log('layout getinitialprops');
-    }
-
     state = {
         dropdown: false,
         secondDropdown: ''
@@ -55,7 +52,7 @@ class Layout extends Component {
     }
 
     renderHeader() {
-        console.log(this.state.dropdown);
+        console.log(this.state);
         return (
             <Header
                 fixed={true}
@@ -92,7 +89,10 @@ class Layout extends Component {
                                 href="#"
                                 onClick={() => {
                                     const help = window.scrollY;
-                                    this.setState({ dropdown: true });
+                                    this.setState({
+                                        dropdown: true,
+                                        secondDropdown: ''
+                                    });
                                     setTimeout(
                                         () => window.scrollTo(0, help),
                                         0
@@ -107,7 +107,10 @@ class Layout extends Component {
                                 target={this.refs.target}
                                 show={this.state.dropdown}
                                 onHide={() => {
-                                    this.setState({ dropdown: false });
+                                    this.setState({
+                                        dropdown: false,
+                                        secondDropdown: ''
+                                    });
                                 }}
                                 style={{
                                     marginTop: '2.5vw',
@@ -117,16 +120,6 @@ class Layout extends Component {
                                     //top: window.scrollY + 'px'
                                 }}
                             >
-                                <Link href="/">
-                                    <a style={{ color: '#7ed4c6' }}>
-                                        <div className="text">link1</div>
-                                    </a>
-                                </Link>
-                                <Link href="/">
-                                    <a style={{ color: '#7ed4c6' }}>
-                                        <div className="text">link2</div>
-                                    </a>
-                                </Link>
                                 <a
                                     ref="target2"
                                     style={{
@@ -160,21 +153,24 @@ class Layout extends Component {
                                         })
                                     }
                                     style={{
-                                        marginTop: '2.5vw',
+                                        marginTop: '12vw',
                                         zIndex: 40,
                                         opacity: '1'
                                     }}
                                 >
-                                    <Link href="/">
-                                        <a style={{ color: '#7ed4c6' }}>
-                                            <div className="text">link1</div>
-                                        </a>
-                                    </Link>
-                                    <Link href="/">
-                                        <a style={{ color: '#7ed4c6' }}>
-                                            <div className="text">link2</div>
-                                        </a>
-                                    </Link>
+                                    {this.props.recipients.map(recipient => {
+                                        return (
+                                            <Link
+                                                href={`/recipient/${recipient}`}
+                                            >
+                                                <a style={{ color: '#7ed4c6' }}>
+                                                    <div className="text">
+                                                        {recipient}
+                                                    </div>
+                                                </a>
+                                            </Link>
+                                        );
+                                    })}
                                 </Popover>
                             </Popover>
                         </li>
@@ -202,46 +198,19 @@ class Layout extends Component {
                                 </a>
                             </Link>
                         </li> */}
-
-                        <li className="nav-item" style={styles.navlink}>
-                            <Link href="/hand-designs">
-                                <a style={{ color: '#7ed4c6' }}>
-                                    <div className="text">Hand Designs</div>
-                                </a>
-                            </Link>
-                        </li>
-
-                        <li className="nav-item" style={styles.navlink}>
-                            <Link href="/">
-                                <a style={{ color: '#7ed4c6' }}>
-                                    <div className="text">Projects</div>
-                                </a>
-                            </Link>
-                        </li>
-
-                        <li className="nav-item" style={styles.navlink}>
-                            <Link href="/gallery">
-                                <a style={{ color: '#7ed4c6' }} href="/gallery">
-                                    <div className="text">Gallery</div>
-                                </a>
-                            </Link>
-                        </li>
-
-                        <li className="nav-item" style={styles.navlink}>
-                            <Link href="/group">
-                                <a style={{ color: '#7ed4c6' }} href="/group">
-                                    <div className="text">Our Group</div>
-                                </a>
-                            </Link>
-                        </li>
-
-                        <li className="nav-item" style={styles.navlink}>
-                            <Link href="/contact">
-                                <a style={{ color: '#7ed4c6' }} href="/contact">
-                                    <div className="text">Contact</div>
-                                </a>
-                            </Link>
-                        </li>
+                        {navlinks.map(link => {
+                            return (
+                                <li className="nav-item" style={styles.navlink}>
+                                    <Link href={link.link}>
+                                        <a style={{ color: '#7ed4c6' }}>
+                                            <div className="text">
+                                                {link.text}
+                                            </div>
+                                        </a>
+                                    </Link>
+                                </li>
+                            );
+                        })}
                     </ul>
                 </Box>
                 <style jsx>{`
@@ -287,6 +256,14 @@ class Layout extends Component {
     }
 }
 
+const navlinks = [
+    { text: 'Hand Designs', link: '/hand-designs' },
+    { text: 'Projects', link: '/' },
+    { text: 'Gallery', link: '/gallery' },
+    { text: 'Our Group', link: '/group' },
+    { text: 'Contact', link: '/contact' }
+];
+
 const styles = {
     navlink: {
         margin: '6px 25px 0px 0px'
@@ -309,4 +286,13 @@ const styles = {
     }
 };
 
-export default Layout;
+const mapStateToProps = state => {
+    return {
+        recipients: state.recipients
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    null
+)(Layout);

@@ -1,10 +1,27 @@
 import React, { Component } from 'react';
-import Head from 'next/head';
-import Button from 'grommet/components/Button';
+import * as types from '../redux/types';
 
 import '../styles.scss';
 
 class LandingPage extends Component {
+    static async getInitialProps({ req, store }) {
+        const links = [];
+        await req.firebaseServer
+            .database()
+            .ref('recipients')
+            .once('value')
+            .then(datasnapshot => {
+                datasnapshot.forEach(child => {
+                    links.push(child.key);
+                });
+            });
+
+        store.dispatch({
+            type: types.GET_RECIPIENTS,
+            payload: links
+        });
+    }
+
     render() {
         return (
             <div>
