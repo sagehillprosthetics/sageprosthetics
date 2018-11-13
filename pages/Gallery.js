@@ -32,15 +32,19 @@ class Gallery extends Component {
     };
 
     renderImages = () => {
+        //const width = window.innerWidth() / 5;
+
         const images = this.props.gallery.map(src => {
             return (
-                <div onClick={() => this.setState({ selectedImage: src })}>
+                <div
+                    onClick={() => this.setState({ selectedImage: src })}
+                    style={{ margin: '1vw' }}
+                >
                     <Image
                         cloudName="sageprosthetics"
                         publicId={src}
-                        width="300"
-                        height="225"
-                        style={{ margin: '20px' }}
+                        width="248"
+                        height="186"
                         //crop="scale"
                     />
                 </div>
@@ -58,7 +62,8 @@ class Gallery extends Component {
                     style={{
                         display: 'flex',
                         flexWrap: 'wrap',
-                        flexDirection: 'row'
+                        flexDirection: 'row',
+                        justifyContent: 'center'
                     }}
                 >
                     {this.renderImages()}

@@ -4,7 +4,8 @@ const INITIAL_STATE = {
     page: '~',
     group: {},
     faculty: {},
-    gallery: []
+    gallery: [],
+    designs: {}
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -17,6 +18,8 @@ export default function(state = INITIAL_STATE, action) {
             return { ...state, faculty: action.payload };
         case types.GET_GALLERY:
             return { ...state, gallery: action.payload };
+        case types.GET_DESIGNS:
+            return { ...state, designs: action.payload };
         default:
             return state;
     }

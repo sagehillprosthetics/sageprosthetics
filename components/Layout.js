@@ -90,9 +90,14 @@ class Layout extends Component {
                                 ref="target"
                                 style={{ color: '#7ed4c6' }}
                                 href="#"
-                                onClick={() =>
-                                    this.setState({ dropdown: true })
-                                }
+                                onClick={() => {
+                                    const help = window.scrollY;
+                                    this.setState({ dropdown: true });
+                                    setTimeout(
+                                        () => window.scrollTo(0, help),
+                                        0
+                                    );
+                                }}
                             >
                                 <div className="text">Recipients</div>
                             </a>
@@ -101,11 +106,15 @@ class Layout extends Component {
                                 container={this}
                                 target={this.refs.target}
                                 show={this.state.dropdown}
-                                onHide={() => this.setState({ dropdown: true })}
+                                onHide={() => {
+                                    this.setState({ dropdown: false });
+                                }}
                                 style={{
                                     marginTop: '2.5vw',
                                     zIndex: 40,
                                     opacity: '1'
+                                    //position: 'absolute'
+                                    //top: window.scrollY + 'px'
                                 }}
                             >
                                 <Link href="/">
@@ -127,9 +136,14 @@ class Layout extends Component {
                                         justifyContent: 'space-between'
                                     }}
                                     href="#"
-                                    onClick={() =>
-                                        this.setState({ secondDropdown: 'a' })
-                                    }
+                                    onClick={() => {
+                                        const help = window.scrollY;
+                                        this.setState({ secondDropdown: 'a' });
+                                        setTimeout(
+                                            () => window.scrollTo(0, help),
+                                            0
+                                        );
+                                    }}
                                 >
                                     <div className="text">Archive</div>
                                     <div className="text">></div>
@@ -165,7 +179,7 @@ class Layout extends Component {
                             </Popover>
                         </li>
 
-                        <li className="nav-item" style={styles.navlink}>
+                        {/* <li className="nav-item" style={styles.navlink}>
                             <Link href="/">
                                 <a
                                     className={
@@ -185,6 +199,14 @@ class Layout extends Component {
                                     >
                                         Hand Designs
                                     </div>
+                                </a>
+                            </Link>
+                        </li> */}
+
+                        <li className="nav-item" style={styles.navlink}>
+                            <Link href="/hand-designs">
+                                <a style={{ color: '#7ed4c6' }}>
+                                    <div className="text">Hand Designs</div>
                                 </a>
                             </Link>
                         </li>

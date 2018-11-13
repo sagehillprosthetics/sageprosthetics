@@ -1,12 +1,11 @@
 {
-    "name": "next-grommet",
+    "name": "sage-prosthetics",
     "version": "1.0.0",
     "main": "index.js",
     "license": "MIT",
     "dependencies": {
         "@zeit/next-sass": "^1.0.1",
         "cloudinary-react": "^1.0.6",
-        "eslint-config-react-app": "^3.0.5",
         "express": "^4.16.4",
         "firebase": "^5.5.8",
         "firebase-admin": "^6.1.0",
@@ -27,7 +26,7 @@
     "devDependencies": {
         "babel-eslint": "^8.2.5",
         "eslint": "^5.0.0-rc.0",
-        "eslint-config-react-app": "^2.1.0",
+        "eslint-config-react-app": "^3.0.5",
         "eslint-plugin-flowtype": "^2.49.3",
         "eslint-plugin-import": "^2.12.0",
         "eslint-plugin-jsx-a11y": "^6.0.3",

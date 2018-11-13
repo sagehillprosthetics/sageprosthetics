@@ -4,7 +4,6 @@ import * as firebase from 'firebase';
 import { connect } from 'react-redux';
 import { getGroup } from '../redux/actions';
 import { Image, Transformation } from 'cloudinary-react';
-import serviceAccount from '../firebasekeys.json';
 import * as types from '../redux/types.js';
 
 import FormField from 'grommet/components/FormField';

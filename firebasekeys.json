@@ -1,0 +1,12 @@
+{
+    "type": "service_account",
+    "project_id": "sage-prosthetics",
+    "private_key_id": "b51344b71cb6c2137a598a824702da0df43e965a",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCgWF35Tume5sCv\nq+MdPF7RKm3V/CF+vBgNpyGAF1XjIrHAp/t5TWfuTd+4cGt4cWb2MUhmjHrKJ8f7\n1dSckfArlD3hyGbkeGoBpVFpGKLAouhQhP4Pje7S5GvPGe1zZtMFbmRY02jPv1fc\nF02lrtaFqxct1Amsgxot5Rh0bjBuTjCaWhx7memhpZxb/STzgDuVTmeWd/RTOJr8\nSTUyxo7f8MWkD5RdeyyUqR04mdB5/GqAQ5BdlWDBv9iFQgCfJNNio0njEUNcp8DD\nb0RikI759HafIyvDgbhJinjzvAUnJpZo7eztpCX0b+1y4+KZ89zk1R9qU+v61jXG\nkPvMbGYfAgMBAAECggEAKAMlICti/PYUK0I3YHpKJuPxmK5cJWYGkpGcOHyaQB3O\nQYcpp7F7N+pS45GaH+ociV7u9DgmBAA9VUicz51TU2ygrJD3rBeoTFTWpeUx5+Q/\nGKi3RWZjrFi31mxf5qZIDljnzYqj4wOahx+BjtC8U4rIM/VvnI7yn3VFzvgYOc4A\nCgknmlirURXJmsRMIbz1daaij8iHNxQxAfVJbQ+xIoYhJzOScacvTpk4k7BYGv4M\n9SaX/vUus7WXeg/hRkCb6mpAzNeOfMYeuejKibzqJnMPw4tbrYRRfOrf9lKxPDIe\n52uNNSKdU37DOEhBu4j69u1Zy+BqM9+qkzlhzGZeYQKBgQDPYe2D1jvI/qFPvc05\nAil17KCRVtWCfCM+kXMDrRfbwpctUXom+6Xdb5PLLJ8ImbS1Tx0E0ttYIl+cJeMF\ntVA47NmFjHFNrvT6uNR2TprU1qDqieRu2brdvu2OIRuyBY0OCY8tyCa2PaBirIDn\nRntjca8PX0v+n+eCN8M4DU61ZwKBgQDF732iE8jL/FG+KTF5E1pajAgHrSFpXK5b\nyfGY1LdGWYC79fcclw++sj1gHu/7ozJzbYSjD4uUNT1PQZuZ+92F+BYrSoDZx0xY\nBusB4iCOqX2W7+i/t5dYQJjFXEY6qpRRh3+8GVBwxt63BvNW7z6kV5/mQokZloMn\nWYT1h1LeiQKBgArOaIkBJdZgZll4Y3RAB5cMgIVyR+fnvhJpk9uyLlcWObhz0XCs\nlkUGpmXk6liRYdg8yh9ROXrLN740PzMx8n804FTUL6dDoaJa9T9A81J56KKwEsYv\n9EvPwiMw2HebUHFV0C8ridDfPzdFE+Z5Rr600tFzPsuC25Zuf26xStOrAoGBAL0N\nli2sP+m1wk2jAsHmHjLF9RV/453DDDZXmA6lfbgP3MmqkLAaCMvXao/YfNcYdSOS\nw1ELlAGnKDv/KiPVUSyYXHRU4OUhWmXplaVi2j3o3S/BTclwDXoZmNFI5Ts7mhaV\nGQgMFaziBe9DEEFEmcxWdT905YYvIG4BLuFks14hAoGAOEY7uuepfwrLkNqEOtBj\nTDc2nMaAoZHNuLsGc1UnBPuT4NH95pAS0VyzkSei7udB46/tTmeRX8Cp+rOYQ2lf\njLOWiZmrawLN0MJ3lLaFa09WGZCfk91wGJrlcgWhx69FSUzcqKMPznxAAWtUgdtT\nz0leA/fGJAEVeNuqpkASnUY=\n-----END PRIVATE KEY-----\n",
+    "client_email": "firebase-adminsdk-3m873@sage-prosthetics.iam.gserviceaccount.com",
+    "client_id": "104006203831706351326",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-3m873%40sage-prosthetics.iam.gserviceaccount.com"
+}
