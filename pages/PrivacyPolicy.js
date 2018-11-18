@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
+import * as types from '../redux/types.js';
+
 import Paragraph from 'grommet/components/Paragraph';
 
 class PrivacyPolicy extends Component {
+    static getInitialProps({ store }) {
+        store.dispatch({
+            type: types.CHANGE_PAGE,
+            payload: '~'
+        });
+    }
+
     render() {
         return (
             <div style={{ margin: '0 15% 0 15%' }}>

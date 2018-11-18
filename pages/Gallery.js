@@ -9,10 +9,21 @@ import * as types from '../redux/types.js';
 import ImageModal from '../components/ImageModal';
 
 class Gallery extends Component {
-    static async getInitialProps({ req, query, store }) {
+    static async getInitialProps({ req, query, store, isServer }) {
+        store.dispatch({
+            type: types.CHANGE_PAGE,
+            payload: 'g'
+        });
+
+        let db = null;
+        if (isServer) {
+            db = req.firebaseServer;
+        } else {
+            db = firebase;
+        }
+
         const links = [];
-        req.firebaseServer
-            .database()
+        db.database()
             .ref('recipients')
             .once('value')
             .then(datasnapshot => {
@@ -22,7 +33,7 @@ class Gallery extends Component {
             });
 
         const pictures = [];
-        await req.firebaseServer
+        await db
             .database()
             .ref('gallery')
             .once('value')

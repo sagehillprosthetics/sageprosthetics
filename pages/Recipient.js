@@ -33,6 +33,7 @@ class Recipient extends Component {
             type: types.GET_SELECTED_RECIPIENT,
             payload: recipient
         });
+        store.dispatch({ type: types.CHANGE_PAGE, payload: recipient.name });
     }
 
     state = {

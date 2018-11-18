@@ -51,8 +51,123 @@ class Layout extends Component {
         );
     }
 
+    renderPopOver() {
+        let archiveactive = false;
+        const archivelinks = this.props.recipients.map(recipient => {
+            let text = 'text';
+            if (recipient === this.props.page) {
+                archiveactive = true;
+                text = 'text active';
+            }
+            return (
+                <Link href={`/recipient/${recipient}`} key={recipient}>
+                    <a
+                        style={{ color: '#7ed4c6' }}
+                        href={`/recipient/${recipient}`}
+                    >
+                        <div className={text}>{recipient}</div>
+                    </a>
+                </Link>
+            );
+        });
+
+        console.log(archiveactive);
+
+        const popovers = (
+            <Popover
+                placement="bottom"
+                container={this}
+                target={this.refs.target}
+                show={this.state.dropdown}
+                onHide={() => {
+                    this.setState({
+                        dropdown: false,
+                        secondDropdown: ''
+                    });
+                }}
+                style={{
+                    marginTop: '2.5vw',
+                    zIndex: 40,
+                    opacity: '1'
+                    //position: 'absolute'
+                    //top: window.scrollY + 'px'
+                }}
+            >
+                <a
+                    ref="target2"
+                    style={{
+                        color: '#7ed4c6',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between'
+                    }}
+                    href="#"
+                    onClick={() => {
+                        const help = window.scrollY;
+                        this.setState({ secondDropdown: 'a' });
+                        setTimeout(() => window.scrollTo(0, help), 0);
+                    }}
+                >
+                    <div className={archiveactive ? 'text' : 'text'}>
+                        Archive
+                    </div>
+                    <div className="text">></div>
+                </a>
+                <Popover
+                    placement="right"
+                    container={this}
+                    target={this.refs.target2}
+                    show={this.state.secondDropdown === 'a'}
+                    onHide={() =>
+                        this.setState({
+                            secondDropdown: '',
+                            dropdown: false
+                        })
+                    }
+                    style={{
+                        marginTop: '12vw',
+                        zIndex: 40,
+                        opacity: '1'
+                    }}
+                >
+                    {archivelinks}
+                </Popover>
+            </Popover>
+        );
+
+        return (
+            <li className="nav-item" style={styles.navlink}>
+                <a
+                    ref="target"
+                    //style={{ color: '#7ed4c6' }}
+                    href="#"
+                    onClick={() => {
+                        const help = window.scrollY;
+                        this.setState({
+                            dropdown: true,
+                            secondDropdown: ''
+                        });
+                        setTimeout(() => window.scrollTo(0, help), 0);
+                    }}
+                >
+                    <div className={archiveactive ? 'text' : 'text'}>
+                        Recipients
+                    </div>
+                </a>
+                {popovers}
+            </li>
+        );
+    }
+
     renderHeader() {
-        console.log(this.state);
+        console.log(this.props.page);
+        let archiveactive = false;
+        this.props.recipients.map(recipient => {
+            if (recipient === this.props.page) {
+                archiveactive = true;
+            }
+        });
+
         return (
             <Header
                 fixed={true}
@@ -99,7 +214,13 @@ class Layout extends Component {
                                     );
                                 }}
                             >
-                                <div className="text">Recipients</div>
+                                <div
+                                    className={
+                                        archiveactive ? 'text active' : 'text'
+                                    }
+                                >
+                                    Recipients
+                                </div>
                             </a>
                             <Popover
                                 placement="bottom"
@@ -138,8 +259,23 @@ class Layout extends Component {
                                         );
                                     }}
                                 >
-                                    <div className="text">Archive</div>
-                                    <div className="text">></div>
+                                    <div
+                                        className={
+                                            archiveactive
+                                                ? 'text active'
+                                                : 'text'
+                                        }
+                                    >
+                                        Archive
+                                    </div>
+                                    <div
+                                        style={{
+                                            textDecoration: 'none',
+                                            color: '#aaaaaa'
+                                        }}
+                                    >
+                                        >
+                                    </div>
                                 </a>
                                 <Popover
                                     placement="right"
@@ -159,12 +295,21 @@ class Layout extends Component {
                                     }}
                                 >
                                     {this.props.recipients.map(recipient => {
+                                        let text = 'text';
+                                        if (recipient === this.props.page) {
+                                            archiveactive = true;
+                                            text = 'text active';
+                                        }
                                         return (
                                             <Link
                                                 href={`/recipient/${recipient}`}
+                                                key={recipient}
                                             >
-                                                <a style={{ color: '#7ed4c6' }}>
-                                                    <div className="text">
+                                                <a
+                                                    style={{ color: '#7ed4c6' }}
+                                                    href={`/recipient/${recipient}`}
+                                                >
+                                                    <div className={text}>
                                                         {recipient}
                                                     </div>
                                                 </a>
@@ -200,10 +345,24 @@ class Layout extends Component {
                         </li> */}
                         {navlinks.map(link => {
                             return (
-                                <li className="nav-item" style={styles.navlink}>
-                                    <Link href={link.link}>
-                                        <a style={{ color: '#7ed4c6' }}>
-                                            <div className="text">
+                                <li
+                                    className="nav-item"
+                                    style={styles.navlink}
+                                    key={link.link}
+                                >
+                                    <Link>
+                                        <a
+                                            style={{ color: '#7ed4c6' }}
+                                            href={link.link}
+                                        >
+                                            <div
+                                                className={
+                                                    this.props.page ===
+                                                    link.page
+                                                        ? 'text active'
+                                                        : 'text'
+                                                }
+                                            >
                                                 {link.text}
                                             </div>
                                         </a>
@@ -221,6 +380,7 @@ class Layout extends Component {
                     .text:hover {
                         color: #7ed4c6;
                         text-decoration: none;
+                        text-decoration-color: #7ed4c6;
                     }
                     .active {
                         color: #7ed4c6;
@@ -257,16 +417,17 @@ class Layout extends Component {
 }
 
 const navlinks = [
-    { text: 'Hand Designs', link: '/hand-designs' },
-    { text: 'Projects', link: '/' },
-    { text: 'Gallery', link: '/gallery' },
-    { text: 'Our Group', link: '/group' },
-    { text: 'Contact', link: '/contact' }
+    { text: 'Hand Designs', link: '/hand-designs', page: 'h' },
+    { text: 'Projects', link: '/#' },
+    { text: 'Gallery', link: '/gallery', page: 'g' },
+    { text: 'Our Group', link: '/group', page: 't' },
+    { text: 'Contact', link: '/contact', page: 'c' }
 ];
 
 const styles = {
     navlink: {
-        margin: '6px 25px 0px 0px'
+        margin: '6px 25px 0px 0px',
+        fontWeight: '500'
         //color: "#CCCCCC"
     },
     navBar: {
@@ -288,7 +449,8 @@ const styles = {
 
 const mapStateToProps = state => {
     return {
-        recipients: state.recipients
+        recipients: state.recipients,
+        page: state.page
     };
 };
 

@@ -5,6 +5,11 @@ import '../styles.scss';
 
 class LandingPage extends Component {
     static async getInitialProps({ req, store }) {
+        store.dispatch({
+            type: types.CHANGE_PAGE,
+            payload: '~'
+        });
+
         const links = [];
         await req.firebaseServer
             .database()

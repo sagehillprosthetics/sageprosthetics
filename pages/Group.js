@@ -10,6 +10,11 @@ class Group extends Component {
     static async getInitialProps({ req, query, store }) {
         //console.log(req.firebaseServer);
 
+        store.dispatch({
+            type: types.CHANGE_PAGE,
+            payload: 't'
+        });
+
         const links = [];
         req.firebaseServer
             .database()

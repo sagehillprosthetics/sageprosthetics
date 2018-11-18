@@ -8,6 +8,11 @@ import Anchor from 'grommet/components/Anchor';
 
 class Hand extends Component {
     static async getInitialProps({ req, query, store }) {
+        store.dispatch({
+            type: types.CHANGE_PAGE,
+            payload: 'h'
+        });
+
         const pictures = [];
         req.firebaseServer
             .database()

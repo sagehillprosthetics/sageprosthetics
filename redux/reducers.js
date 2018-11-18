@@ -26,6 +26,8 @@ export default function(state = INITIAL_STATE, action) {
             return { ...state, recipients: action.payload };
         case types.GET_SELECTED_RECIPIENT:
             return { ...state, selectedRecipient: action.payload };
+        case types.CHANGE_PAGE:
+            return { ...state, page: action.payload };
         default:
             return state;
     }

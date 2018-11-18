@@ -11,6 +11,11 @@ import Button from 'grommet/components/Button';
 
 class Contact extends Component {
     static async getInitialProps({ req, query, store }) {
+        store.dispatch({
+            type: types.CHANGE_PAGE,
+            payload: 'c'
+        });
+
         const links = [];
         await req.firebaseServer
             .database()
