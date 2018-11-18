@@ -5,6 +5,8 @@ import { Image, Transformation } from 'cloudinary-react';
 import * as types from '../redux/types.js';
 import Card from 'grommet/components/Card';
 import Anchor from 'grommet/components/Anchor';
+import Quote from 'grommet/components/Quote';
+import Paragraph from 'grommet/components/Paragraph';
 
 class Recipient extends Component {
     static async getInitialProps({ req, query, store }) {
@@ -41,6 +43,7 @@ class Recipient extends Component {
     };
 
     render() {
+        console.log(this.props.recipient.src);
         return (
             <div style={{ margin: '0% 5% 0% 5%' }}>
                 <h2 style={{ textAlign: 'center' }}>
@@ -58,13 +61,27 @@ class Recipient extends Component {
                     <Image
                         cloudName="sageprosthetics"
                         publicId={this.props.recipient.src + ''}
-                        crop="scale"
-                        width="200"
-                    />
-                    <div style={{ margin: '10%' }}>
+                        height="100%"
+                    >
+                        <Transformation width="300" height="400" crop="scale" />
+                    </Image>
+                    <div style={{ marginLeft: '10%' }}>
                         {this.props.recipient.text}
+                        {this.props.recipient.quote ? (
+                            <Quote
+                                borderColorIndex="accent-1"
+                                style={{ marginTop: '2vw' }}
+                                size="full"
+                            >
+                                <Paragraph>
+                                    "{this.props.recipient.quote}"
+                                </Paragraph>
+                            </Quote>
+                        ) : null}
                     </div>
                 </div>
+                <hr />
+                team members people images stuff
             </div>
         );
     }
