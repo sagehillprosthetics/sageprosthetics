@@ -7,7 +7,9 @@ const INITIAL_STATE = {
     gallery: [],
     designs: {},
     recipients: ['Internal Server Error!'],
-    selectedRecipient: {}
+    selectedRecipient: {},
+    projects: ['Internal Server Error!'],
+    selectedProject: {}
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -28,6 +30,10 @@ export default function(state = INITIAL_STATE, action) {
             return { ...state, selectedRecipient: action.payload };
         case types.CHANGE_PAGE:
             return { ...state, page: action.payload };
+        case types.GET_PROJECTS:
+            return { ...state, projects: action.payload };
+        case types.GET_SELECTED_PROJECT:
+            return { ...state, selectedProject: action.payload };
         default:
             return state;
     }

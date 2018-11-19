@@ -4,10 +4,42 @@ import * as types from '../redux/types.js';
 import Paragraph from 'grommet/components/Paragraph';
 
 class PrivacyPolicy extends Component {
-    static getInitialProps({ store }) {
+    static async getInitialProps({ req, store }) {
         store.dispatch({
             type: types.CHANGE_PAGE,
             payload: '~'
+        });
+
+        const project = [];
+        req.firebaseServer
+            .database()
+            .ref('projects')
+            .once('value')
+            .then(datasnapshot => {
+                datasnapshot.forEach(child => {
+                    project.push(child.key);
+                });
+            });
+
+        const links = [];
+        await req.firebaseServer
+            .database()
+            .ref('recipients')
+            .once('value')
+            .then(datasnapshot => {
+                datasnapshot.forEach(child => {
+                    links.push(child.key);
+                });
+            });
+
+        store.dispatch({
+            type: types.GET_RECIPIENTS,
+            payload: links
+        });
+
+        store.dispatch({
+            type: types.GET_PROJECTS,
+            payload: project
         });
     }
 

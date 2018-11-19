@@ -8,5 +8,6 @@ routes.add('/gallery', 'Gallery');
 routes.add('/contact', 'Contact');
 routes.add('/hand-designs', 'Hand');
 routes.add('/recipient/:id', 'Recipient');
+routes.add('/projects/:id', 'Project');
 
 module.exports = routes;

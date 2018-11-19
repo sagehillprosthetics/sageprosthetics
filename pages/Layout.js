@@ -51,120 +51,19 @@ class Layout extends Component {
         );
     }
 
-    renderPopOver() {
+    renderHeader() {
+        console.log(this.props.projects);
         let archiveactive = false;
-        const archivelinks = this.props.recipients.map(recipient => {
-            let text = 'text';
+        this.props.recipients.forEach(recipient => {
             if (recipient === this.props.page) {
                 archiveactive = true;
-                text = 'text active';
             }
-            return (
-                <Link href={`/recipient/${recipient}`} key={recipient}>
-                    <a
-                        style={{ color: '#7ed4c6' }}
-                        href={`/recipient/${recipient}`}
-                    >
-                        <div className={text}>{recipient}</div>
-                    </a>
-                </Link>
-            );
         });
 
-        console.log(archiveactive);
-
-        const popovers = (
-            <Popover
-                placement="bottom"
-                container={this}
-                target={this.refs.target}
-                show={this.state.dropdown}
-                onHide={() => {
-                    this.setState({
-                        dropdown: false,
-                        secondDropdown: ''
-                    });
-                }}
-                style={{
-                    marginTop: '2.5vw',
-                    zIndex: 40,
-                    opacity: '1'
-                    //position: 'absolute'
-                    //top: window.scrollY + 'px'
-                }}
-            >
-                <a
-                    ref="target2"
-                    style={{
-                        color: '#7ed4c6',
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'space-between'
-                    }}
-                    href="#"
-                    onClick={() => {
-                        const help = window.scrollY;
-                        this.setState({ secondDropdown: 'a' });
-                        setTimeout(() => window.scrollTo(0, help), 0);
-                    }}
-                >
-                    <div className={archiveactive ? 'text' : 'text'}>
-                        Archive
-                    </div>
-                    <div className="text">></div>
-                </a>
-                <Popover
-                    placement="right"
-                    container={this}
-                    target={this.refs.target2}
-                    show={this.state.secondDropdown === 'a'}
-                    onHide={() =>
-                        this.setState({
-                            secondDropdown: '',
-                            dropdown: false
-                        })
-                    }
-                    style={{
-                        marginTop: '12vw',
-                        zIndex: 40,
-                        opacity: '1'
-                    }}
-                >
-                    {archivelinks}
-                </Popover>
-            </Popover>
-        );
-
-        return (
-            <li className="nav-item" style={styles.navlink}>
-                <a
-                    ref="target"
-                    //style={{ color: '#7ed4c6' }}
-                    href="#"
-                    onClick={() => {
-                        const help = window.scrollY;
-                        this.setState({
-                            dropdown: true,
-                            secondDropdown: ''
-                        });
-                        setTimeout(() => window.scrollTo(0, help), 0);
-                    }}
-                >
-                    <div className={archiveactive ? 'text' : 'text'}>
-                        Recipients
-                    </div>
-                </a>
-                {popovers}
-            </li>
-        );
-    }
-
-    renderHeader() {
-        console.log(this.props.page);
-        let archiveactive = false;
-        this.props.recipients.map(recipient => {
-            if (recipient === this.props.page) {
-                archiveactive = true;
+        let projectsactive = false;
+        this.props.projects.forEach(project => {
+            if (project === this.props.page) {
+                projectsactive = true;
             }
         });
 
@@ -205,7 +104,7 @@ class Layout extends Component {
                                 onClick={() => {
                                     const help = window.scrollY;
                                     this.setState({
-                                        dropdown: true,
+                                        dropdown: 'r',
                                         secondDropdown: ''
                                     });
                                     setTimeout(
@@ -226,7 +125,7 @@ class Layout extends Component {
                                 placement="bottom"
                                 container={this}
                                 target={this.refs.target}
-                                show={this.state.dropdown}
+                                show={this.state.dropdown === 'r'}
                                 onHide={() => {
                                     this.setState({
                                         dropdown: false,
@@ -234,7 +133,7 @@ class Layout extends Component {
                                     });
                                 }}
                                 style={{
-                                    marginTop: '2.5vw',
+                                    marginTop: '5vh',
                                     zIndex: 40,
                                     opacity: '1'
                                     //position: 'absolute'
@@ -285,11 +184,11 @@ class Layout extends Component {
                                     onHide={() =>
                                         this.setState({
                                             secondDropdown: '',
-                                            dropdown: false
+                                            dropdown: ''
                                         })
                                     }
                                     style={{
-                                        marginTop: '12vw',
+                                        marginTop: '16vh',
                                         zIndex: 40,
                                         opacity: '1'
                                     }}
@@ -320,29 +219,74 @@ class Layout extends Component {
                             </Popover>
                         </li>
 
-                        {/* <li className="nav-item" style={styles.navlink}>
-                            <Link href="/">
-                                <a
+                        <li className="nav-item" style={styles.navlink}>
+                            <a
+                                ref="target3"
+                                style={{ color: '#7ed4c6' }}
+                                href="#"
+                                onClick={() => {
+                                    const help = window.scrollY;
+                                    this.setState({
+                                        dropdown: 'p',
+                                        secondDropdown: ''
+                                    });
+                                    setTimeout(
+                                        () => window.scrollTo(0, help),
+                                        0
+                                    );
+                                }}
+                            >
+                                <div
                                     className={
-                                        this.props.page === 'm'
-                                            ? 'active'
-                                            : null
+                                        projectsactive ? 'text active' : 'text'
                                     }
-                                    style={{ color: '#7ed4c6' }}
                                 >
-                                    <div
-                                        style={{
-                                            fontWeight: 'regular',
-                                            display: 'flex',
-                                            alignItems: 'center'
-                                        }}
-                                        className="text"
-                                    >
-                                        Hand Designs
-                                    </div>
-                                </a>
-                            </Link>
-                        </li> */}
+                                    Projects
+                                </div>
+                            </a>
+                            <Popover
+                                placement="bottom"
+                                container={this}
+                                target={this.refs.target3}
+                                show={this.state.dropdown === 'p'}
+                                onHide={() => {
+                                    this.setState({
+                                        dropdown: '',
+                                        secondDropdown: ''
+                                    });
+                                }}
+                                style={{
+                                    marginTop: '5vh',
+                                    zIndex: 40,
+                                    opacity: '1'
+                                    //position: 'absolute'
+                                    //top: window.scrollY + 'px'
+                                }}
+                            >
+                                {this.props.projects.map(project => {
+                                    let text = 'text';
+                                    if (project === this.props.page) {
+                                        text = 'text active';
+                                    }
+                                    return (
+                                        <Link
+                                            href={`/projects/${project}`}
+                                            key={project}
+                                        >
+                                            <a
+                                                style={{ color: '#7ed4c6' }}
+                                                href={`/projects/${project}`}
+                                            >
+                                                <div className={text}>
+                                                    {project}
+                                                </div>
+                                            </a>
+                                        </Link>
+                                    );
+                                })}
+                            </Popover>
+                        </li>
+
                         {navlinks.map(link => {
                             return (
                                 <li
@@ -418,7 +362,6 @@ class Layout extends Component {
 
 const navlinks = [
     { text: 'Hand Designs', link: '/hand-designs', page: 'h' },
-    { text: 'Projects', link: '/#' },
     { text: 'Gallery', link: '/gallery', page: 'g' },
     { text: 'Our Group', link: '/group', page: 't' },
     { text: 'Contact', link: '/contact', page: 'c' }
@@ -450,6 +393,7 @@ const styles = {
 const mapStateToProps = state => {
     return {
         recipients: state.recipients,
+        projects: state.projects,
         page: state.page
     };
 };

@@ -26,6 +26,17 @@ class Group extends Component {
                 });
             });
 
+        const project = [];
+        req.firebaseServer
+            .database()
+            .ref('projects')
+            .once('value')
+            .then(datasnapshot => {
+                datasnapshot.forEach(child => {
+                    project.push(child.key);
+                });
+            });
+
         const faculty = [];
         req.firebaseServer
             .database()
@@ -64,6 +75,11 @@ class Group extends Component {
         store.dispatch({
             type: types.GET_RECIPIENTS,
             payload: links
+        });
+
+        store.dispatch({
+            type: types.GET_PROJECTS,
+            payload: project
         });
 
         store.dispatch({

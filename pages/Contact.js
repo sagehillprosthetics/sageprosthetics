@@ -16,6 +16,17 @@ class Contact extends Component {
             payload: 'c'
         });
 
+        const project = [];
+        req.firebaseServer
+            .database()
+            .ref('projects')
+            .once('value')
+            .then(datasnapshot => {
+                datasnapshot.forEach(child => {
+                    project.push(child.key);
+                });
+            });
+
         const links = [];
         await req.firebaseServer
             .database()
@@ -30,6 +41,11 @@ class Contact extends Component {
         store.dispatch({
             type: types.GET_RECIPIENTS,
             payload: links
+        });
+
+        store.dispatch({
+            type: types.GET_PROJECTS,
+            payload: project
         });
     }
 

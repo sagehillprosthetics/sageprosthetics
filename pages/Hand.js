@@ -13,6 +13,17 @@ class Hand extends Component {
             payload: 'h'
         });
 
+        const project = [];
+        req.firebaseServer
+            .database()
+            .ref('projects')
+            .once('value')
+            .then(datasnapshot => {
+                datasnapshot.forEach(child => {
+                    project.push(child.key);
+                });
+            });
+
         const pictures = [];
         req.firebaseServer
             .database()
@@ -43,6 +54,11 @@ class Hand extends Component {
         store.dispatch({
             type: types.GET_DESIGNS,
             payload: pictures
+        });
+
+        store.dispatch({
+            type: types.GET_PROJECTS,
+            payload: project
         });
     }
 

@@ -8,19 +8,22 @@ import Anchor from 'grommet/components/Anchor';
 import Quote from 'grommet/components/Quote';
 import Paragraph from 'grommet/components/Paragraph';
 
-class Recipient extends Component {
+class Project extends Component {
     static async getInitialProps({ req, query, store }) {
-        let recipient = {};
+        let project = {};
         const links = [];
 
-        const project = [];
+        const projects = [];
         req.firebaseServer
             .database()
             .ref('projects')
             .once('value')
             .then(datasnapshot => {
                 datasnapshot.forEach(child => {
-                    project.push(child.key);
+                    projects.push(child.key);
+                    if (child.key === query.id) {
+                        project = { ...child.val(), name: child.key };
+                    }
                 });
             });
 
@@ -53,9 +56,6 @@ class Recipient extends Component {
             .then(datasnapshot => {
                 datasnapshot.forEach(child => {
                     links.push(child.key);
-                    if (child.key === query.id) {
-                        recipient = { ...child.val(), name: child.key };
-                    }
                 });
             });
 
@@ -66,14 +66,14 @@ class Recipient extends Component {
 
         store.dispatch({
             type: types.GET_PROJECTS,
-            payload: project
+            payload: projects
         });
 
         store.dispatch({
-            type: types.GET_SELECTED_RECIPIENT,
-            payload: recipient
+            type: types.GET_SELECTED_PROJECT,
+            payload: project
         });
-        store.dispatch({ type: types.CHANGE_PAGE, payload: recipient.name });
+        store.dispatch({ type: types.CHANGE_PAGE, payload: project.name });
         store.dispatch({
             type: types.GET_GROUP,
             payload: { ...reformat, ...archivereformat }
@@ -85,9 +85,8 @@ class Recipient extends Component {
     };
 
     renderGroup() {
-        console.log(this.props.recipient);
         let group = null;
-        if (this.props.recipient.group) {
+        if (this.props.project.group) {
             group = (
                 <div style={{ margin: '40px 10% 10px 10% ' }}>
                     <h3> Group Members </h3>
@@ -100,7 +99,7 @@ class Recipient extends Component {
                             flexWrap: 'wrap'
                         }}
                     >
-                        {this.props.recipient.group.map(person => {
+                        {this.props.project.group.map(person => {
                             return (
                                 <div
                                     style={{
@@ -146,7 +145,7 @@ class Recipient extends Component {
     }
 
     renderImage() {
-        const { pictures, videos } = this.props.recipient;
+        const { pictures, videos } = this.props.project;
         let media = null;
 
         if (pictures || videos) {
@@ -187,7 +186,7 @@ class Recipient extends Component {
                                               publicId={key}
                                               resourceType="video"
                                               controls
-                                              height="190"
+                                              height="300"
                                               //crop="scale"
                                           />
                                       </div>
@@ -203,11 +202,11 @@ class Recipient extends Component {
     }
 
     render() {
-        console.log(this.props.recipient.src);
+        console.log(this.props.project.src);
         return (
             <div style={{ margin: '0% 5% 0% 5%' }}>
                 <h2 style={{ textAlign: 'center' }}>
-                    {this.props.recipient.name}
+                    {this.props.project.name}
                 </h2>
                 <div
                     style={{
@@ -220,24 +219,13 @@ class Recipient extends Component {
                 >
                     <Image
                         cloudName="sageprosthetics"
-                        publicId={this.props.recipient.src + ''}
+                        publicId={this.props.project.src + ''}
                         height="100%"
                     >
                         <Transformation width="300" height="400" crop="scale" />
                     </Image>
                     <div style={{ marginLeft: '10%' }}>
-                        {this.props.recipient.text}
-                        {this.props.recipient.quote ? (
-                            <Quote
-                                borderColorIndex="accent-1"
-                                style={{ marginTop: '2vw' }}
-                                size="full"
-                            >
-                                <Paragraph>
-                                    "{this.props.recipient.quote}"
-                                </Paragraph>
-                            </Quote>
-                        ) : null}
+                        {this.props.project.text}
                     </div>
                 </div>
                 {this.renderImage()}
@@ -249,7 +237,7 @@ class Recipient extends Component {
 
 const mapStateToProps = state => {
     return {
-        recipient: state.selectedRecipient,
+        project: state.selectedProject,
         group: state.group
     };
 };
@@ -257,4 +245,4 @@ const mapStateToProps = state => {
 export default connect(
     mapStateToProps,
     null
-)(Recipient);
+)(Project);
