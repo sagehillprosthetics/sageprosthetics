@@ -82,6 +82,7 @@ class Contact extends Component {
         console.log(this.state.message);
         return (
             <div style={{ margin: '0% 15% 0% 15%' }}>
+                <title> Contact | Sage Prosthetics </title>
                 <h2 style={{ textAlign: 'center' }}>Contact Us</h2>
                 <form
                     action="https://formspree.io/timg51237@gmail.com"

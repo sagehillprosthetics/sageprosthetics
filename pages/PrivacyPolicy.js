@@ -46,6 +46,7 @@ class PrivacyPolicy extends Component {
     render() {
         return (
             <div style={{ margin: '0 15% 0 15%' }}>
+                <title> Privacy Policy | Sage Prosthetics </title>
                 <h2 style={{ textAlign: 'center' }}> Privacy Policy </h2>
                 <div>
                     This privacy policy has been compiled to better serve those

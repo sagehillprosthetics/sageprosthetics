@@ -85,7 +85,6 @@ class Recipient extends Component {
     };
 
     renderGroup() {
-        console.log(this.props.recipient);
         let group = null;
         if (this.props.recipient.group) {
             group = (
@@ -179,7 +178,6 @@ class Recipient extends Component {
 
                         {videos
                             ? videos.map(key => {
-                                  console.log('help video');
                                   return (
                                       <div style={{ margin: '1%' }}>
                                           <Video
@@ -203,9 +201,9 @@ class Recipient extends Component {
     }
 
     render() {
-        console.log(this.props.recipient.src);
         return (
             <div style={{ margin: '0% 5% 0% 5%' }}>
+                <title> {this.props.recipient.name} | Sage Prosthetics </title>
                 <h2 style={{ textAlign: 'center' }}>
                     {this.props.recipient.name}
                 </h2>

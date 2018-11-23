@@ -6,7 +6,13 @@ module.exports = withSass({
     },
     webpack(config, options) {
         // Further custom configuration here
-        return config;
+        return {
+            ...config,
+            node: {
+                fs: 'empty',
+                child_process: 'empty'
+            }
+        };
     }
 });
 

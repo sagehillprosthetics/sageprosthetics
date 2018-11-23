@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import * as types from '../redux/types';
-import { Parallax, Background } from 'react-parallax';
+//import { Parallax, Background } from 'react-parallax';
+import {
+    Parallax,
+    ParallaxProvider,
+    ParallaxBanner
+} from 'react-scroll-parallax';
+import Accordion from 'grommet/components/Accordion';
+import AccordionPanel from 'grommet/components/AccordionPanel';
+import Button from 'grommet/components/Button';
 
 import '../styles.scss';
 
@@ -43,80 +51,293 @@ class LandingPage extends Component {
             payload: project
         });
     }
-    /*
-linear-gradient(160deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 46%, rgb(29, 105, 139) 100%, rgb(29, 105, 139) 100%);
-*/
-    render() {
+
+    renderAccordian = () => {
         return (
-            <div style={{ marginTop: '0%' }}>
-                <Parallax blur={0} strength={400}>
-                    <Background
-                        className="custom-bg"
-                        bgStyle={{
-                            backgroundColor: 'yellow',
-                            width: '100vw',
-                            height: '70vh',
-                            borderWidth: '20px',
-                            borderColor: 'blue'
-                        }}
-                    >
-                        {/* <img
-                            style={{
-                                marginTop: '200px',
-                                backgroundColor: 'yellow',
-                                width: '100%'
-                            }}
-                            src="/static/printer.png"
-                            alt="printer"
-                        /> */}
-                        <div
-                            style={{
-                                backgroundColor: '',
-                                width: '100vw',
-                                height: '70vh'
-                            }}
-                        />
-                    </Background>
-                    <div
-                        style={{
-                            height: '700px',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}
-                    >
-                        <h1
-                            style={{
-                                fontWeight: 'bold',
-                                color: '#7ed4c6',
-                                textAlign: 'center',
-                                width: '100%',
-                                fontSize: '100px'
-                            }}
-                        >
-                            <div>WE MAKE</div>
-                            <div>HANDS</div>
-                        </h1>
-                    </div>
-                </Parallax>
-                <hr />
-                <Parallax
-                    blur={0}
-                    bgImage={'/static/printer.png'}
-                    bgImageAlt="the cat"
-                    strength={200}
+            <Accordion
+                style={{
+                    fontWeight: '400',
+                    marginTop: '40px',
+                    borderWidth: '0px',
+                    width: '60%'
+                }}
+            >
+                <AccordionPanel
+                    heading="How does this work?"
+                    style={{
+                        borderWidth: '0px',
+                        width: '100%',
+                        backgroundColor: 'green'
+                    }}
                 >
-                    Put some text content here - even an empty div with fixed
-                    dimensions to have a height for the parallax.
-                    <div style={{ height: '600px' }} />
-                </Parallax>
-            </div>
+                    <div style={styles.dropdown}>
+                        We receive pictures and measurements of our recipients’
+                        arms, and we use that information to model them a custom
+                        hand to maximize the hand’s effectiveness and comfort.
+                        We can also accommodate for color and design requests.
+                        We then print each hand in many parts. After that we
+                        carefully assemble them and ship them to our recipients.
+                    </div>
+                </AccordionPanel>
+                <AccordionPanel heading="Who's making the hands?">
+                    <div style={styles.dropdown}>
+                        We are a dedicated group of students from{' '}
+                        <a
+                            href="https://www.sagehillschool.org"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Sage Hill School
+                        </a>{' '}
+                        in Southern California who trying to make a difference.
+                        You can learn more about our team{' '}
+                        <a href="/contact">here</a>.
+                    </div>
+                </AccordionPanel>
+                <AccordionPanel heading="Can I buy one?">
+                    <div style={styles.dropdown}>
+                        Nope. Sorry, we typically make hands for recipients who
+                        are either unable to afford or access traditional
+                        prosthesis. On a case by case basis, we will work with
+                        recipients who would like a hand under other
+                        circumstances, in particular, those who are within our
+                        geographic region.
+                    </div>
+                </AccordionPanel>
+                <AccordionPanel heading="How can I become a recipient?">
+                    <div style={styles.dropdown}>
+                        <a href="/contact">Reach out to us!</a> Tell us your
+                        story, and we would be glad to add you as a recipient.
+                    </div>
+                </AccordionPanel>
+            </Accordion>
+        );
+    };
+
+    render() {
+        const copy = 'Parallax'.split('');
+        return (
+            <ParallaxProvider>
+                <title> Sage Prosthetics </title>
+                <ParallaxBanner
+                    layers={[
+                        {
+                            children: (
+                                <div
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        background:
+                                            'linear-gradient(160deg, #ffffff, #ffffff, #1d698b)'
+                                    }}
+                                />
+                            ),
+                            amount: 0.1,
+                            slowerScrollRate: false
+                        },
+                        {
+                            children: (
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        width: '100vw'
+                                    }}
+                                >
+                                    <img
+                                        src="/static/printer.png"
+                                        style={{ margin: '100px 0 100px 0' }}
+                                        alt="gradient"
+                                    />
+                                </div>
+                            ),
+                            amount: 0.1,
+                            slowerScrollRate: true
+                        },
+                        {
+                            children: (
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        width: '100vw',
+                                        fontWeight: '700',
+                                        textAlign: 'center',
+                                        fontSize: '550%',
+                                        margin: '15% 0 0 10px'
+                                    }}
+                                >
+                                    <div
+                                        style={{
+                                            color: '#7ed4c6',
+                                            lineHeight: '100%',
+                                            background:
+                                                '-webkit-linear-gradient(-45deg, #7f5ac5, #558ad2, #75c4a0)',
+                                            WebkitBackgroundClip: 'text',
+                                            WebkitTextFillColor: 'transparent'
+                                        }}
+                                    >
+                                        WE MAKE <br /> HANDS
+                                    </div>
+                                </div>
+                            ),
+                            amount: 0.1,
+                            slowerScrollRate: false
+                        }
+                    ]}
+                    style={{
+                        height: '700px'
+                    }}
+                />
+
+                <ParallaxBanner
+                    layers={[
+                        {
+                            children: (
+                                <div
+                                    style={{
+                                        width: '100%',
+                                        height: '100%'
+                                    }}
+                                />
+                            ),
+                            amount: 0.1,
+                            slowerScrollRate: false
+                        },
+                        {
+                            children: (
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        flexDirection: 'column',
+                                        width: '100vw',
+                                        fontWeight: '700',
+                                        textAlign: 'center',
+                                        margin: '15% 0 0 10px'
+                                    }}
+                                >
+                                    <div
+                                        style={{
+                                            lineHeight: '70%',
+                                            background:
+                                                '-webkit-linear-gradient(-45deg, #7f5ac5, #558ad2, #75c4a0)',
+                                            WebkitBackgroundClip: 'text',
+                                            WebkitTextFillColor: 'transparent',
+                                            fontSize: '300%'
+                                        }}
+                                    >
+                                        WE USE 3D PRINTING TO{' '}
+                                    </div>
+                                    <div
+                                        style={{
+                                            fontSize: '500%',
+                                            lineHeight: '100%'
+                                        }}
+                                    >
+                                        {' '}
+                                        MAKE PROSTHETICS{' '}
+                                    </div>
+                                    {this.renderAccordian()}
+                                </div>
+                            ),
+                            amount: 0.1,
+                            slowerScrollRate: false
+                        }
+                    ]}
+                    style={{
+                        height: '820px'
+                    }}
+                />
+                <ParallaxBanner
+                    layers={[
+                        {
+                            children: (
+                                <div
+                                    style={{
+                                        // backgroundImage: url(
+                                        //     '/static/backgroundtile.png'
+                                        // ),
+                                        background: 'rgba(234, 232, 229, 0.6)',
+                                        height: '100%',
+                                        width: '100vw'
+                                    }}
+                                >
+                                    <img
+                                        src="/static/video.jpg"
+                                        style={{
+                                            width: '100vw',
+                                            background:
+                                                'rgba(234, 232, 229, 0.6)'
+                                        }}
+                                        alt="video"
+                                    />
+                                </div>
+                            ),
+                            amount: 0.1,
+                            slowerScrollRate: true
+                        },
+                        {
+                            children: (
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        flexDirection: 'column',
+                                        width: '100vw',
+                                        color: '#ffffff',
+                                        textAlign: 'center',
+                                        margin: '15% 0 0 10px'
+                                    }}
+                                >
+                                    <div
+                                        style={{
+                                            fontSize: '12vh',
+                                            fontWeight: '500',
+                                            lineHeight: '100%'
+                                        }}
+                                    >
+                                        e-NABLE
+                                    </div>
+                                    <div
+                                        style={{
+                                            fontSize: '3vh',
+                                            fontWeight: '500',
+                                            lineHeight: '110%'
+                                        }}
+                                    >
+                                        Connecting people who make hands <br />{' '}
+                                        with people who need them.
+                                    </div>
+                                    <Button
+                                        label="Learn more about e-NABLE"
+                                        href="http://enablingthefuture.org/"
+                                        critical={true}
+                                        style={{
+                                            color: 'white',
+                                            margin: '20px'
+                                        }}
+                                    />
+                                </div>
+                            ),
+                            amount: 0.1,
+                            slowerScrollRate: false
+                        }
+                    ]}
+                    style={{
+                        height: '600px'
+                    }}
+                />
+            </ParallaxProvider>
         );
     }
 }
 
 const styles = {
-    title: {}
+    dropdown: {
+        width: '100%',
+        textAlign: 'left',
+        margin: '10px 10px 0 20px'
+    }
 };
-
 export default LandingPage;

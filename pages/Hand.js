@@ -114,6 +114,7 @@ class Hand extends Component {
     render() {
         return (
             <div style={{ margin: '0% 5% 0% 5%' }}>
+                <title> Hands | Sage Prosthetics </title>
                 <h2 style={{ textAlign: 'center' }}>Hand Designs</h2>
                 <div
                     style={{

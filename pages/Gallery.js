@@ -100,6 +100,7 @@ class Gallery extends Component {
     render() {
         return (
             <div style={{ margin: '0% 5% 0% 5%' }}>
+                <title> Gallery | Sage Prosthetics </title>
                 <h2 style={{ textAlign: 'center' }}>Photo Gallery</h2>
                 <div
                     style={{

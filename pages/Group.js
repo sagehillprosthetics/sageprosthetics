@@ -8,8 +8,6 @@ import * as types from '../redux/types.js';
 
 class Group extends Component {
     static async getInitialProps({ req, query, store }) {
-        //console.log(req.firebaseServer);
-
         store.dispatch({
             type: types.CHANGE_PAGE,
             payload: 't'
@@ -137,7 +135,6 @@ class Group extends Component {
 
         try {
             const teachers = this.props.faculty.map(teacher => {
-                console.log(teacher);
                 return (
                     <div
                         style={{
@@ -231,9 +228,9 @@ class Group extends Component {
     };
 
     render() {
-        console.log(this.props.group);
         return (
             <div style={{ margin: '0% 15% 0% 15%' }}>
+                <title> Our Group | Sage Prosthetics </title>
                 <h2 style={{ textAlign: 'center' }}>
                     {' '}
                     Meet our Service Group{' '}

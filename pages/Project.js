@@ -178,7 +178,6 @@ class Project extends Component {
 
                         {videos
                             ? videos.map(key => {
-                                  console.log('help video');
                                   return (
                                       <div style={{ margin: '1%' }}>
                                           <Video
@@ -202,9 +201,9 @@ class Project extends Component {
     }
 
     render() {
-        console.log(this.props.project.src);
         return (
             <div style={{ margin: '0% 5% 0% 5%' }}>
+                <title> {this.props.project.name} | Sage Prosthetics </title>
                 <h2 style={{ textAlign: 'center' }}>
                     {this.props.project.name}
                 </h2>
