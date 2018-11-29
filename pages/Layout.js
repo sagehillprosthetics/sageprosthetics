@@ -37,14 +37,10 @@ class Layout extends Component {
                 </Title>
                 <Box direction="row" align="center" pad={{ between: 'medium' }}>
                     <Paragraph margin="none">© 2018 Sage Prosthetics</Paragraph>
-                    <Menu
-                        direction="row"
-                        size="small"
-                        dropAlign={{ right: 'right' }}
-                    >
+                    <Menu direction="row" size="small" dropAlign={{ right: 'right' }}>
                         <Anchor href="/privacy-policy">Privacy Policy</Anchor>
                         <Anchor href="/contact">Contact</Anchor>
-                        <Anchor href="#">About</Anchor>
+                        <Anchor href="/">About</Anchor>
                     </Menu>
                 </Box>
             </Footer>
@@ -68,26 +64,13 @@ class Layout extends Component {
         });
 
         return (
-            <Header
-                fixed={true}
-                width="full"
-                style={{ padding: '0% 1.5% 0% 1.5%', height: '7vw', zIndex: 1 }}
-            >
+            <Header fixed={true} width="full" style={{ padding: '0% 1.5% 0% 1.5%', height: '7vw', zIndex: 1 }}>
                 <Title>
                     <a style={{ fontSize: '30px', margin: 0 }} href="/">
-                        <img
-                            src="/static/biglogo.png"
-                            alt="logo"
-                            style={{ height: '5vw', marginBottom: 0 }}
-                        />
+                        <img src="/static/biglogo.png" alt="logo" style={{ height: '5vw', marginBottom: 0 }} />
                     </a>
                 </Title>
-                <Box
-                    flex={true}
-                    justify="end"
-                    direction="row"
-                    responsive={false}
-                >
+                <Box flex={true} justify="end" direction="row" responsive={false}>
                     <ul
                         className="navbar-nav mr-auto"
                         style={{
@@ -107,19 +90,10 @@ class Layout extends Component {
                                         dropdown: 'r',
                                         secondDropdown: ''
                                     });
-                                    setTimeout(
-                                        () => window.scrollTo(0, help),
-                                        0
-                                    );
+                                    setTimeout(() => window.scrollTo(0, help), 0);
                                 }}
                             >
-                                <div
-                                    className={
-                                        archiveactive ? 'text active' : 'text'
-                                    }
-                                >
-                                    Recipients
-                                </div>
+                                <div className={archiveactive ? 'text active' : 'text'}>Recipients</div>
                             </a>
                             <Popover
                                 placement="bottom"
@@ -152,21 +126,10 @@ class Layout extends Component {
                                     onClick={() => {
                                         const help = window.scrollY;
                                         this.setState({ secondDropdown: 'a' });
-                                        setTimeout(
-                                            () => window.scrollTo(0, help),
-                                            0
-                                        );
+                                        setTimeout(() => window.scrollTo(0, help), 0);
                                     }}
                                 >
-                                    <div
-                                        className={
-                                            archiveactive
-                                                ? 'text active'
-                                                : 'text'
-                                        }
-                                    >
-                                        Archive
-                                    </div>
+                                    <div className={archiveactive ? 'text active' : 'text'}>Archive</div>
                                     <div
                                         style={{
                                             textDecoration: 'none',
@@ -193,28 +156,27 @@ class Layout extends Component {
                                         opacity: '1'
                                     }}
                                 >
-                                    {this.props.recipients.map(recipient => {
-                                        let text = 'text';
-                                        if (recipient === this.props.page) {
-                                            archiveactive = true;
-                                            text = 'text active';
-                                        }
-                                        return (
-                                            <Link
-                                                href={`/recipient/${recipient}`}
-                                                key={recipient}
-                                            >
-                                                <a
-                                                    style={{ color: '#7ed4c6' }}
-                                                    href={`/recipient/${recipient}`}
-                                                >
-                                                    <div className={text}>
-                                                        {recipient}
-                                                    </div>
-                                                </a>
-                                            </Link>
-                                        );
-                                    })}
+                                    <>
+                                        {this.props.recipients.map(recipient => {
+                                            let text = 'text';
+                                            if (recipient === this.props.page) {
+                                                archiveactive = true;
+                                                text = 'text active';
+                                            }
+                                            return (
+                                                <Link href={`/recipient/${recipient}`} key={recipient}>
+                                                    <a
+                                                        style={{
+                                                            color: '#7ed4c6'
+                                                        }}
+                                                        href={`/recipient/${recipient}`}
+                                                    >
+                                                        <div className={text}>{recipient}</div>
+                                                    </a>
+                                                </Link>
+                                            );
+                                        })}
+                                    </>
                                 </Popover>
                             </Popover>
                         </li>
@@ -230,19 +192,10 @@ class Layout extends Component {
                                         dropdown: 'p',
                                         secondDropdown: ''
                                     });
-                                    setTimeout(
-                                        () => window.scrollTo(0, help),
-                                        0
-                                    );
+                                    setTimeout(() => window.scrollTo(0, help), 0);
                                 }}
                             >
-                                <div
-                                    className={
-                                        projectsactive ? 'text active' : 'text'
-                                    }
-                                >
-                                    Projects
-                                </div>
+                                <div className={projectsactive ? 'text active' : 'text'}>Projects</div>
                             </a>
                             <Popover
                                 placement="bottom"
@@ -259,8 +212,6 @@ class Layout extends Component {
                                     marginTop: '5vh',
                                     zIndex: 40,
                                     opacity: '1'
-                                    //position: 'absolute'
-                                    //top: window.scrollY + 'px'
                                 }}
                             >
                                 {this.props.projects.map(project => {
@@ -269,17 +220,9 @@ class Layout extends Component {
                                         text = 'text active';
                                     }
                                     return (
-                                        <Link
-                                            href={`/projects/${project}`}
-                                            key={project}
-                                        >
-                                            <a
-                                                style={{ color: '#7ed4c6' }}
-                                                href={`/projects/${project}`}
-                                            >
-                                                <div className={text}>
-                                                    {project}
-                                                </div>
+                                        <Link href={`/projects/${project}`} key={project}>
+                                            <a style={{ color: '#7ed4c6' }} href={`/projects/${project}`}>
+                                                <div className={text}>{project}</div>
                                             </a>
                                         </Link>
                                     );
@@ -289,24 +232,10 @@ class Layout extends Component {
 
                         {navlinks.map(link => {
                             return (
-                                <li
-                                    className="nav-item"
-                                    style={styles.navlink}
-                                    key={link.link}
-                                >
+                                <li className="nav-item" style={styles.navlink} key={link.link}>
                                     <Link>
-                                        <a
-                                            style={{ color: '#7ed4c6' }}
-                                            href={link.link}
-                                        >
-                                            <div
-                                                className={
-                                                    this.props.page ===
-                                                    link.page
-                                                        ? 'text active'
-                                                        : 'text'
-                                                }
-                                            >
+                                        <a style={{ color: '#7ed4c6' }} href={link.link}>
+                                            <div className={this.props.page === link.page ? 'text active' : 'text'}>
                                                 {link.text}
                                             </div>
                                         </a>
@@ -349,9 +278,7 @@ class Layout extends Component {
                 >
                     {this.renderHeader()}
 
-                    <div style={{ minHeight: '81vh' }}>
-                        {this.props.children}
-                    </div>
+                    <div style={{ minHeight: '81vh' }}>{this.props.children}</div>
 
                     {this.renderFooter()}
                 </Article>

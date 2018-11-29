@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import * as types from '../redux/types';
 //import { Parallax, Background } from 'react-parallax';
-import {
-    Parallax,
-    ParallaxProvider,
-    ParallaxBanner
-} from 'react-scroll-parallax';
+import { Parallax, ParallaxProvider, ParallaxBanner } from 'react-scroll-parallax';
 import Accordion from 'grommet/components/Accordion';
 import AccordionPanel from 'grommet/components/AccordionPanel';
 import Button from 'grommet/components/Button';
@@ -63,7 +59,7 @@ class LandingPage extends Component {
                 }}
             >
                 <AccordionPanel
-                    heading="How does this work?"
+                    heading="Our Process"
                     style={{
                         borderWidth: '0px',
                         width: '100%',
@@ -71,43 +67,35 @@ class LandingPage extends Component {
                     }}
                 >
                     <div style={styles.dropdown}>
-                        We receive pictures and measurements of our recipients’
-                        arms, and we use that information to model them a custom
-                        hand to maximize the hand’s effectiveness and comfort.
-                        We can also accommodate for color and design requests.
-                        We then print each hand in many parts. After that we
+                        We receive pictures and measurements of our recipients’ arms, and we use that information to
+                        model them a custom hand to maximize the hand’s effectiveness and comfort. We can also
+                        accommodate for color and design requests. We then print each hand in many parts. After that we
                         carefully assemble them and ship them to our recipients.
                     </div>
                 </AccordionPanel>
                 <AccordionPanel heading="Who's making the hands?">
                     <div style={styles.dropdown}>
                         We are a dedicated group of students from{' '}
-                        <a
-                            href="https://www.sagehillschool.org"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
+                        <a href="https://www.sagehillschool.org" target="_blank" rel="noopener noreferrer">
                             Sage Hill School
                         </a>{' '}
-                        in Southern California who trying to make a difference.
-                        You can learn more about our team{' '}
+                        in Southern California who trying to make a difference. You can learn more about our team{' '}
                         <a href="/contact">here</a>.
                     </div>
                 </AccordionPanel>
                 <AccordionPanel heading="Can I buy one?">
                     <div style={styles.dropdown}>
-                        Nope. Sorry, we typically make hands for recipients who
-                        are either unable to afford or access traditional
-                        prosthesis. On a case by case basis, we will work with
-                        recipients who would like a hand under other
-                        circumstances, in particular, those who are within our
-                        geographic region.
+                        Nope. Sorry, we typically make hands for recipients who are either unable to afford or access
+                        traditional prosthesis. On a case by case basis, we will work with recipients who would like a
+                        hand under other circumstances, in particular, those who are within our geographic region.
                     </div>
                 </AccordionPanel>
                 <AccordionPanel heading="How can I become a recipient?">
                     <div style={styles.dropdown}>
-                        <a href="/contact">Reach out to us!</a> Tell us your
-                        story, and we would be glad to add you as a recipient.
+                        <a href="/contact">Reach out to us!</a> Tell us your story, and we would be glad to add you as a
+                        recipient. We typically make hands for recipients who are either unable to afford or access
+                        traditional prosthesis. On a case by case basis, we will work with recipients who would like a
+                        hand under other circumstances, in particular, those who are within our geographic region.
                     </div>
                 </AccordionPanel>
             </Accordion>
@@ -127,8 +115,7 @@ class LandingPage extends Component {
                                     style={{
                                         width: '100%',
                                         height: '100%',
-                                        background:
-                                            'linear-gradient(160deg, #ffffff, #ffffff, #1d698b)'
+                                        background: 'linear-gradient(160deg, #ffffff, #ffffff, #1d698b)'
                                     }}
                                 />
                             ),
@@ -171,8 +158,7 @@ class LandingPage extends Component {
                                         style={{
                                             color: '#7ed4c6',
                                             lineHeight: '100%',
-                                            background:
-                                                '-webkit-linear-gradient(-45deg, #7f5ac5, #558ad2, #75c4a0)',
+                                            background: '-webkit-linear-gradient(-45deg, #7f5ac5, #558ad2, #75c4a0)',
                                             WebkitBackgroundClip: 'text',
                                             WebkitTextFillColor: 'transparent'
                                         }}
@@ -220,8 +206,7 @@ class LandingPage extends Component {
                                     <div
                                         style={{
                                             lineHeight: '70%',
-                                            background:
-                                                '-webkit-linear-gradient(-45deg, #7f5ac5, #558ad2, #75c4a0)',
+                                            background: '-webkit-linear-gradient(-45deg, #7f5ac5, #558ad2, #75c4a0)',
                                             WebkitBackgroundClip: 'text',
                                             WebkitTextFillColor: 'transparent',
                                             fontSize: '300%'
@@ -258,19 +243,28 @@ class LandingPage extends Component {
                                         // backgroundImage: url(
                                         //     '/static/backgroundtile.png'
                                         // ),
-                                        background: 'rgba(234, 232, 229, 0.6)',
+                                        background: '#000000',
                                         height: '100%',
                                         width: '100vw'
+                                        //opacity: '0.7'
                                     }}
                                 >
                                     <img
                                         src="/static/video.jpg"
                                         style={{
                                             width: '100vw',
-                                            background:
-                                                'rgba(234, 232, 229, 0.6)'
+                                            opacity: '0.7'
                                         }}
                                         alt="video"
+                                    />
+                                    <div
+                                        style={{
+                                            width: '100%',
+                                            height: '100%',
+                                            zIndex: '2',
+                                            background: '#000000',
+                                            opacity: '0.7'
+                                        }}
                                     />
                                 </div>
                             ),
@@ -288,12 +282,13 @@ class LandingPage extends Component {
                                         color: '#ffffff',
                                         textAlign: 'center',
                                         margin: '15% 0 0 10px'
+                                        //backgroundColor: '#000000'
                                     }}
                                 >
                                     <div
                                         style={{
                                             fontSize: '12vh',
-                                            fontWeight: '500',
+                                            fontWeight: '600',
                                             lineHeight: '100%'
                                         }}
                                     >
@@ -306,8 +301,7 @@ class LandingPage extends Component {
                                             lineHeight: '110%'
                                         }}
                                     >
-                                        Connecting people who make hands <br />{' '}
-                                        with people who need them.
+                                        Connecting people who make hands <br /> with people who need them.
                                     </div>
                                     <Button
                                         label="Learn more about e-NABLE"
