@@ -3,15 +3,15 @@ import * as types from '../redux/types';
 import posed from 'react-pose';
 //import { Parallax, Background } from 'react-parallax';
 import { Parallax, ParallaxProvider, ParallaxBanner } from 'react-scroll-parallax';
-import Accordion from 'grommet/components/Accordion';
-import AccordionPanel from 'grommet/components/AccordionPanel';
-import Button from 'grommet/components/Button';
+// import Accordion from 'grommet/components/Accordion';
+// import AccordionPanel from 'grommet/components/AccordionPanel';
+import { Button } from 'grommet';
 import anime from 'animejs';
 import Transition from 'react-transition-group/Transition';
 import Particles from 'react-particles-js';
 import { Router } from '../routes';
 
-import '../styles.scss';
+//import '../styles.scss';
 
 class LandingPage extends Component {
     state = {
@@ -110,57 +110,59 @@ class LandingPage extends Component {
     };
 
     renderAccordian = () => {
-        return (
-            <Accordion
-                style={{
-                    fontWeight: '400',
-                    margin: '0 20% 0 20%',
-                    borderWidth: '0px',
-                    width: '60%'
-                }}
-            >
-                <AccordionPanel
-                    heading="Our Process"
-                    style={{
-                        borderWidth: '0px',
-                        width: '100%',
-                        backgroundColor: 'green'
-                    }}
-                >
-                    <div style={styles.dropdown}>
-                        We receive pictures and measurements of our recipients’ arms, and we use that information to
-                        model them a custom hand to maximize the hand’s effectiveness and comfort. We can also
-                        accommodate for color and design requests. We then print each hand in many parts. After that we
-                        carefully assemble them and ship them to our recipients.
-                    </div>
-                </AccordionPanel>
-                <AccordionPanel heading="Who's making the hands?">
-                    <div style={styles.dropdown}>
-                        We are a dedicated group of students from{' '}
-                        <a href="https://www.sagehillschool.org" target="_blank" rel="noopener noreferrer">
-                            Sage Hill School
-                        </a>{' '}
-                        in Southern California who trying to make a difference. You can learn more about our team{' '}
-                        <a href="/contact">here</a>.
-                    </div>
-                </AccordionPanel>
-                <AccordionPanel heading="Can I buy one?">
-                    <div style={styles.dropdown}>
-                        Nope. Sorry, we typically make hands for recipients who are either unable to afford or access
-                        traditional prosthesis. On a case by case basis, we will work with recipients who would like a
-                        hand under other circumstances, in particular, those who are within our geographic region.
-                    </div>
-                </AccordionPanel>
-                <AccordionPanel heading="How can I become a recipient?">
-                    <div style={styles.dropdown}>
-                        <a href="/contact">Reach out to us!</a> Tell us your story, and we would be glad to add you as a
-                        recipient. We typically make hands for recipients who are either unable to afford or access
-                        traditional prosthesis. On a case by case basis, we will work with recipients who would like a
-                        hand under other circumstances, in particular, those who are within our geographic region.
-                    </div>
-                </AccordionPanel>
-            </Accordion>
-        );
+        // return (
+        //     <Accordion
+        //         style={{
+        //             fontWeight: '400',
+        //             margin: '0 20% 0 20%',
+        //             borderWidth: '0px',
+        //             width: '60%'
+        //         }}
+        //     >
+        //         <AccordionPanel
+        //             heading="Our Process"
+        //             style={{
+        //                 borderWidth: '0px',
+        //                 width: '100%',
+        //                 backgroundColor: 'green'
+        //             }}
+        //         >
+        //             <div style={styles.dropdown}>
+        //                 We receive pictures and measurements of our recipients’ arms, and we use that information to
+        //                 model them a custom hand to maximize the hand’s effectiveness and comfort. We can also
+        //                 accommodate for color and design requests. We then print each hand in many parts. After that we
+        //                 carefully assemble them and ship them to our recipients.
+        //             </div>
+        //         </AccordionPanel>
+        //         <AccordionPanel heading="Who's making the hands?">
+        //             <div style={styles.dropdown}>
+        //                 We are a dedicated group of students from{' '}
+        //                 <a href="https://www.sagehillschool.org" target="_blank" rel="noopener noreferrer">
+        //                     Sage Hill School
+        //                 </a>{' '}
+        //                 in Southern California who trying to make a difference. You can learn more about our team{' '}
+        //                 <a href="/contact">here</a>.
+        //             </div>
+        //         </AccordionPanel>
+        //         <AccordionPanel heading="Can I buy one?">
+        //             <div style={styles.dropdown}>
+        //                 Nope. Sorry, we typically make hands for recipients who are either unable to afford or access
+        //                 traditional prosthesis. On a case by case basis, we will work with recipients who would like a
+        //                 hand under other circumstances, in particular, those who are within our geographic region.
+        //             </div>
+        //         </AccordionPanel>
+        //         <AccordionPanel heading="How can I become a recipient?">
+        //             <div style={styles.dropdown}>
+        //                 <a href="/contact">Reach out to us!</a> Tell us your story, and we would be glad to add you as a
+        //                 recipient. We typically make hands for recipients who are either unable to afford or access
+        //                 traditional prosthesis. On a case by case basis, we will work with recipients who would like a
+        //                 hand under other circumstances, in particular, those who are within our geographic region.
+        //             </div>
+        //         </AccordionPanel>
+        //     </Accordion>
+        // );
+
+        return null;
     };
 
     render() {

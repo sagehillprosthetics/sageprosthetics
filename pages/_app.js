@@ -3,10 +3,11 @@ import { Provider } from 'react-redux';
 import App, { Container } from 'next/app';
 import withRedux from 'next-redux-wrapper';
 import * as firebase from 'firebase';
+import { Grommet, grommet } from 'grommet';
 
-import '../styles.scss';
+//import '../styles.scss';
 import { initStore } from '../redux/store';
-import Layout from './Layout';
+//import Layout from './Layout';
 import * as types from '../redux/types';
 
 if (!firebase.apps.length) {
@@ -30,9 +31,7 @@ export default withRedux(initStore)(
             // store.dispatch({ type: types.GET_RECIPIENTS, payload: 'help' });
 
             return {
-                pageProps: Component.getInitialProps
-                    ? await Component.getInitialProps(ctx)
-                    : {}
+                pageProps: Component.getInitialProps ? await Component.getInitialProps(ctx) : {}
             };
         }
 
@@ -47,12 +46,24 @@ export default withRedux(initStore)(
             return (
                 <Container>
                     <Provider store={store}>
-                        <Layout>
+                        <Grommet theme={grommet}>
+                            {/* <Layout> */}
                             <Component {...pageProps} />
-                        </Layout>
+                            {/* </Layout> */}
+                        </Grommet>
                     </Provider>
                 </Container>
             );
         }
     }
 );
+
+const theme = {
+    global: {
+        font: {
+            family: 'Arial',
+            size: '14px',
+            height: '20px'
+        }
+    }
+};
