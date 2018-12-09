@@ -7,7 +7,7 @@ import { Grommet, grommet } from 'grommet';
 
 //import '../styles.scss';
 import { initStore } from '../redux/store';
-//import Layout from './Layout';
+import Layout from './Layout';
 import * as types from '../redux/types';
 
 if (!firebase.apps.length) {
@@ -47,9 +47,9 @@ export default withRedux(initStore)(
                 <Container>
                     <Provider store={store}>
                         <Grommet theme={grommet}>
-                            {/* <Layout> */}
-                            <Component {...pageProps} />
-                            {/* </Layout> */}
+                            <Layout>
+                                <Component {...pageProps} />
+                            </Layout>
                         </Grommet>
                     </Provider>
                 </Container>
