@@ -36,19 +36,24 @@ class Hand extends Component {
             });
 
         const links = [];
+        const archive = [];
         await req.firebaseServer
             .database()
             .ref('recipients')
             .once('value')
             .then(datasnapshot => {
                 datasnapshot.forEach(child => {
-                    links.push(child.key);
+                    if (child.val().archive == true) {
+                        archive.push(child.key);
+                    } else {
+                        links.push(child.key);
+                    }
                 });
             });
 
         store.dispatch({
             type: types.GET_RECIPIENTS,
-            payload: links
+            payload: { links, archive }
         });
 
         store.dispatch({
@@ -71,13 +76,7 @@ class Hand extends Component {
             .sort((a, b) => b.order - a.order)
             .map(design => {
                 const bulletpoints = Object.keys(design).map(key => {
-                    if (
-                        key == 1 ||
-                        key == 2 ||
-                        key == 3 ||
-                        key == 4 ||
-                        key == 0
-                    ) {
+                    if (key == 1 || key == 2 || key == 3 || key == 4 || key == 0) {
                         return <li> {design[key]} </li>;
                     }
                 });
@@ -89,12 +88,7 @@ class Hand extends Component {
                         <Card
                             heading={design.name}
                             description={<ul> {bulletpoints} </ul>}
-                            link={
-                                <Anchor
-                                    href={design.link}
-                                    label="View on ThingiVerse"
-                                />
-                            }
+                            link={<Anchor href={design.link} label="View on ThingiVerse" />}
                         >
                             <Image
                                 cloudName="sageprosthetics"

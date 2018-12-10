@@ -11,7 +11,6 @@ import Paragraph from 'grommet/components/Paragraph';
 class Recipient extends Component {
     static async getInitialProps({ req, query, store }) {
         let recipient = {};
-        const links = [];
 
         const project = [];
         req.firebaseServer
@@ -46,13 +45,20 @@ class Recipient extends Component {
                 });
             });
 
+        const links = [];
+        const archive = [];
         await req.firebaseServer
             .database()
             .ref('recipients')
             .once('value')
             .then(datasnapshot => {
                 datasnapshot.forEach(child => {
-                    links.push(child.key);
+                    if (child.val().archive == true) {
+                        archive.push(child.key);
+                    } else {
+                        links.push(child.key);
+                    }
+
                     if (child.key === query.id) {
                         recipient = { ...child.val(), name: child.key };
                     }
@@ -61,7 +67,7 @@ class Recipient extends Component {
 
         store.dispatch({
             type: types.GET_RECIPIENTS,
-            payload: links
+            payload: { links, archive }
         });
 
         store.dispatch({
@@ -204,9 +210,7 @@ class Recipient extends Component {
         return (
             <div style={{ margin: '0% 5% 0% 5%' }}>
                 <title> {this.props.recipient.name} | Sage Prosthetics </title>
-                <h2 style={{ textAlign: 'center' }}>
-                    {this.props.recipient.name}
-                </h2>
+                <h2 style={{ textAlign: 'center' }}>{this.props.recipient.name}</h2>
                 <div
                     style={{
                         display: 'flex',
@@ -216,24 +220,14 @@ class Recipient extends Component {
                         margin: '0 15% 0 15%'
                     }}
                 >
-                    <Image
-                        cloudName="sageprosthetics"
-                        publicId={this.props.recipient.src + ''}
-                        height="100%"
-                    >
+                    <Image cloudName="sageprosthetics" publicId={this.props.recipient.src + ''} height="100%">
                         <Transformation width="300" height="400" crop="scale" />
                     </Image>
                     <div style={{ marginLeft: '10%' }}>
                         {this.props.recipient.text}
                         {this.props.recipient.quote ? (
-                            <Quote
-                                borderColorIndex="accent-1"
-                                style={{ marginTop: '2vw' }}
-                                size="full"
-                            >
-                                <Paragraph>
-                                    "{this.props.recipient.quote}"
-                                </Paragraph>
+                            <Quote borderColorIndex="accent-1" style={{ marginTop: '2vw' }} size="full">
+                                <Paragraph>"{this.props.recipient.quote}"</Paragraph>
                             </Quote>
                         ) : null}
                     </div>

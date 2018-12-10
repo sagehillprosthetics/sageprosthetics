@@ -36,19 +36,24 @@ class LandingPage extends Component {
             });
 
         const links = [];
+        const archive = [];
         await req.firebaseServer
             .database()
             .ref('recipients')
             .once('value')
             .then(datasnapshot => {
                 datasnapshot.forEach(child => {
-                    links.push(child.key);
+                    if (child.val().archive == true) {
+                        archive.push(child.key);
+                    } else {
+                        links.push(child.key);
+                    }
                 });
             });
 
         store.dispatch({
             type: types.GET_RECIPIENTS,
-            payload: links
+            payload: { links, archive }
         });
 
         store.dispatch({
@@ -220,7 +225,7 @@ class LandingPage extends Component {
                                             width: '100vw',
                                             fontWeight: '900',
                                             textAlign: 'center',
-                                            fontSize: '367%',
+                                            fontSize: '7vh',
                                             margin: '14% 0 0 10px',
                                             opacity: 0
                                         }}
@@ -233,7 +238,8 @@ class LandingPage extends Component {
                                                 background:
                                                     '-webkit-linear-gradient(left, #9357cc 0%,#2989d8 50%,#2cc99d 100%)',
                                                 WebkitBackgroundClip: 'text',
-                                                WebkitTextFillColor: 'transparent'
+                                                WebkitTextFillColor: 'transparent',
+                                                letterSpacing: '-0.05em'
                                             }}
                                         >
                                             WE MAKE <br /> HANDS
@@ -246,7 +252,7 @@ class LandingPage extends Component {
                         }
                     ]}
                     style={{
-                        height: '700px'
+                        height: '75vh'
                     }}
                 />
 
@@ -300,12 +306,13 @@ class LandingPage extends Component {
                                             >
                                                 <div
                                                     style={{
-                                                        lineHeight: '70%',
+                                                        lineHeight: '85%',
                                                         background:
                                                             '-webkit-linear-gradient(left, #9357cc 30%,#2989d8 50%,#2cc99d 70%)',
                                                         WebkitBackgroundClip: 'text',
                                                         WebkitTextFillColor: 'transparent',
-                                                        fontSize: '300%'
+                                                        fontSize: '6vh',
+                                                        letterSpacing: '0.1em'
                                                     }}
                                                     className="subheading"
                                                 >
@@ -319,8 +326,9 @@ class LandingPage extends Component {
                                             >
                                                 <div
                                                     style={{
-                                                        fontSize: '500%',
-                                                        lineHeight: '100%'
+                                                        fontSize: '10vh',
+                                                        lineHeight: '100%',
+                                                        letterSpacing: '0.05em'
                                                     }}
                                                     className="mainheading"
                                                 >
@@ -347,7 +355,7 @@ class LandingPage extends Component {
                         }
                     ]}
                     style={{
-                        height: '820px'
+                        height: '100vh'
                     }}
                 />
                 <ParallaxBanner
@@ -403,18 +411,20 @@ class LandingPage extends Component {
                                 >
                                     <div
                                         style={{
-                                            fontSize: '12vh',
-                                            fontWeight: '600',
-                                            lineHeight: '100%'
+                                            fontSize: '9vh',
+                                            fontWeight: '700',
+                                            lineHeight: '100%',
+                                            letterSpacing: '-0.05em'
                                         }}
                                     >
                                         e-NABLE
                                     </div>
                                     <div
                                         style={{
-                                            fontSize: '3vh',
+                                            fontSize: '2.5vh',
                                             fontWeight: '500',
-                                            lineHeight: '110%'
+                                            lineHeight: '110%',
+                                            letterSpacing: '0.2em'
                                         }}
                                     >
                                         Connecting people who make hands <br /> with people who need them.

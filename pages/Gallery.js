@@ -7,6 +7,10 @@ import { Image, Transformation } from 'cloudinary-react';
 import serviceAccount from '../firebasekeys.json';
 import * as types from '../redux/types.js';
 import ImageModal from '../components/ImageModal';
+import Anchor from 'grommet/components/Anchor';
+import Heading from 'grommet/components/Heading';
+import CaretBackIcon from 'grommet/components/icons/base/CaretBack';
+import CaretNextIcon from 'grommet/components/icons/base/CaretNext';
 
 class Gallery extends Component {
     static async getInitialProps({ req, query, store, isServer }) {
@@ -34,12 +38,18 @@ class Gallery extends Component {
             });
 
         const links = [];
-        db.database()
+        const archive = [];
+        req.firebaseServer
+            .database()
             .ref('recipients')
             .once('value')
             .then(datasnapshot => {
                 datasnapshot.forEach(child => {
-                    links.push(child.key);
+                    if (child.val().archive == true) {
+                        archive.push(child.key);
+                    } else {
+                        links.push(child.key);
+                    }
                 });
             });
 
@@ -61,7 +71,7 @@ class Gallery extends Component {
 
         store.dispatch({
             type: types.GET_RECIPIENTS,
-            payload: links
+            payload: { links, archive }
         });
 
         store.dispatch({
@@ -71,37 +81,84 @@ class Gallery extends Component {
     }
 
     state = {
-        selectedImage: ''
+        selectedImage: '',
+        page: 1
     };
 
     renderImages = () => {
         //const width = window.innerWidth() / 5;
 
+        let count = -1;
         const images = this.props.gallery.map(src => {
-            return (
-                <div
-                    onClick={() => this.setState({ selectedImage: src })}
-                    style={{ margin: '1vw' }}
-                >
-                    <Image
-                        cloudName="sageprosthetics"
-                        publicId={src}
-                        width="248"
-                        height="186"
-                        //crop="scale"
-                    />
-                </div>
-            );
+            count++;
+            if (count >= (this.state.page - 1) * 20 && count < this.state.page * 20) {
+                console.log(src);
+                return (
+                    <div
+                        onClick={() => this.setState({ selectedImage: src })}
+                        style={{ margin: '1vw' }}
+                    >
+                        <Image
+                            cloudName="sageprosthetics"
+                            publicId={src}
+                            width="248"
+                            height="186"
+                            //crop="scale"
+                        />
+                    </div>
+                );
+            }
         });
 
-        return images.reverse();
+        return images;
+    };
+
+    renderAnchorTags = () => {
+        let anchors = [];
+        anchors.push(
+            <Anchor
+                icon={<CaretBackIcon />}
+                label=""
+                onClick={() => this.setState({ page: this.state.page - 1 })}
+                disabled={this.state.page === 1}
+                key="<"
+            />
+        );
+        for (let a = 1; a <= Math.ceil(this.props.gallery.length / 20); a++) {
+            anchors.push(
+                <Anchor
+                    onClick={() => this.setState({ page: a })}
+                    key={a}
+                    style={{ margin: '15px 10px 0px 10px' }}
+                    className={a === this.state.page ? 'text active' : 'text'}
+                >
+                    {' '}
+                    <Heading tag="h3">{a}</Heading>{' '}
+                </Anchor>
+            );
+        }
+        anchors.push(
+            <Anchor
+                icon={<CaretNextIcon />}
+                label=""
+                onClick={() => this.setState({ page: this.state.page + 1 })}
+                disabled={
+                    !this.props.gallery ||
+                    this.state.page == Math.ceil(this.props.gallery.length / 20)
+                }
+                key=">"
+            />
+        );
+        return anchors;
     };
 
     render() {
+        console.log(this.state.page);
         return (
             <div style={{ margin: '0% 5% 0% 5%' }}>
                 <title> Gallery | Sage Prosthetics </title>
                 <h2 style={{ textAlign: 'center' }}>Photo Gallery</h2>
+
                 <div
                     style={{
                         display: 'flex',
@@ -113,11 +170,37 @@ class Gallery extends Component {
                     {this.renderImages()}
                 </div>
 
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}
+                >
+                    {this.renderAnchorTags()}
+                </div>
+
                 <ImageModal
                     show={this.state.selectedImage !== ''}
                     src={this.state.selectedImage}
                     onToggleModal={() => this.setState({ selectedImage: '' })}
                 />
+                <style jsx>{`
+                    .text {
+                        color: #416989;
+                        font-weight: 500;
+                    }
+                    .text:hover {
+                        color: #7ed4c6;
+                        text-decoration: none;
+                        text-decoration-color: #7ed4c6;
+                    }
+                    .active {
+                        color: #7ed4c6;
+                        text-decoration: none;
+                    }
+                `}</style>
             </div>
         );
     }
@@ -125,7 +208,7 @@ class Gallery extends Component {
 
 const mapStateToProps = state => {
     return {
-        gallery: state.gallery
+        gallery: state.gallery.reverse()
     };
 };
 

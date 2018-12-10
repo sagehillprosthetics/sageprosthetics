@@ -28,19 +28,24 @@ class Contact extends Component {
             });
 
         const links = [];
+        const archive = [];
         await req.firebaseServer
             .database()
             .ref('recipients')
             .once('value')
             .then(datasnapshot => {
                 datasnapshot.forEach(child => {
-                    links.push(child.key);
+                    if (child.val().archive == true) {
+                        archive.push(child.key);
+                    } else {
+                        links.push(child.key);
+                    }
                 });
             });
 
         store.dispatch({
             type: types.GET_RECIPIENTS,
-            payload: links
+            payload: { links, archive }
         });
 
         store.dispatch({
@@ -69,13 +74,7 @@ class Contact extends Component {
             );
         }
 
-        return (
-            <Button
-                label="Submit"
-                accent
-                style={{ margin: '20px 45% 0% 45%', width: '10%' }}
-            />
-        );
+        return <Button label="Submit" accent style={{ margin: '20px 45% 0% 45%', width: '10%' }} />;
     }
 
     render() {
@@ -101,25 +100,17 @@ class Contact extends Component {
                                 border: 'none'
                             }}
                             type="text"
-                            onChange={event =>
-                                this.setState({ name: event.target.value })
-                            }
+                            onChange={event => this.setState({ name: event.target.value })}
                         />
                     </FormField>
-                    <FormField
-                        label="Email Address"
-                        size="medium"
-                        help="Required"
-                    >
+                    <FormField label="Email Address" size="medium" help="Required">
                         <input
                             style={{
                                 fontWeight: 'lighter',
                                 border: 'none'
                             }}
                             type="email"
-                            onChange={event =>
-                                this.setState({ email: event.target.value })
-                            }
+                            onChange={event => this.setState({ email: event.target.value })}
                         />
                     </FormField>
 
@@ -135,9 +126,7 @@ class Contact extends Component {
                             placeholder="Message"
                             name="message"
                             rows={10}
-                            onChange={event =>
-                                this.setState({ message: event.target.value })
-                            }
+                            onChange={event => this.setState({ message: event.target.value })}
                         />
                     </FormField>
 

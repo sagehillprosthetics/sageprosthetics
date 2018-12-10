@@ -48,13 +48,26 @@ class Layout extends Component {
     }
 
     renderHeader() {
-        console.log(this.props.projects);
+        console.log(this.props.recipients);
+        const { archive, links } = this.props.recipients;
         let archiveactive = false;
-        this.props.recipients.forEach(recipient => {
-            if (recipient === this.props.page) {
-                archiveactive = true;
-            }
-        });
+
+        if (archive) {
+            archive.forEach(recipient => {
+                if (recipient === this.props.page) {
+                    archiveactive = true;
+                }
+            });
+        }
+
+        let linksactive = archiveactive;
+        if (links) {
+            links.forEach(recipient => {
+                if (recipient === this.props.page) {
+                    linksactive = true;
+                }
+            });
+        }
 
         let projectsactive = false;
         this.props.projects.forEach(project => {
@@ -64,10 +77,18 @@ class Layout extends Component {
         });
 
         return (
-            <Header fixed={true} width="full" style={{ padding: '0% 1.5% 0% 1.5%', height: '7vw', zIndex: 1 }}>
+            <Header
+                fixed={true}
+                width="full"
+                style={{ padding: '0% 1.5% 0% 1.5%', height: '7vw', zIndex: 1 }}
+            >
                 <Title>
                     <a style={{ fontSize: '30px', margin: 0 }} href="/">
-                        <img src="/static/biglogo.png" alt="logo" style={{ height: '5vw', marginBottom: 0 }} />
+                        <img
+                            src="/static/biglogo.png"
+                            alt="logo"
+                            style={{ height: '5vw', marginBottom: 0 }}
+                        />
                     </a>
                 </Title>
                 <Box flex={true} justify="end" direction="row" responsive={false}>
@@ -93,7 +114,9 @@ class Layout extends Component {
                                     setTimeout(() => window.scrollTo(0, help), 0);
                                 }}
                             >
-                                <div className={archiveactive ? 'text active' : 'text'}>Recipients</div>
+                                <div className={linksactive ? 'text active' : 'text'}>
+                                    Recipients
+                                </div>
                             </a>
                             <Popover
                                 placement="bottom"
@@ -114,6 +137,30 @@ class Layout extends Component {
                                     //top: window.scrollY + 'px'
                                 }}
                             >
+                                {links
+                                    ? links.map(recipient => {
+                                          let text = 'text';
+                                          if (recipient === this.props.page) {
+                                              archiveactive = true;
+                                              text = 'text active';
+                                          }
+                                          return (
+                                              <Link
+                                                  href={`/recipient/${recipient}`}
+                                                  key={recipient}
+                                              >
+                                                  <a
+                                                      style={{
+                                                          color: '#7ed4c6'
+                                                      }}
+                                                      href={`/recipient/${recipient}`}
+                                                  >
+                                                      <div className={text}>{recipient}</div>
+                                                  </a>
+                                              </Link>
+                                          );
+                                      })
+                                    : null}
                                 <a
                                     ref="target2"
                                     style={{
@@ -129,7 +176,9 @@ class Layout extends Component {
                                         setTimeout(() => window.scrollTo(0, help), 0);
                                     }}
                                 >
-                                    <div className={archiveactive ? 'text active' : 'text'}>Archive</div>
+                                    <div className={archiveactive ? 'text active' : 'text'}>
+                                        Archive
+                                    </div>
                                     <div
                                         style={{
                                             textDecoration: 'none',
@@ -157,25 +206,32 @@ class Layout extends Component {
                                     }}
                                 >
                                     <>
-                                        {this.props.recipients.map(recipient => {
-                                            let text = 'text';
-                                            if (recipient === this.props.page) {
-                                                archiveactive = true;
-                                                text = 'text active';
-                                            }
-                                            return (
-                                                <Link href={`/recipient/${recipient}`} key={recipient}>
-                                                    <a
-                                                        style={{
-                                                            color: '#7ed4c6'
-                                                        }}
-                                                        href={`/recipient/${recipient}`}
-                                                    >
-                                                        <div className={text}>{recipient}</div>
-                                                    </a>
-                                                </Link>
-                                            );
-                                        })}
+                                        {archive
+                                            ? archive.map(recipient => {
+                                                  let text = 'text';
+                                                  if (recipient === this.props.page) {
+                                                      archiveactive = true;
+                                                      text = 'text active';
+                                                  }
+                                                  return (
+                                                      <Link
+                                                          href={`/recipient/${recipient}`}
+                                                          key={recipient}
+                                                      >
+                                                          <a
+                                                              style={{
+                                                                  color: '#7ed4c6'
+                                                              }}
+                                                              href={`/recipient/${recipient}`}
+                                                          >
+                                                              <div className={text}>
+                                                                  {recipient}
+                                                              </div>
+                                                          </a>
+                                                      </Link>
+                                                  );
+                                              })
+                                            : null}
                                     </>
                                 </Popover>
                             </Popover>
@@ -195,7 +251,9 @@ class Layout extends Component {
                                     setTimeout(() => window.scrollTo(0, help), 0);
                                 }}
                             >
-                                <div className={projectsactive ? 'text active' : 'text'}>Projects</div>
+                                <div className={projectsactive ? 'text active' : 'text'}>
+                                    Projects
+                                </div>
                             </a>
                             <Popover
                                 placement="bottom"
@@ -221,7 +279,10 @@ class Layout extends Component {
                                     }
                                     return (
                                         <Link href={`/projects/${project}`} key={project}>
-                                            <a style={{ color: '#7ed4c6' }} href={`/projects/${project}`}>
+                                            <a
+                                                style={{ color: '#7ed4c6' }}
+                                                href={`/projects/${project}`}
+                                            >
                                                 <div className={text}>{project}</div>
                                             </a>
                                         </Link>
@@ -235,7 +296,13 @@ class Layout extends Component {
                                 <li className="nav-item" style={styles.navlink} key={link.link}>
                                     <Link>
                                         <a style={{ color: '#7ed4c6' }} href={link.link}>
-                                            <div className={this.props.page === link.page ? 'text active' : 'text'}>
+                                            <div
+                                                className={
+                                                    this.props.page === link.page
+                                                        ? 'text active'
+                                                        : 'text'
+                                                }
+                                            >
                                                 {link.text}
                                             </div>
                                         </a>

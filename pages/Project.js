@@ -11,7 +11,6 @@ import Paragraph from 'grommet/components/Paragraph';
 class Project extends Component {
     static async getInitialProps({ req, query, store }) {
         let project = {};
-        const links = [];
 
         const projects = [];
         req.firebaseServer
@@ -49,19 +48,25 @@ class Project extends Component {
                 });
             });
 
+        const links = [];
+        const archive = [];
         await req.firebaseServer
             .database()
             .ref('recipients')
             .once('value')
             .then(datasnapshot => {
                 datasnapshot.forEach(child => {
-                    links.push(child.key);
+                    if (child.val().archive == true) {
+                        archive.push(child.key);
+                    } else {
+                        links.push(child.key);
+                    }
                 });
             });
 
         store.dispatch({
             type: types.GET_RECIPIENTS,
-            payload: links
+            payload: { links, archive }
         });
 
         store.dispatch({
@@ -204,9 +209,7 @@ class Project extends Component {
         return (
             <div style={{ margin: '0% 5% 0% 5%' }}>
                 <title> {this.props.project.name} | Sage Prosthetics </title>
-                <h2 style={{ textAlign: 'center' }}>
-                    {this.props.project.name}
-                </h2>
+                <h2 style={{ textAlign: 'center' }}>{this.props.project.name}</h2>
                 <div
                     style={{
                         display: 'flex',
@@ -216,16 +219,10 @@ class Project extends Component {
                         margin: '0 15% 0 15%'
                     }}
                 >
-                    <Image
-                        cloudName="sageprosthetics"
-                        publicId={this.props.project.src + ''}
-                        height="100%"
-                    >
+                    <Image cloudName="sageprosthetics" publicId={this.props.project.src + ''} height="100%">
                         <Transformation width="300" height="400" crop="scale" />
                     </Image>
-                    <div style={{ marginLeft: '10%' }}>
-                        {this.props.project.text}
-                    </div>
+                    <div style={{ marginLeft: '10%' }}>{this.props.project.text}</div>
                 </div>
                 {this.renderImage()}
                 {this.renderGroup()}

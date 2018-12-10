@@ -14,13 +14,18 @@ class Group extends Component {
         });
 
         const links = [];
+        const archive = [];
         req.firebaseServer
             .database()
             .ref('recipients')
             .once('value')
             .then(datasnapshot => {
                 datasnapshot.forEach(child => {
-                    links.push(child.key);
+                    if (child.val().archive == true) {
+                        archive.push(child.key);
+                    } else {
+                        links.push(child.key);
+                    }
                 });
             });
 
@@ -72,7 +77,7 @@ class Group extends Component {
 
         store.dispatch({
             type: types.GET_RECIPIENTS,
-            payload: links
+            payload: { links, archive }
         });
 
         store.dispatch({
@@ -149,13 +154,7 @@ class Group extends Component {
                             width="150"
                             //crop="scale"
                         >
-                            <Transformation
-                                width="1000"
-                                height="1000"
-                                gravity="face"
-                                radius="500"
-                                crop="thumb"
-                            />
+                            <Transformation width="1000" height="1000" gravity="face" radius="500" crop="thumb" />
                         </Image>
                         <h3
                             style={{
@@ -199,13 +198,7 @@ class Group extends Component {
                             width="150"
                             //crop="scale"
                         >
-                            <Transformation
-                                width="1000"
-                                height="1000"
-                                gravity="face"
-                                radius="500"
-                                crop="thumb"
-                            />
+                            <Transformation width="1000" height="1000" gravity="face" radius="500" crop="thumb" />
                         </Image>
                         <h4
                             style={{
@@ -231,16 +224,9 @@ class Group extends Component {
         return (
             <div style={{ margin: '0% 15% 0% 15%' }}>
                 <title> Our Group | Sage Prosthetics </title>
-                <h2 style={{ textAlign: 'center' }}>
-                    {' '}
-                    Meet our Service Group{' '}
-                </h2>
+                <h2 style={{ textAlign: 'center' }}> Meet our Service Group </h2>
 
-                <div
-                    style={{ display: 'flex', justifyContent: 'space-around' }}
-                >
-                    {this.renderFaculty()}
-                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-around' }}>{this.renderFaculty()}</div>
 
                 <div
                     style={{
