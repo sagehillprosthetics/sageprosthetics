@@ -81,8 +81,6 @@ class Hand extends Component {
                     }
                 });
 
-                console.log(design.src);
-
                 return (
                     <div style={{ margin: '1vw' }}>
                         <Card

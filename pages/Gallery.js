@@ -92,11 +92,12 @@ class Gallery extends Component {
         const images = this.props.gallery.map(src => {
             count++;
             if (count >= (this.state.page - 1) * 20 && count < this.state.page * 20) {
-                console.log(src);
                 return (
                     <div
                         onClick={() => this.setState({ selectedImage: src })}
                         style={{ margin: '1vw' }}
+                        onMouseOver={() => console.log('mouse over')}
+                        onMouseOut={() => console.log('mouse down')}
                     >
                         <Image
                             cloudName="sageprosthetics"
@@ -153,7 +154,6 @@ class Gallery extends Component {
     };
 
     render() {
-        console.log(this.state.page);
         return (
             <div style={{ margin: '0% 5% 0% 5%' }}>
                 <title> Gallery | Sage Prosthetics </title>

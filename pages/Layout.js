@@ -48,7 +48,6 @@ class Layout extends Component {
     }
 
     renderHeader() {
-        console.log(this.props.recipients);
         const { archive, links } = this.props.recipients;
         let archiveactive = false;
 

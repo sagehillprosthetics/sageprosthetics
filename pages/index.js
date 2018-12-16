@@ -69,48 +69,52 @@ class LandingPage extends Component {
 
     renderParticles = () => {
         return (
-            <Particles
-                style={{ height: '40vh' }}
-                params={{
-                    particles: {
-                        number: {
-                            value: 70
-                        },
-                        size: {
-                            value: 3
-                        },
-                        color: {
-                            value: '#2cc99d'
-                        },
-                        move: {
-                            enable: true,
-                            direction: 'right',
-                            out_mode: 'out',
-                            bounce: false,
-                            speed: 3,
-                            attract: {
-                                enable: false,
-                                rotateX: 0,
-                                rotateY: 0
-                            }
-                        },
-                        line_linked: {
-                            distance: 140,
-                            color: '#2cc99d'
-                        }
-                    },
-                    interactivity: {
-                        events: {
-                            onhover: {
+            <Transition onEnter={animateParticles} timeout={4000} in={this.state.isVisible}>
+                <Particles
+                    className="particles"
+                    style={{ height: '40vh' }}
+                    params={{
+                        particles: {
+                            number: {
+                                value: 100
+                            },
+                            size: {
+                                value: 4,
+                                random: true
+                            },
+                            color: {
+                                value: '#2cc99d'
+                            },
+                            move: {
                                 enable: true,
-                                mode: 'repulse'
+                                direction: 'right',
+                                out_mode: 'out',
+                                bounce: false,
+                                speed: 3,
+                                attract: {
+                                    enable: false,
+                                    rotateX: 0,
+                                    rotateY: 0
+                                }
+                            },
+                            line_linked: {
+                                distance: 140,
+                                color: '#2cc99d',
+                                opacity: 0.9,
+                                width: 1.5
+                            }
+                        },
+                        interactivity: {
+                            events: {
+                                onhover: {
+                                    enable: true,
+                                    mode: 'repulse'
+                                }
                             }
                         }
-                    }
-                }}
-            >
-                HELLO
-            </Particles>
+                    }}
+                />
+            </Transition>
         );
     };
 
@@ -133,35 +137,42 @@ class LandingPage extends Component {
                     }}
                 >
                     <div style={styles.dropdown}>
-                        We receive pictures and measurements of our recipients’ arms, and we use that information to
-                        model them a custom hand to maximize the hand’s effectiveness and comfort. We can also
-                        accommodate for color and design requests. We then print each hand in many parts. After that we
-                        carefully assemble them and ship them to our recipients.
+                        We receive pictures and measurements of our recipients’ arms, and we use
+                        that information to model them a custom hand to maximize the hand’s
+                        effectiveness and comfort. We can also accommodate for color and design
+                        requests. We then print each hand in many parts. After that we carefully
+                        assemble them and ship them to our recipients.
                     </div>
                 </AccordionPanel>
                 <AccordionPanel heading="Who's making the hands?">
                     <div style={styles.dropdown}>
                         We are a dedicated group of students from{' '}
-                        <a href="https://www.sagehillschool.org" target="_blank" rel="noopener noreferrer">
+                        <a
+                            href="https://www.sagehillschool.org"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             Sage Hill School
                         </a>{' '}
-                        in Southern California who trying to make a difference. You can learn more about our team{' '}
-                        <a href="/contact">here</a>.
+                        in Southern California who trying to make a difference. You can learn more
+                        about our team <a href="/contact">here</a>.
                     </div>
                 </AccordionPanel>
                 <AccordionPanel heading="Can I buy one?">
                     <div style={styles.dropdown}>
-                        Nope. Sorry, we typically make hands for recipients who are either unable to afford or access
-                        traditional prosthesis. On a case by case basis, we will work with recipients who would like a
-                        hand under other circumstances, in particular, those who are within our geographic region.
+                        Nope. Sorry, we typically make hands for recipients who are either unable to
+                        afford or access traditional prosthesis. On a case by case basis, we will
+                        work with recipients who would like a hand under other circumstances, in
+                        particular, those who are within our geographic region.
                     </div>
                 </AccordionPanel>
                 <AccordionPanel heading="How can I become a recipient?">
                     <div style={styles.dropdown}>
-                        <a href="/contact">Reach out to us!</a> Tell us your story, and we would be glad to add you as a
-                        recipient. We typically make hands for recipients who are either unable to afford or access
-                        traditional prosthesis. On a case by case basis, we will work with recipients who would like a
-                        hand under other circumstances, in particular, those who are within our geographic region.
+                        <a href="/contact">Reach out to us!</a> Tell us your story, and we would be
+                        glad to add you as a recipient. We typically make hands for recipients who
+                        are either unable to afford or access traditional prosthesis. On a case by
+                        case basis, we will work with recipients who would like a hand under other
+                        circumstances, in particular, those who are within our geographic region.
                     </div>
                 </AccordionPanel>
             </Accordion>
@@ -185,7 +196,8 @@ class LandingPage extends Component {
                                     style={{
                                         width: '100%',
                                         height: '100%',
-                                        background: 'linear-gradient(160deg, #ffffff, #ffffff, #1d698b)'
+                                        background:
+                                            'linear-gradient(160deg, #ffffff, #ffffff, #1d698b)'
                                     }}
                                 />
                             ),
@@ -194,7 +206,11 @@ class LandingPage extends Component {
                         },
                         {
                             children: (
-                                <Transition onEnter={animatePrinterIn} timeout={1000} in={this.state.isVisible}>
+                                <Transition
+                                    onEnter={animatePrinterIn}
+                                    timeout={1000}
+                                    in={this.state.isVisible}
+                                >
                                     <div
                                         style={{
                                             display: 'flex',
@@ -206,7 +222,11 @@ class LandingPage extends Component {
                                     >
                                         <img
                                             src="/static/1-21-squashed.png"
-                                            style={{ margin: '150px 0 100px 0', width: '50%', height: '50%' }}
+                                            style={{
+                                                margin: '150px 0 100px 0',
+                                                width: '50%',
+                                                height: '50%'
+                                            }}
                                             alt="gradient"
                                         />
                                     </div>
@@ -217,7 +237,11 @@ class LandingPage extends Component {
                         },
                         {
                             children: (
-                                <Transition onEnter={animateHeadingIn} timeout={0} in={this.state.isVisible}>
+                                <Transition
+                                    onEnter={animateHeadingIn}
+                                    timeout={0}
+                                    in={this.state.isVisible}
+                                >
                                     <div
                                         style={{
                                             display: 'flex',
@@ -427,12 +451,19 @@ class LandingPage extends Component {
                                             letterSpacing: '0.2em'
                                         }}
                                     >
-                                        Connecting people who make hands <br /> with people who need them.
+                                        Connecting people who make hands <br /> with people who need
+                                        them.
                                     </div>
                                     <Box
-                                        style={{ margin: '40px', padding: '15px', borderWeight: '2px' }}
+                                        style={{
+                                            margin: '40px',
+                                            padding: '15px',
+                                            borderWeight: '2px'
+                                        }}
                                         href="http://enablingthefuture.org/"
-                                        onClick={() => (window.location.href = 'http://enablingthefuture.org/')}
+                                        onClick={() =>
+                                            (window.location.href = 'http://enablingthefuture.org/')
+                                        }
                                     >
                                         Learn more about e-NABLE
                                         {/* <Button
@@ -469,6 +500,19 @@ const Box = posed.button({
         backgroundColor: '#ffffff'
     }
 });
+
+const animateParticles = particles => {
+    console.log('particles');
+    return anime({
+        targets: particles,
+        delay: 500,
+        opacity: {
+            value: [0, 1]
+        },
+        easing: 'easeOutQuint',
+        duration: 3000
+    });
+};
 
 const animateMainheadingIn = mainheading => {
     return anime({

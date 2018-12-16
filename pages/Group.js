@@ -2,9 +2,14 @@ import React, { Component } from 'react';
 import * as firebase from 'firebase';
 //import * as admin from 'firebase-admin';
 import { connect } from 'react-redux';
-import { getGroup } from '../redux/actions';
 import { Image, Transformation } from 'cloudinary-react';
+import anime from 'animejs';
+import Transition from 'react-transition-group/Transition';
+
+import { getGroup } from '../redux/actions';
 import * as types from '../redux/types.js';
+import Person from '../components/Person';
+import BioModal from '../components/BioModal';
 
 class Group extends Component {
     static async getInitialProps({ req, query, store }) {
@@ -89,49 +94,11 @@ class Group extends Component {
             type: types.GET_FACULTY,
             payload: faculty
         });
-
-        //console.log(help);
-
-        // admin.initializeApp({
-        //     credential: admin.credential.cert(serviceAccount),
-        //     databaseURL: 'https://sage-prosthetics.firebaseio.com'
-        // });
-        // const db = admin.database();
-        // const ref = db.ref('sage-prosthetics/group');
-        // ref.once('group', function(data) {
-        //     console.log(data);
-        // });
-        // db.collection('group')
-        //     .get()
-        //     .then(snapshot => {
-        //         const reformat = [];
-        //         snapshot.forEach(doc => {
-        //             reformat.push({ ...doc.data(), id: doc.id });
-        //         });
-        // store.dispatch({
-        //     type: types.GET_GROUP,
-        //     payload: reformat
-        // });
-        //     })
-        //     .catch(err => {
-        //         console.log('Error getting documents', err);
-        //     });
-        // db.collection('faculty')
-        //     .get()
-        //     .then(snapshot => {
-        //         const reformat = [];
-        //         snapshot.forEach(doc => {
-        //             reformat.push({ ...doc.data(), id: doc.id });
-        //         });
-        //         store.dispatch({
-        //             type: types.GET_FACULTY,
-        //             payload: reformat
-        //         });
-        //     })
-        //     .catch(err => {
-        //         console.log('Error getting documents', err);
-        //     });
     }
+
+    state = {
+        profile: ''
+    };
 
     renderFaculty = () => {
         if (!this.props.faculty) {
@@ -141,32 +108,12 @@ class Group extends Component {
         try {
             const teachers = this.props.faculty.map(teacher => {
                 return (
-                    <div
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center'
-                        }}
-                    >
-                        <Image
-                            cloudName="sageprosthetics"
-                            publicId={teacher.src}
-                            width="150"
-                            //crop="scale"
-                        >
-                            <Transformation width="1000" height="1000" gravity="face" radius="500" crop="thumb" />
-                        </Image>
-                        <h3
-                            style={{
-                                fontWeight: '600',
-                                textAlign: 'center',
-                                margin: '20px'
-                            }}
-                        >
-                            {teacher.name}
-                        </h3>
-                        <h5> Faculty Advisor </h5>
-                    </div>
+                    <Person
+                        src={teacher.src}
+                        name={teacher.name}
+                        faculty
+                        onClick={() => this.setState({ profile: teacher })}
+                    />
                 );
             });
 
@@ -183,35 +130,7 @@ class Group extends Component {
 
         try {
             const students = this.props.group.map(student => {
-                return (
-                    <div
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            margin: '1%'
-                        }}
-                    >
-                        <Image
-                            cloudName="sageprosthetics"
-                            publicId={student.src}
-                            width="150"
-                            //crop="scale"
-                        >
-                            <Transformation width="1000" height="1000" gravity="face" radius="500" crop="thumb" />
-                        </Image>
-                        <h4
-                            style={{
-                                fontWeight: '600',
-                                textAlign: 'center',
-                                margin: '20px',
-                                width: '150px'
-                            }}
-                        >
-                            {student.name}
-                        </h4>
-                    </div>
-                );
+                return <Person src={student.src} name={student.name} />;
             });
 
             return students;
@@ -221,12 +140,15 @@ class Group extends Component {
     };
 
     render() {
+        console.log(this.state);
         return (
             <div style={{ margin: '0% 15% 0% 15%' }}>
                 <title> Our Group | Sage Prosthetics </title>
                 <h2 style={{ textAlign: 'center' }}> Meet our Service Group </h2>
 
-                <div style={{ display: 'flex', justifyContent: 'space-around' }}>{this.renderFaculty()}</div>
+                <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                    {this.renderFaculty()}
+                </div>
 
                 <div
                     style={{
@@ -246,10 +168,47 @@ class Group extends Component {
                 >
                     {this.renderStudent()}
                 </div>
+
+                <Transition
+                    onEnter={modalEnter}
+                    timeout={0}
+                    in={this.state.profile !== ''}
+                    onExit={modalExit}
+                >
+                    <div className="biomodal">
+                        <BioModal
+                            show={this.state.profile !== ''}
+                            onToggleModal={() => this.setState({ profile: '' })}
+                            person={this.state.profile}
+                        />
+                    </div>
+                </Transition>
             </div>
         );
     }
 }
+
+const modalEnter = biomodal => {
+    return anime({
+        // targets: biomodal,
+        // opacity: {
+        //     value: [0, 1]
+        // },
+        // easing: 'easeOutQuint',
+        // duration: 1000
+    });
+};
+
+const modalExit = biomodal => {
+    return anime({
+        // targets: biomodal,
+        // opacity: {
+        //     value: [1, 0]
+        // },
+        // easing: 'easeOutQuint',
+        // duration: 1000
+    });
+};
 
 const mapStateToProps = state => {
     return {

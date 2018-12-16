@@ -8,6 +8,8 @@ import Anchor from 'grommet/components/Anchor';
 import Quote from 'grommet/components/Quote';
 import Paragraph from 'grommet/components/Paragraph';
 
+import Person from '../components/Person';
+
 class Recipient extends Component {
     static async getInitialProps({ req, query, store }) {
         let recipient = {};
@@ -101,46 +103,12 @@ class Recipient extends Component {
                         style={{
                             display: 'flex',
                             flexDirection: 'row',
-                            justifyContent: 'space-between',
+                            justifyContent: 'space-around',
                             flexWrap: 'wrap'
                         }}
                     >
                         {this.props.recipient.group.map(person => {
-                            return (
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        alignItems: 'center',
-                                        margin: '1%'
-                                    }}
-                                >
-                                    <Image
-                                        cloudName="sageprosthetics"
-                                        publicId={this.props.group[person]}
-                                        width="120"
-                                        //crop="scale"
-                                    >
-                                        <Transformation
-                                            width="1000"
-                                            height="1000"
-                                            gravity="face"
-                                            radius="500"
-                                            crop="thumb"
-                                        />
-                                    </Image>
-                                    <h4
-                                        style={{
-                                            fontWeight: '600',
-                                            textAlign: 'center',
-                                            margin: '20px',
-                                            width: '150px'
-                                        }}
-                                    >
-                                        {person}
-                                    </h4>
-                                </div>
-                            );
+                            return <Person src={this.props.group[person]} name={person} />;
                         })}
                     </div>
                 </div>
@@ -220,13 +188,21 @@ class Recipient extends Component {
                         margin: '0 15% 0 15%'
                     }}
                 >
-                    <Image cloudName="sageprosthetics" publicId={this.props.recipient.src + ''} height="100%">
+                    <Image
+                        cloudName="sageprosthetics"
+                        publicId={this.props.recipient.src + ''}
+                        height="100%"
+                    >
                         <Transformation width="300" height="400" crop="scale" />
                     </Image>
                     <div style={{ marginLeft: '10%' }}>
                         {this.props.recipient.text}
                         {this.props.recipient.quote ? (
-                            <Quote borderColorIndex="accent-1" style={{ marginTop: '2vw' }} size="full">
+                            <Quote
+                                borderColorIndex="accent-1"
+                                style={{ marginTop: '2vw' }}
+                                size="full"
+                            >
                                 <Paragraph>"{this.props.recipient.quote}"</Paragraph>
                             </Quote>
                         ) : null}
