@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { getGroup } from '../redux/actions';
 import { Image, Video, Transformation } from 'cloudinary-react';
 import * as types from '../redux/types.js';
+import NextSeo from 'next-seo';
 import Card from 'grommet/components/Card';
 import Anchor from 'grommet/components/Anchor';
 import Quote from 'grommet/components/Quote';
@@ -208,7 +209,15 @@ class Project extends Component {
     render() {
         return (
             <div style={{ margin: '0% 5% 0% 5%' }}>
-                <title> {this.props.project.name} | Sage Prosthetics </title>
+                <NextSeo
+                    config={{
+                        title: this.props.project.name + ` | Sage Prosthetics`,
+                        twitter: { title: this.props.project.name + ' | Sage Prosthetics' },
+                        openGraph: {
+                            title: this.props.project.name + ' | Sage Prosthetics'
+                        }
+                    }}
+                />
                 <h2 style={{ textAlign: 'center' }}>{this.props.project.name}</h2>
                 <div
                     style={{
@@ -219,7 +228,11 @@ class Project extends Component {
                         margin: '0 15% 0 15%'
                     }}
                 >
-                    <Image cloudName="sageprosthetics" publicId={this.props.project.src + ''} height="100%">
+                    <Image
+                        cloudName="sageprosthetics"
+                        publicId={this.props.project.src + ''}
+                        height="100%"
+                    >
                         <Transformation width="300" height="400" crop="scale" />
                     </Image>
                     <div style={{ marginLeft: '10%' }}>{this.props.project.text}</div>

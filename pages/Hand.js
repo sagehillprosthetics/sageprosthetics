@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getGroup } from '../redux/actions';
 import { Image, Transformation } from 'cloudinary-react';
-import * as types from '../redux/types.js';
 import Card from 'grommet/components/Card';
 import Anchor from 'grommet/components/Anchor';
+import NextSeo from 'next-seo';
+
+import { getGroup } from '../redux/actions';
+import * as types from '../redux/types.js';
 
 class Hand extends Component {
     static async getInitialProps({ req, query, store }) {
@@ -106,7 +108,15 @@ class Hand extends Component {
     render() {
         return (
             <div style={{ margin: '0% 5% 0% 5%' }}>
-                <title> Hands | Sage Prosthetics </title>
+                <NextSeo
+                    config={{
+                        title: 'Hand Designs | Sage Prosthetics',
+                        twitter: { title: 'Hand Designs | Sage Prosthetics' },
+                        openGraph: {
+                            title: 'Hand Designs | Sage Prosthetics'
+                        }
+                    }}
+                />
                 <h2 style={{ textAlign: 'center' }}>Hand Designs</h2>
                 <div
                     style={{

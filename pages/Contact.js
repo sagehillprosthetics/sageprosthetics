@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
-//import * as admin from 'firebase-admin';
 import { connect } from 'react-redux';
 import { getGroup } from '../redux/actions';
 import { Image, Transformation } from 'cloudinary-react';
 import * as types from '../redux/types.js';
+import NextSeo from 'next-seo';
 
 import FormField from 'grommet/components/FormField';
 import Button from 'grommet/components/Button';
@@ -81,7 +81,15 @@ class Contact extends Component {
         console.log(this.state.message);
         return (
             <div style={{ margin: '0% 15% 0% 15%' }}>
-                <title> Contact | Sage Prosthetics </title>
+                <NextSeo
+                    config={{
+                        title: 'Contact | Sage Prosthetics',
+                        twitter: { title: 'Contact | Sage Prosthetics' },
+                        openGraph: {
+                            title: 'Contact | Sage Prosthetics'
+                        }
+                    }}
+                />
                 <h2 style={{ textAlign: 'center' }}>Contact Us</h2>
                 <form
                     action="https://formspree.io/timg51237@gmail.com"

@@ -103,15 +103,13 @@ class Layout extends Component {
                             <a
                                 ref="target"
                                 style={{ color: '#7ed4c6' }}
-                                href="#"
-                                onClick={() => {
-                                    const help = window.scrollY;
+                                href="#!"
+                                onClick={() =>
                                     this.setState({
                                         dropdown: 'r',
                                         secondDropdown: ''
-                                    });
-                                    setTimeout(() => window.scrollTo(0, help), 0);
-                                }}
+                                    })
+                                }
                             >
                                 <div className={linksactive ? 'text active' : 'text'}>
                                     Recipients
@@ -122,12 +120,12 @@ class Layout extends Component {
                                 container={this}
                                 target={this.refs.target}
                                 show={this.state.dropdown === 'r'}
-                                onHide={() => {
+                                onHide={() =>
                                     this.setState({
                                         dropdown: false,
                                         secondDropdown: ''
-                                    });
-                                }}
+                                    })
+                                }
                                 style={{
                                     marginTop: '5vh',
                                     zIndex: 40,
@@ -147,12 +145,12 @@ class Layout extends Component {
                                               <Link
                                                   href={`/recipient/${recipient}`}
                                                   key={recipient}
+                                                  passHref
                                               >
                                                   <a
                                                       style={{
                                                           color: '#7ed4c6'
                                                       }}
-                                                      href={`/recipient/${recipient}`}
                                                   >
                                                       <div className={text}>{recipient}</div>
                                                   </a>
@@ -168,12 +166,8 @@ class Layout extends Component {
                                         flexDirection: 'row',
                                         justifyContent: 'space-between'
                                     }}
-                                    href="#"
-                                    onClick={() => {
-                                        const help = window.scrollY;
-                                        this.setState({ secondDropdown: 'a' });
-                                        setTimeout(() => window.scrollTo(0, help), 0);
-                                    }}
+                                    href="#!"
+                                    onClick={() => this.setState({ secondDropdown: 'a' })}
                                 >
                                     <div className={archiveactive ? 'text active' : 'text'}>
                                         Archive
@@ -216,12 +210,12 @@ class Layout extends Component {
                                                       <Link
                                                           href={`/recipient/${recipient}`}
                                                           key={recipient}
+                                                          passHref
                                                       >
                                                           <a
                                                               style={{
                                                                   color: '#7ed4c6'
                                                               }}
-                                                              href={`/recipient/${recipient}`}
                                                           >
                                                               <div className={text}>
                                                                   {recipient}
@@ -240,7 +234,7 @@ class Layout extends Component {
                             <a
                                 ref="target3"
                                 style={{ color: '#7ed4c6' }}
-                                href="#"
+                                href="#!"
                                 onClick={() => {
                                     const help = window.scrollY;
                                     this.setState({
@@ -277,11 +271,8 @@ class Layout extends Component {
                                         text = 'text active';
                                     }
                                     return (
-                                        <Link href={`/projects/${project}`} key={project}>
-                                            <a
-                                                style={{ color: '#7ed4c6' }}
-                                                href={`/projects/${project}`}
-                                            >
+                                        <Link href={`/projects/${project}`} key={project} passHref>
+                                            <a style={{ color: '#7ed4c6' }}>
                                                 <div className={text}>{project}</div>
                                             </a>
                                         </Link>
@@ -293,8 +284,8 @@ class Layout extends Component {
                         {navlinks.map(link => {
                             return (
                                 <li className="nav-item" style={styles.navlink} key={link.link}>
-                                    <Link>
-                                        <a style={{ color: '#7ed4c6' }} href={link.link}>
+                                    <Link href={link.link} passHref>
+                                        <a style={{ color: '#7ed4c6' }}>
                                             <div
                                                 className={
                                                     this.props.page === link.page

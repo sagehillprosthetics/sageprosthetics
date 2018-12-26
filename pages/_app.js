@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import App, { Container } from 'next/app';
 import withRedux from 'next-redux-wrapper';
 import * as firebase from 'firebase';
+import NextSeo from 'next-seo';
 
 import '../styles.scss';
 import { initStore } from '../redux/store';
@@ -20,6 +21,30 @@ if (!firebase.apps.length) {
     });
 }
 
+const DEFAULT_SEO = {
+    title: 'Sage Prosthetics - 3D Printed Custom Prosthetics',
+    description:
+        'A student-run service group that uses 3D printing to make custom prosthetics for those in need. All of the prosthetics are made by hand using open-source designs in collaboration with E-Nable.',
+    openGraph: {
+        type: 'website',
+        locale: 'en_IE',
+        url: 'https://www.sageprosthetics.org/',
+        title: 'Sage Prosthetics - 3D Printed Custom Prosthetics',
+        description:
+            'A student-run service group that uses 3D printing to make custom prosthetics for those in need. All of the prosthetics are made by hand using open-source designs in collaboration with E-Nable.',
+        image: '/static/favicon.png',
+        site_name: 'Sage Prosthetics',
+        imageWidth: 1200,
+        imageHeight: 1200
+    },
+    twitter: {
+        title: 'Sage Prosthetics - 3D Printed Custom Prosthetics',
+        cardType: 'summary_large_image',
+        description:
+            'A student-run service group that uses 3D printing to make custom prosthetics for those in need. All of the prosthetics are made by hand using open-source designs in collaboration with E-Nable.'
+    }
+};
+
 // import * as types from '../redux/types';
 //import { initGA, logPageView } from '../components/general/analytics';
 
@@ -30,9 +55,7 @@ export default withRedux(initStore)(
             // store.dispatch({ type: types.GET_RECIPIENTS, payload: 'help' });
 
             return {
-                pageProps: Component.getInitialProps
-                    ? await Component.getInitialProps(ctx)
-                    : {}
+                pageProps: Component.getInitialProps ? await Component.getInitialProps(ctx) : {}
             };
         }
 
@@ -46,6 +69,7 @@ export default withRedux(initStore)(
 
             return (
                 <Container>
+                    <NextSeo config={DEFAULT_SEO} />
                     <Provider store={store}>
                         <Layout>
                             <Component {...pageProps} />

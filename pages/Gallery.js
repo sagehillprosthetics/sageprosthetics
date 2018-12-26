@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
-//import * as admin from 'firebase-admin';
 import { connect } from 'react-redux';
-import { getGroup } from '../redux/actions';
 import { Image, Transformation } from 'cloudinary-react';
+import NextSeo from 'next-seo';
+
+import { getGroup } from '../redux/actions';
 import serviceAccount from '../firebasekeys.json';
 import * as types from '../redux/types.js';
 import ImageModal from '../components/ImageModal';
+
 import Anchor from 'grommet/components/Anchor';
 import Heading from 'grommet/components/Heading';
 import CaretBackIcon from 'grommet/components/icons/base/CaretBack';
@@ -156,7 +158,15 @@ class Gallery extends Component {
     render() {
         return (
             <div style={{ margin: '0% 5% 0% 5%' }}>
-                <title> Gallery | Sage Prosthetics </title>
+                <NextSeo
+                    config={{
+                        title: 'Gallery | Sage Prosthetics',
+                        twitter: { title: 'Gallery | Sage Prosthetics' },
+                        openGraph: {
+                            title: 'Gallery | Sage Prosthetics'
+                        }
+                    }}
+                />
                 <h2 style={{ textAlign: 'center' }}>Photo Gallery</h2>
 
                 <div

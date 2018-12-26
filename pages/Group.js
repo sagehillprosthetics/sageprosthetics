@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Image, Transformation } from 'cloudinary-react';
 import anime from 'animejs';
 import Transition from 'react-transition-group/Transition';
+import NextSeo from 'next-seo';
 
 import { getGroup } from '../redux/actions';
 import * as types from '../redux/types.js';
@@ -143,7 +144,15 @@ class Group extends Component {
         console.log(this.state);
         return (
             <div style={{ margin: '0% 15% 0% 15%' }}>
-                <title> Our Group | Sage Prosthetics </title>
+                <NextSeo
+                    config={{
+                        title: 'Our Group | Sage Prosthetics',
+                        twitter: { title: 'Our Group | Sage Prosthetics' },
+                        openGraph: {
+                            title: 'Our Group | Sage Prosthetics'
+                        }
+                    }}
+                />
                 <h2 style={{ textAlign: 'center' }}> Meet our Service Group </h2>
 
                 <div style={{ display: 'flex', justifyContent: 'space-around' }}>

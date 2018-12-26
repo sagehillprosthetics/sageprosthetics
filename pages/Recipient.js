@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { getGroup } from '../redux/actions';
 import { Image, Video, Transformation } from 'cloudinary-react';
 import * as types from '../redux/types.js';
+import NextSeo from 'next-seo';
+
 import Card from 'grommet/components/Card';
 import Anchor from 'grommet/components/Anchor';
 import Quote from 'grommet/components/Quote';
@@ -177,7 +179,15 @@ class Recipient extends Component {
     render() {
         return (
             <div style={{ margin: '0% 5% 0% 5%' }}>
-                <title> {this.props.recipient.name} | Sage Prosthetics </title>
+                <NextSeo
+                    config={{
+                        title: this.props.recipient.name + ` | Sage Prosthetics`,
+                        twitter: { title: this.props.recipient.name + ' | Sage Prosthetics' },
+                        openGraph: {
+                            title: this.props.recipient.name + ' | Sage Prosthetics'
+                        }
+                    }}
+                />
                 <h2 style={{ textAlign: 'center' }}>{this.props.recipient.name}</h2>
                 <div
                     style={{
