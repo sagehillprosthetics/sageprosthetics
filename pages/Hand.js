@@ -78,7 +78,7 @@ class Hand extends Component {
             .sort((a, b) => b.order - a.order)
             .map(design => {
                 const bulletpoints = Object.keys(design).map(key => {
-                    if (key == 1 || key == 2 || key == 3 || key == 4 || key == 0) {
+                    if (!isNaN(parseInt(key))) {
                         return <li> {design[key]} </li>;
                     }
                 });

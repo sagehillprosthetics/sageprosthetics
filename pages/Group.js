@@ -54,9 +54,9 @@ class Group extends Component {
             .then(datasnapshot => {
                 datasnapshot.forEach(child => {
                     faculty.push({
-                        id: child.key,
                         name: child.key,
-                        src: child.val()
+                        src: child.val().image,
+                        bio: child.val().bio
                     });
                 });
             });

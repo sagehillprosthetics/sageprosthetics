@@ -60,7 +60,7 @@ const BioModal = props => {
                                 faculty
                                 horizontal
                             />
-                            <h6 style={{ marginTop: '6vh' }}> {teacherBio[props.person.name]} </h6>
+                            <h6 style={{ marginTop: '6vh' }}> {props.person.bio} </h6>
                         </div>
                     </Transition>
                 </div>
@@ -93,11 +93,6 @@ const modalExit = biomodal => {
         // easing: 'easeOutQuint',
         // duration: 1000
     });
-};
-
-const teacherBio = {
-    'Tanya Lerch': `Tanya joined Sage Hill in 2016 from Convent of the Sacred Heart in NYC where she taught AP Statistics, Geometry, and Algebra 2. She serves as an AP reader in Statistics each year and is currently teaching AP Statistics and Applied Statistics and serves as the 12th grade Dean at Sage Hill. Tanya first started collaborating with e-NABLE in 2014 and was the first primary school to incorporate the creation of 3D printed prosthetics in the classroom. Tanya is the faculty advisor to a group of 26 upperclassman students who work on prosthetics as a community service project: "Sage Prosthetics". Tanya has also coached Varsity Cross Country and Track, and has run 8 marathons with a personal record of 3:08. Mrs. Lerch earned her bachelor’s degree in psychology and a bachelor’s degree in dance from Hamilton College. She also holds a master’s degree in psychology from New York University (where she first started teaching statistics) and a master’s degree in mathematics education from Columbia University Teacher’s College.`,
-    'Anie Robinson': `Anie Robinson joined Sage Hill in 2016 from Campbell Hall Episcopal School in Los Angeles, where she taught honors chemistry and biology. Prior to that, Anie taught multiple science subjects at Rose and Alex Pilibos Armenian School in Los Angeles and served as the Science Bowl coach. She graduated with college honors and cum laude distinction from UCLA with a major in chemistry. During her undergraduate years, she also conducted research at the Medical Genetics Institute at Cedars-Sinai Medical Center and co-authored three publications on protein signaling. She enjoys playing piano and volleyball during her spare time, and has recently taken an interest in 3D printing and fabrication after joining the prosthetics group as a faculty advisor in 2017.`
 };
 
 export default BioModal;

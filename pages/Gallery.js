@@ -68,7 +68,7 @@ class Gallery extends Component {
 
         store.dispatch({
             type: types.GET_GALLERY,
-            payload: pictures
+            payload: pictures.reverse()
         });
 
         store.dispatch({
@@ -218,7 +218,7 @@ class Gallery extends Component {
 
 const mapStateToProps = state => {
     return {
-        gallery: state.gallery.reverse()
+        gallery: state.gallery
     };
 };
 

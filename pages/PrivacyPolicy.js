@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import * as types from '../redux/types.js';
 import NextSeo from 'next-seo';
-import Paragraph from 'grommet/components/Paragraph';
 
 class PrivacyPolicy extends Component {
     static async getInitialProps({ req, store }) {

@@ -9,5 +9,6 @@ routes.add('/contact', 'Contact');
 routes.add('/hand-designs', 'Hand');
 routes.add('/recipient/:id', 'Recipient');
 routes.add('/projects/:id', 'Project');
+routes.add('/admin', 'Admin');
 
 module.exports = routes;

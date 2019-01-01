@@ -11,6 +11,7 @@ import Layout from './Layout';
 import * as types from '../redux/types';
 
 if (!firebase.apps.length) {
+    console.log('initializing firebase');
     firebase.initializeApp({
         apiKey: 'AIzaSyBn97XtxibfzEfqvY9-xUdJ26xHT7wSIg0',
         authDomain: 'sage-prosthetics.firebaseapp.com',
