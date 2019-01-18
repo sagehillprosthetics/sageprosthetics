@@ -6,7 +6,7 @@ const admin = require('firebase-admin');
 const serviceAccount = require('./firebasekeys.json');
 
 const app = next({
-    dev: process.env.NODE_ENV === 'production'
+    dev: process.env.NODE_ENV === 'development'
 });
 
 const routes = require('./routes');

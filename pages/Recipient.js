@@ -110,7 +110,9 @@ class Recipient extends Component {
                         }}
                     >
                         {this.props.recipient.group.map(person => {
-                            return <Person src={this.props.group[person]} name={person} />;
+                            return (
+                                <Person key={person} src={this.props.group[person]} name={person} />
+                            );
                         })}
                     </div>
                 </div>
@@ -140,7 +142,7 @@ class Recipient extends Component {
                         {pictures
                             ? pictures.map(key => {
                                   return (
-                                      <div style={{ margin: '1%' }}>
+                                      <div style={{ margin: '1%' }} key={key}>
                                           <Image
                                               cloudName="sageprosthetics"
                                               publicId={key}
@@ -155,7 +157,7 @@ class Recipient extends Component {
                         {videos
                             ? videos.map(key => {
                                   return (
-                                      <div style={{ margin: '1%' }}>
+                                      <div style={{ margin: '1%' }} key={key}>
                                           <Video
                                               cloudName="sageprosthetics"
                                               publicId={key}

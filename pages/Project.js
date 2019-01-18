@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getGroup } from '../redux/actions';
 import { Image, Video, Transformation } from 'cloudinary-react';
-import * as types from '../redux/types.js';
+import * as types from '../redux/types';
 import NextSeo from 'next-seo';
-import Card from 'grommet/components/Card';
-import Anchor from 'grommet/components/Anchor';
-import Quote from 'grommet/components/Quote';
-import Paragraph from 'grommet/components/Paragraph';
+import Person from '../components/Person';
 
 class Project extends Component {
     static async getInitialProps({ req, query, store }) {
@@ -107,39 +103,7 @@ class Project extends Component {
                     >
                         {this.props.project.group.map(person => {
                             return (
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        alignItems: 'center',
-                                        margin: '1%'
-                                    }}
-                                >
-                                    <Image
-                                        cloudName="sageprosthetics"
-                                        publicId={this.props.group[person]}
-                                        width="120"
-                                        //crop="scale"
-                                    >
-                                        <Transformation
-                                            width="1000"
-                                            height="1000"
-                                            gravity="face"
-                                            radius="500"
-                                            crop="thumb"
-                                        />
-                                    </Image>
-                                    <h4
-                                        style={{
-                                            fontWeight: '600',
-                                            textAlign: 'center',
-                                            margin: '20px',
-                                            width: '150px'
-                                        }}
-                                    >
-                                        {person}
-                                    </h4>
-                                </div>
+                                <Person key={person} name={person} src={this.props.group[person]} />
                             );
                         })}
                     </div>
@@ -170,7 +134,7 @@ class Project extends Component {
                         {pictures
                             ? pictures.map(key => {
                                   return (
-                                      <div style={{ margin: '1%' }}>
+                                      <div style={{ margin: '1%' }} key={key}>
                                           <Image
                                               cloudName="sageprosthetics"
                                               publicId={key}
@@ -185,7 +149,7 @@ class Project extends Component {
                         {videos
                             ? videos.map(key => {
                                   return (
-                                      <div style={{ margin: '1%' }}>
+                                      <div style={{ margin: '1%' }} key={key}>
                                           <Video
                                               cloudName="sageprosthetics"
                                               publicId={key}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image, Transformation } from 'cloudinary-react';
+import Button from 'grommet/components/Button';
 
 const Person = props => {
     return (
@@ -8,7 +9,8 @@ const Person = props => {
                 display: 'flex',
                 flexDirection: props.horizontal ? 'row' : 'column',
                 alignItems: 'center',
-                margin: '1%'
+                margin: '1%',
+                ...props.style
             }}
             onClick={props.onClick}
         >
@@ -37,7 +39,13 @@ const Person = props => {
                 >
                     {props.name}
                 </h4>
-                {props.faculty ? <h5> Faculty Advisor </h5> : null}
+                {props.faculty ? <h5 style={{ marginTop: '-10px' }}> Faculty Advisor </h5> : null}
+                {props.faculty && !props.horizontal ? (
+                    <Button plain={true} onClick={props.onClick} style={{ marginTop: '-15px' }}>
+                        {' '}
+                        View Bio{' '}
+                    </Button>
+                ) : null}
             </div>
         </div>
     );

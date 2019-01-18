@@ -110,6 +110,7 @@ class Group extends Component {
             const teachers = this.props.faculty.map(teacher => {
                 return (
                     <Person
+                        key={teacher.name}
                         src={teacher.src}
                         name={teacher.name}
                         faculty
@@ -131,7 +132,7 @@ class Group extends Component {
 
         try {
             const students = this.props.group.map(student => {
-                return <Person src={student.src} name={student.name} />;
+                return <Person src={student.src} name={student.name} key={student.name} />;
             });
 
             return students;
@@ -141,7 +142,7 @@ class Group extends Component {
     };
 
     render() {
-        console.log(this.state);
+        //console.log(this.state);
         return (
             <div style={{ margin: '0% 15% 0% 15%' }}>
                 <NextSeo

@@ -5,6 +5,8 @@ import { getGroup } from '../redux/actions';
 import { Image, Transformation } from 'cloudinary-react';
 import * as types from '../redux/types.js';
 import NextSeo from 'next-seo';
+import { Player } from 'video-react';
+import ReactPlayer from 'react-player';
 
 import FormField from 'grommet/components/FormField';
 import Button from 'grommet/components/Button';
@@ -77,8 +79,13 @@ class Contact extends Component {
         return <Button label="Submit" accent style={{ margin: '20px 45% 0% 45%', width: '10%' }} />;
     }
 
+    componentDidMount() {
+        //this.refs.player.controls = false;
+        //console.log(this.refs.player.getState());
+    }
+
     render() {
-        console.log(this.state.message);
+        //console.log(this.state.message);
         return (
             <div style={{ margin: '0% 15% 0% 15%' }}>
                 <NextSeo
@@ -157,6 +164,28 @@ class Contact extends Component {
                     /> */}
                 </form>
                 {this.renderButtons()}
+                {/* <Player
+                    playsInline
+                    poster="/static/video.jpg"
+                    src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4"
+                    width={50}
+                    fluid={false}
+                    preload="auto"
+                    muted={true}
+                    autoPlay={true}
+                    ref="player"
+                /> */}
+                {/* <ReactPlayer
+                    url="https://www.youtube.com/watch?v=ysz5S6PUM-U"
+                    playing
+                    controls={false}
+                    muted
+                    config={{
+                        youtube: {
+                            playerVars: { showinfo: 0, controls: 0 }
+                        }
+                    }}
+                /> */}
             </div>
         );
     }

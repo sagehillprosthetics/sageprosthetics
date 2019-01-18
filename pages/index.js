@@ -63,7 +63,7 @@ class LandingPage extends Component {
     }
 
     componentDidMount() {
-        console.log('componentdidmount');
+        //console.log('componentdidmount');
         this.setState({ isVisible: true });
     }
 
@@ -72,7 +72,7 @@ class LandingPage extends Component {
             <Transition onEnter={animateParticles} timeout={4000} in={this.state.isVisible}>
                 <Particles
                     className="particles"
-                    style={{ height: '40vh' }}
+                    style={{ height: '40vh', position: 'absolute', top: '80px' }}
                     params={{
                         particles: {
                             number: {
@@ -91,6 +91,7 @@ class LandingPage extends Component {
                                 out_mode: 'out',
                                 bounce: false,
                                 speed: 3,
+                                random: false,
                                 attract: {
                                     enable: false,
                                     rotateX: 0,
@@ -98,10 +99,10 @@ class LandingPage extends Component {
                                 }
                             },
                             line_linked: {
-                                distance: 140,
+                                distance: 120,
                                 color: '#2cc99d',
                                 opacity: 0.9,
-                                width: 1.5
+                                width: 1.3
                             }
                         },
                         interactivity: {
@@ -110,8 +111,15 @@ class LandingPage extends Component {
                                     enable: true,
                                     mode: 'repulse'
                                 }
+                            },
+                            modes: {
+                                repulse: {
+                                    distance: 100,
+                                    duration: 1
+                                }
                             }
-                        }
+                        },
+                        retina_detect: true
                     }}
                 />
             </Transition>
@@ -320,7 +328,8 @@ class LandingPage extends Component {
                                                 fontWeight: '700',
                                                 textAlign: 'center',
                                                 margin: '15% 0 10% 10px',
-                                                zIndex: 30
+                                                zIndex: 30,
+                                                pointerEvents: 'none'
                                             }}
                                         >
                                             <Transition
@@ -502,7 +511,7 @@ const Box = posed.button({
 });
 
 const animateParticles = particles => {
-    console.log('particles');
+    //console.log('particles');
     return anime({
         targets: particles,
         delay: 500,
@@ -546,7 +555,7 @@ const animateSubheadingIn = subheading => {
 };
 
 const animatePrinterIn = printer => {
-    console.log('something happened');
+    //console.log('something happened');
     return anime({
         targets: printer,
         opacity: {
@@ -562,7 +571,7 @@ const animatePrinterIn = printer => {
 };
 
 const animateHeadingIn = heading => {
-    console.log('something happened');
+    //console.log('something happened');
     return anime({
         targets: heading,
         opacity: {

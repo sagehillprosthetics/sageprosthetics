@@ -96,10 +96,11 @@ class Gallery extends Component {
             if (count >= (this.state.page - 1) * 20 && count < this.state.page * 20) {
                 return (
                     <div
+                        key={src}
                         onClick={() => this.setState({ selectedImage: src })}
                         style={{ margin: '1vw' }}
-                        onMouseOver={() => console.log('mouse over')}
-                        onMouseOut={() => console.log('mouse down')}
+                        // onMouseOver={() => console.log('mouse over')}
+                        // onMouseOut={() => console.log('mouse down')}
                     >
                         <Image
                             cloudName="sageprosthetics"

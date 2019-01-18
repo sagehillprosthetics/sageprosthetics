@@ -79,12 +79,12 @@ class Hand extends Component {
             .map(design => {
                 const bulletpoints = Object.keys(design).map(key => {
                     if (!isNaN(parseInt(key))) {
-                        return <li> {design[key]} </li>;
+                        return <li key={key}> {design[key]} </li>;
                     }
                 });
 
                 return (
-                    <div style={{ margin: '1vw' }}>
+                    <div style={{ margin: '1vw' }} key={design.name}>
                         <Card
                             heading={design.name}
                             description={<ul> {bulletpoints} </ul>}

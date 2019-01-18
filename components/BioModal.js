@@ -39,8 +39,8 @@ const BioModal = props => {
                     <Transition onEnter={modalEnter} timeout={0} in={props.show} onExit={modalExit}>
                         <div
                             style={{
-                                height: '60vh',
-                                width: '60vw',
+                                height: '70vh',
+                                width: '70vw',
                                 marginTop: 150 + window.scrollY + 'px',
                                 backgroundColor: 'white',
                                 borderRadius: '20px',
@@ -49,6 +49,7 @@ const BioModal = props => {
                                 display: 'flex',
                                 alignItems: 'center',
                                 flexDirection: 'column',
+                                justifyContent: 'flex-start',
                                 zIndex: 300
                             }}
                             onClick={event => event.preventDefault()}
@@ -60,7 +61,10 @@ const BioModal = props => {
                                 faculty
                                 horizontal
                             />
-                            <h6 style={{ marginTop: '6vh' }}> {props.person.bio} </h6>
+                            <h6 style={{ marginTop: '4vh', fontSize: '2vh' }}>
+                                &emsp;&ensp;
+                                {props.person.bio}{' '}
+                            </h6>
                         </div>
                     </Transition>
                 </div>
