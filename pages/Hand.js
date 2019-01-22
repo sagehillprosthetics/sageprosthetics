@@ -84,17 +84,32 @@ class Hand extends Component {
                 });
 
                 return (
-                    <div style={{ margin: '1vw' }} key={design.name}>
+                    <div
+                        style={{
+                            margin: '1vw',
+                            //height: '60vh',
+                            border: '3px solid #416989',
+                            borderRadius: '10px',
+                            width: '25vw'
+                        }}
+                        key={design.name}
+                    >
                         <Card
                             heading={design.name}
                             description={<ul> {bulletpoints} </ul>}
                             link={<Anchor href={design.link} label="View on ThingiVerse" />}
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'space-around'
+                            }}
                         >
                             <Image
                                 cloudName="sageprosthetics"
                                 publicId={design.src + ''}
                                 width="248"
-                                height="186"
                                 crop="scale"
                             />
                         </Card>
