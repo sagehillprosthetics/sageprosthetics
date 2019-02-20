@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-import * as firebase from 'firebase';
 import { connect } from 'react-redux';
 import { getGroup } from '../redux/actions';
-import { Image, Transformation } from 'cloudinary-react';
 import * as types from '../redux/types.js';
 import NextSeo from 'next-seo';
-import { Player } from 'video-react';
-import ReactPlayer from 'react-player';
 
 import FormField from 'grommet/components/FormField';
 import Button from 'grommet/components/Button';
