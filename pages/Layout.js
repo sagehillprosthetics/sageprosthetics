@@ -73,6 +73,8 @@ class Layout extends Component {
             }
         });
 
+        console.log('Archive Active?', archiveactive);
+
         return (
             <Header
                 fixed={true}
@@ -137,7 +139,6 @@ class Layout extends Component {
                                         ? links.map(recipient => {
                                               let text = 'text';
                                               if (recipient === this.props.page) {
-                                                  archiveactive = true;
                                                   text = 'text active';
                                               }
                                               return (

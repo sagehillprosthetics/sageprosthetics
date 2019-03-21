@@ -2,21 +2,21 @@ import React, { Component } from 'react';
 import * as types from '../redux/types';
 import posed from 'react-pose';
 //import { Parallax, Background } from 'react-parallax';
-import { Parallax, ParallaxProvider, ParallaxBanner } from 'react-scroll-parallax';
+import { ParallaxProvider, ParallaxBanner } from 'react-scroll-parallax';
 import Accordion from 'grommet/components/Accordion';
 import AccordionPanel from 'grommet/components/AccordionPanel';
 import anime from 'animejs';
 import Transition from 'react-transition-group/Transition';
 import Particles from 'react-particles-js';
 import Iframe from 'react-iframe';
-import { VideoTag } from 'react-video-tag';
 import ReactPlayer from 'react-player';
 
 import '../styles.scss';
 
 class LandingPage extends Component {
     state = {
-        isVisible: false
+        isVisible: false,
+        expanded: false
     };
 
     static async getInitialProps({ req, store }) {
@@ -136,6 +136,7 @@ class LandingPage extends Component {
                     borderWidth: '0px',
                     width: '60%'
                 }}
+                onActive={() => this.setState({ expanded: !this.state.expanded })}
             >
                 <AccordionPanel
                     heading="Our Process"
@@ -183,6 +184,34 @@ class LandingPage extends Component {
                         case basis, we will work with recipients who would like a hand under other
                         circumstances, in particular, those who are within our geographic region.
                     </div>
+                </AccordionPanel>
+                <AccordionPanel heading="I have a 3D Printer and want to make hands like this, how do I start?">
+                    <div style={styles.dropdown}>
+                        <a href="http://enablealliance.org/education/">
+                            http://enablealliance.org/education/
+                        </a>
+                        <br />
+                        <br />
+                        This website is under construction and will be filled with valuable
+                        resources and information for those that are interested in learning more
+                        about getting e-NABLE projects into STEM based learning environments!
+                        <br />
+                        <br />
+                        For now, go to{' '}
+                        <a href="http://enablingthefuture.org">EnablingTheFuture.org</a> or{' '}
+                        <a href="http://e-nable.org">e-NABLE.org</a> or{' '}
+                        <a href="https://wikifactory.com/+e-NABLE">wikifactory.org/+e-NABLE</a>, get
+                        a badge for making the Phoenix, and you can eventually use{' '}
+                        <a href="https://www.enablewebcentral.com/">EnableWebCentral.com</a> to seek
+                        a recipient to work with.
+                        <br />
+                        <br />
+                        You should also get involved with the e-NABLE Facebook groups as those
+                        provide valuable information and discussion
+                    </div>
+                </AccordionPanel>
+                <AccordionPanel heading="I am an educator/student and want to start a chapter like this. How do I begin?">
+                    <div style={styles.dropdown}>Same answer as above!</div>
                 </AccordionPanel>
             </Accordion>
         );
@@ -328,7 +357,7 @@ class LandingPage extends Component {
                                             style={{
                                                 fontWeight: '700',
                                                 textAlign: 'center',
-                                                margin: '15% 0 10% 10px',
+                                                margin: '13% 0px 10% 10px',
                                                 zIndex: 30,
                                                 pointerEvents: 'none'
                                             }}
@@ -377,7 +406,11 @@ class LandingPage extends Component {
                                             backgroundColor: 'white',
                                             zIndex: '30',
                                             width: '100%',
-                                            justifyContent: 'center'
+                                            height: '70vh',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            display: 'flex',
+                                            flexDirection: 'row'
                                         }}
                                     >
                                         {this.renderAccordian()}
@@ -389,7 +422,7 @@ class LandingPage extends Component {
                         }
                     ]}
                     style={{
-                        height: '100vh'
+                        height: '113vh'
                     }}
                 />
                 <ParallaxBanner
