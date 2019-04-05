@@ -111,6 +111,7 @@ class Contact extends Component {
                                 border: 'none'
                             }}
                             type="text"
+                            name="name"
                             onChange={event => this.setState({ name: event.target.value })}
                         />
                     </FormField>
@@ -121,6 +122,7 @@ class Contact extends Component {
                                 border: 'none'
                             }}
                             type="email"
+                            name="email"
                             onChange={event => this.setState({ email: event.target.value })}
                         />
                     </FormField>
