@@ -5,8 +5,7 @@ import { Image, Video, Transformation } from 'cloudinary-react';
 import * as types from '../redux/types.js';
 import NextSeo from 'next-seo';
 
-import Card from 'grommet/components/Card';
-import Anchor from 'grommet/components/Anchor';
+import ReactPlayer from 'react-player';
 import Quote from 'grommet/components/Quote';
 import Paragraph from 'grommet/components/Paragraph';
 
@@ -158,13 +157,11 @@ class Recipient extends Component {
                             ? videos.map(key => {
                                   return (
                                       <div style={{ margin: '1%' }} key={key}>
-                                          <Video
-                                              cloudName="sageprosthetics"
-                                              publicId={key}
-                                              resourceType="video"
+                                          <ReactPlayer
+                                              width="338px"
+                                              height="190px"
                                               controls
-                                              height="190"
-                                              //crop="scale"
+                                              url={key}
                                           />
                                       </div>
                                   );

@@ -654,15 +654,11 @@ class LandingPage extends Component {
                                             alignItems: 'center'
                                         }}
                                     >
-                                        <Iframe
-                                            url="https://abc7.com/video/embed/?pid=5110086"
-                                            id="myId"
+                                        <ReactPlayer
                                             width="35vw"
                                             height="35vh"
-                                            className="myClassname"
-                                            display="initial"
-                                            position="relative"
-                                            allowFullScreen
+                                            controls
+                                            url="https://res.cloudinary.com/sageprosthetics/video/upload/v1558071592/something.mov"
                                         />
 
                                         <div style={{ width: '35vw', textAlign: 'left' }}>
