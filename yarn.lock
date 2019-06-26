@@ -6437,6 +6437,11 @@ react-desc@^1.0.0:
   resolved "https://registry.yarnpkg.com/react-desc/-/react-desc-1.4.1.tgz#99beddf7be2575902d159e919408d118823cc78b"
   integrity sha1-mb7d974ldZAtFZ6RlAjRGII8x4s=
 
+react-device-detect@^1.6.2:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/react-device-detect/-/react-device-detect-1.6.2.tgz#2587e4d1dc15bdfce7a1bf5417624ecd2a2fc31f"
+  integrity sha512-XIBgwIfpGAknm7tXe/YNbx4ieIR7IyFI3KNfSQk4UjHVy97UHe/nB7iJj8R/dDsI+I/ZzPR4HJ39Gh5tI4nhxw==
+
 react-dom@^16.2.0:
   version "16.6.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.6.1.tgz#5476e08694ae504ae385a28b62ecc4fe3a29add9"

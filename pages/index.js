@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
-import * as types from '../redux/types';
 import posed from 'react-pose';
-//import { Parallax, Background } from 'react-parallax';
 import { ParallaxProvider, ParallaxBanner } from 'react-scroll-parallax';
 import Accordion from 'grommet/components/Accordion';
 import AccordionPanel from 'grommet/components/AccordionPanel';
 import anime from 'animejs';
 import Transition from 'react-transition-group/Transition';
 import Particles from 'react-particles-js';
-import Iframe from 'react-iframe';
+import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
 import ReactPlayer from 'react-player';
 
 import '../styles.scss';
+import * as types from '../redux/types';
 
 class LandingPage extends Component {
     state = {
         isVisible: false,
-        expanded: false
+        expanded: false,
+        desktop: true
     };
 
     static async getInitialProps({ req, store }) {
@@ -64,8 +64,8 @@ class LandingPage extends Component {
     }
 
     componentDidMount() {
-        //console.log('componentdidmount');
-        this.setState({ isVisible: true });
+        console.log(isBrowser);
+        this.setState({ isVisible: true, desktop: isBrowser });
     }
 
     renderParticles = () => {
@@ -127,7 +127,7 @@ class LandingPage extends Component {
         );
     };
 
-    renderAccordian = () => {
+    renderAccordion = () => {
         return (
             <Accordion
                 style={{
@@ -261,9 +261,11 @@ class LandingPage extends Component {
                                         <img
                                             src="/static/1-21-squashed.png"
                                             style={{
-                                                margin: '150px 0 100px 0',
-                                                width: '50%',
-                                                height: '50%'
+                                                margin: this.state.desktop
+                                                    ? '10.5% 0 17% 0'
+                                                    : '70% 0 30% 0',
+                                                width: this.state.desktop ? '50%' : '90%',
+                                                height: this.state.desktop ? '50%' : '90%'
                                             }}
                                             alt="gradient"
                                         />
@@ -288,7 +290,9 @@ class LandingPage extends Component {
                                             fontWeight: '900',
                                             textAlign: 'center',
                                             fontSize: '7vh',
-                                            margin: '14% 0 0 10px',
+                                            margin: this.state.desktop
+                                                ? '14% 0 0 10px'
+                                                : '30vw 0 0 10px',
                                             opacity: 0
                                         }}
                                         className="heading"
@@ -314,7 +318,7 @@ class LandingPage extends Component {
                         }
                     ]}
                     style={{
-                        height: '75vh'
+                        height: this.state.desktop ? '75vh' : '90vh'
                     }}
                 />
 
@@ -357,7 +361,9 @@ class LandingPage extends Component {
                                             style={{
                                                 fontWeight: '700',
                                                 textAlign: 'center',
-                                                margin: '13% 0px 10% 10px',
+                                                margin: this.state.desktop
+                                                    ? '13% 0px 10% 10px'
+                                                    : '40% 0px 20% 10px',
                                                 zIndex: 30,
                                                 pointerEvents: 'none'
                                             }}
@@ -374,7 +380,9 @@ class LandingPage extends Component {
                                                             '-webkit-linear-gradient(left, #9357cc 30%,#2989d8 50%,#2cc99d 70%)',
                                                         WebkitBackgroundClip: 'text',
                                                         WebkitTextFillColor: 'transparent',
-                                                        fontSize: '6vh',
+                                                        fontSize: this.state.desktop
+                                                            ? '6vh'
+                                                            : '350%',
                                                         letterSpacing: '0.1em'
                                                     }}
                                                     className="subheading"
@@ -389,9 +397,11 @@ class LandingPage extends Component {
                                             >
                                                 <div
                                                     style={{
-                                                        fontSize: '10vh',
                                                         lineHeight: '100%',
-                                                        letterSpacing: '0.05em'
+                                                        letterSpacing: '0.05em',
+                                                        fontSize: this.state.desktop
+                                                            ? '10vh'
+                                                            : '500%'
                                                     }}
                                                     className="mainheading"
                                                 >
@@ -406,14 +416,14 @@ class LandingPage extends Component {
                                             backgroundColor: 'white',
                                             zIndex: '30',
                                             width: '100%',
-                                            height: '70vh',
+                                            height: this.state.desktop ? '70vh' : '40vh',
                                             justifyContent: 'center',
                                             alignItems: 'center',
                                             display: 'flex',
                                             flexDirection: 'row'
                                         }}
                                     >
-                                        {this.renderAccordian()}
+                                        {this.renderAccordion()}
                                     </div>
                                 </div>
                             ),
@@ -422,7 +432,7 @@ class LandingPage extends Component {
                         }
                     ]}
                     style={{
-                        height: '113vh'
+                        height: this.state.desktop ? '113vh' : '84vh'
                     }}
                 />
                 <ParallaxBanner
@@ -435,7 +445,7 @@ class LandingPage extends Component {
                                         //     '/static/backgroundtile.png'
                                         // ),
                                         background: '#000000',
-                                        height: '100%',
+                                        height: this.state.desktop ? '100%' : '78%',
                                         width: '100vw'
                                         //opacity: '0.7'
                                     }}
@@ -448,15 +458,17 @@ class LandingPage extends Component {
                                         }}
                                         alt="video"
                                     />
-                                    <div
-                                        style={{
-                                            width: '100%',
-                                            height: '100%',
-                                            zIndex: '2',
-                                            background: '#000000',
-                                            opacity: '0.7'
-                                        }}
-                                    />
+                                    {this.state.desktop ? (
+                                        <div
+                                            style={{
+                                                width: '100%',
+                                                height: '100%',
+                                                zIndex: '2',
+                                                background: '#000000',
+                                                opacity: '0.7'
+                                            }}
+                                        />
+                                    ) : null}
                                 </div>
                             ),
                             amount: 0.1,
@@ -470,15 +482,14 @@ class LandingPage extends Component {
                                         alignItems: 'center',
                                         flexDirection: 'column',
                                         width: '100vw',
-                                        color: '#ffffff',
+                                        color: '#FFFFFF',
                                         textAlign: 'center',
                                         margin: '15% 0 0 10px'
-                                        //backgroundColor: '#000000'
                                     }}
                                 >
                                     <div
                                         style={{
-                                            fontSize: '9vh',
+                                            fontSize: this.state.desktop ? '9vh' : '11vw',
                                             fontWeight: '700',
                                             lineHeight: '100%',
                                             letterSpacing: '-0.05em'
@@ -488,7 +499,7 @@ class LandingPage extends Component {
                                     </div>
                                     <div
                                         style={{
-                                            fontSize: '2.5vh',
+                                            fontSize: this.state.desktop ? '2.5vh' : '3.5vw',
                                             fontWeight: '500',
                                             lineHeight: '110%',
                                             letterSpacing: '0.2em'
@@ -553,7 +564,9 @@ class LandingPage extends Component {
                                         flexDirection: 'column',
                                         width: '100vw',
                                         textAlign: 'center',
-                                        margin: '15% 0 0 10px'
+                                        margin: this.state.desktop
+                                            ? '15% 0 0 10px'
+                                            : '20vw 0 0 10px'
                                         //backgroundColor: '#000000'
                                     }}
                                 >
@@ -564,7 +577,7 @@ class LandingPage extends Component {
                                                 '-webkit-linear-gradient(right, #9357cc 30%,#2989d8 50%,#2cc99d 70%)',
                                             WebkitBackgroundClip: 'text',
                                             WebkitTextFillColor: 'transparent',
-                                            fontSize: '6vh',
+                                            fontSize: this.state.desktop ? '6vh' : '11vw',
                                             letterSpacing: '0.1em',
                                             fontWeight: '700',
                                             marginBottom: '3vh'
@@ -706,7 +719,7 @@ class LandingPage extends Component {
                         }
                     ]}
                     style={{
-                        height: '1200px'
+                        height: this.state.desktop ? '1200px' : '200vw'
                     }}
                 />
             </ParallaxProvider>
