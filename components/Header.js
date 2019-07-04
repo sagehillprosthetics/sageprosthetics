@@ -15,8 +15,6 @@ class DesktopHeader extends Component {
         const { archive, links } = this.props.recipients;
         let archiveactive = false;
 
-        console.log(this.state.dropdown);
-
         if (archive) {
             archive.forEach(recipient => {
                 if (recipient === this.props.page) {
@@ -40,8 +38,6 @@ class DesktopHeader extends Component {
                 projectsactive = true;
             }
         });
-
-        console.log('Archive Active?', archiveactive);
 
         return (
             <Header
@@ -243,7 +239,7 @@ class DesktopHeader extends Component {
                                         }
                                         return (
                                             <Link
-                                                href={`/projects/${project}`}
+                                                href={`/project/${project}`}
                                                 key={project}
                                                 passHref
                                             >

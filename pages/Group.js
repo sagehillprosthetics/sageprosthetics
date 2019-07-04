@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import * as firebase from 'firebase';
-//import * as admin from 'firebase-admin';
+import firebase from 'firebase/app';
+import 'firebase/database';
 import { connect } from 'react-redux';
-import { Image, Transformation } from 'cloudinary-react';
 import anime from 'animejs';
 import Transition from 'react-transition-group/Transition';
 import NextSeo from 'next-seo';
@@ -19,10 +18,11 @@ class Group extends Component {
             payload: 't'
         });
 
+        let db = firebase;
+
         const links = [];
         const archive = [];
-        req.firebaseServer
-            .database()
+        db.database()
             .ref('recipients')
             .once('value')
             .then(datasnapshot => {
@@ -36,8 +36,7 @@ class Group extends Component {
             });
 
         const project = [];
-        req.firebaseServer
-            .database()
+        db.database()
             .ref('projects')
             .once('value')
             .then(datasnapshot => {
@@ -47,8 +46,7 @@ class Group extends Component {
             });
 
         const faculty = [];
-        req.firebaseServer
-            .database()
+        db.database()
             .ref('faculty')
             .once('value')
             .then(datasnapshot => {
@@ -62,7 +60,7 @@ class Group extends Component {
             });
 
         const reformat = [];
-        await req.firebaseServer
+        await db
             .database()
             .ref('group')
             .once('value')
@@ -142,7 +140,6 @@ class Group extends Component {
     };
 
     render() {
-        //console.log(this.state);
         return (
             <div style={{ margin: '0% 15% 0% 15%' }}>
                 <NextSeo

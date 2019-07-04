@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Image, Video, Transformation } from 'cloudinary-react';
-import * as types from '../redux/types';
+import * as types from '../../redux/types';
+import firebase from 'firebase/app';
+import 'firebase/database';
 import NextSeo from 'next-seo';
-import Person from '../components/Person';
+import Person from '../../components/Person';
 
 class Project extends Component {
     static async getInitialProps({ req, query, store }) {
         let project = {};
 
+        let db = firebase;
+
         const projects = [];
-        req.firebaseServer
-            .database()
+        db.database()
             .ref('projects')
             .once('value')
             .then(datasnapshot => {
@@ -24,8 +27,7 @@ class Project extends Component {
             });
 
         const reformat = {};
-        req.firebaseServer
-            .database()
+        db.database()
             .ref('group')
             .once('value')
             .then(datasnapshot => {
@@ -35,8 +37,7 @@ class Project extends Component {
             });
 
         const archivereformat = {};
-        req.firebaseServer
-            .database()
+        db.database()
             .ref('group-archive')
             .once('value')
             .then(datasnapshot => {
@@ -47,7 +48,7 @@ class Project extends Component {
 
         const links = [];
         const archive = [];
-        await req.firebaseServer
+        await db
             .database()
             .ref('recipients')
             .once('value')

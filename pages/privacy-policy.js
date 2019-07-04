@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import * as types from '../redux/types.js';
 import NextSeo from 'next-seo';
+import firebase from 'firebase/app';
+import 'firebase/database';
 
 class PrivacyPolicy extends Component {
     static async getInitialProps({ req, store }) {
@@ -9,9 +11,10 @@ class PrivacyPolicy extends Component {
             payload: '~'
         });
 
+        let db = firebase;
+
         const project = [];
-        req.firebaseServer
-            .database()
+        db.database()
             .ref('projects')
             .once('value')
             .then(datasnapshot => {
@@ -22,7 +25,7 @@ class PrivacyPolicy extends Component {
 
         const links = [];
         const archive = [];
-        await req.firebaseServer
+        await db
             .database()
             .ref('recipients')
             .once('value')

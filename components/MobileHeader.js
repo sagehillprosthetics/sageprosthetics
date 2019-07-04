@@ -46,8 +46,6 @@ class MobileHeader extends Component {
     }
 
     renderPanel() {
-        console.log(this.projects);
-
         let iterate = navlinks;
         if (this.state.show === 2) {
             iterate = this.links;
@@ -107,7 +105,6 @@ class MobileHeader extends Component {
     }
 
     render() {
-        console.log(this.state.show);
         return (
             <div style={{ padding: '30px', height: '20vw', zIndex: 1, width: '100vw' }}>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>

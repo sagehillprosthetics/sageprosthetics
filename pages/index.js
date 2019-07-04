@@ -6,6 +6,8 @@ import AccordionPanel from 'grommet/components/AccordionPanel';
 import anime from 'animejs';
 import Transition from 'react-transition-group/Transition';
 import Particles from 'react-particles-js';
+import firebase from 'firebase/app';
+import 'firebase/database';
 import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
 import ReactPlayer from 'react-player';
 
@@ -25,9 +27,10 @@ class LandingPage extends Component {
             payload: '~'
         });
 
+        let db = firebase;
+
         const project = [];
-        req.firebaseServer
-            .database()
+        db.database()
             .ref('projects')
             .once('value')
             .then(datasnapshot => {
@@ -38,7 +41,7 @@ class LandingPage extends Component {
 
         const links = [];
         const archive = [];
-        await req.firebaseServer
+        await db
             .database()
             .ref('recipients')
             .once('value')
@@ -64,7 +67,6 @@ class LandingPage extends Component {
     }
 
     componentDidMount() {
-        console.log(isBrowser);
         this.setState({ isVisible: true, desktop: isBrowser });
     }
 
@@ -218,11 +220,6 @@ class LandingPage extends Component {
     };
 
     render() {
-        const Animation = posed.div({
-            visible: { opacity: 1 },
-            hidden: { opacity: 0 }
-        });
-
         return (
             <ParallaxProvider>
                 <title> Sage Prosthetics </title>
@@ -735,14 +732,12 @@ const Box = posed.button({
         backgroundColor: 'rgb(0,0,0,0)'
     },
     hover: {
-        //borderColor: '#000000',
         color: '#000000',
         backgroundColor: '#ffffff'
     }
 });
 
 const animateParticles = particles => {
-    //console.log('particles');
     return anime({
         targets: particles,
         delay: 500,
@@ -786,7 +781,6 @@ const animateSubheadingIn = subheading => {
 };
 
 const animatePrinterIn = printer => {
-    //console.log('something happened');
     return anime({
         targets: printer,
         opacity: {
@@ -802,7 +796,6 @@ const animatePrinterIn = printer => {
 };
 
 const animateHeadingIn = heading => {
-    //console.log('something happened');
     return anime({
         targets: heading,
         opacity: {

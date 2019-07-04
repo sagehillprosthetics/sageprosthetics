@@ -1,5 +1,4 @@
 import React from 'react';
-import { Router } from '../routes';
 
 //Custom error page --> DO NOT RENAME
 const ErrorPage = props => {

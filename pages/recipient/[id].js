@@ -1,23 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getGroup } from '../redux/actions';
 import { Image, Video, Transformation } from 'cloudinary-react';
-import * as types from '../redux/types.js';
+import * as types from '../../redux/types.js';
 import NextSeo from 'next-seo';
+import firebase from 'firebase/app';
+import 'firebase/database';
 
 import ReactPlayer from 'react-player';
 import Quote from 'grommet/components/Quote';
 import Paragraph from 'grommet/components/Paragraph';
 
-import Person from '../components/Person';
+import Person from '../../components/Person';
 
 class Recipient extends Component {
     static async getInitialProps({ req, query, store }) {
         let recipient = {};
 
+        let db = firebase;
+
         const project = [];
-        req.firebaseServer
-            .database()
+        db.database()
             .ref('projects')
             .once('value')
             .then(datasnapshot => {
@@ -27,8 +29,7 @@ class Recipient extends Component {
             });
 
         const reformat = {};
-        req.firebaseServer
-            .database()
+        db.database()
             .ref('group')
             .once('value')
             .then(datasnapshot => {
@@ -38,8 +39,7 @@ class Recipient extends Component {
             });
 
         const archivereformat = {};
-        req.firebaseServer
-            .database()
+        db.database()
             .ref('group-archive')
             .once('value')
             .then(datasnapshot => {
@@ -50,7 +50,7 @@ class Recipient extends Component {
 
         const links = [];
         const archive = [];
-        await req.firebaseServer
+        await db
             .database()
             .ref('recipients')
             .once('value')

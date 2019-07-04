@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Image, Transformation } from 'cloudinary-react';
+import firebase from 'firebase/app';
+import 'firebase/database';
 import Card from 'grommet/components/Card';
 import Anchor from 'grommet/components/Anchor';
 import NextSeo from 'next-seo';
@@ -15,9 +17,10 @@ class Hand extends Component {
             payload: 'h'
         });
 
+        let db = firebase;
+
         const project = [];
-        req.firebaseServer
-            .database()
+        db.database()
             .ref('projects')
             .once('value')
             .then(datasnapshot => {
@@ -27,8 +30,7 @@ class Hand extends Component {
             });
 
         const pictures = [];
-        req.firebaseServer
-            .database()
+        db.database()
             .ref('hands')
             .once('value')
             .then(datasnapshot => {
@@ -39,7 +41,7 @@ class Hand extends Component {
 
         const links = [];
         const archive = [];
-        await req.firebaseServer
+        await db
             .database()
             .ref('recipients')
             .once('value')

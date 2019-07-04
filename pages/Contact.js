@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import firebase from 'firebase/app';
+import 'firebase/database';
 import { connect } from 'react-redux';
 import { getGroup } from '../redux/actions';
 import * as types from '../redux/types.js';
@@ -14,9 +16,10 @@ class Contact extends Component {
             payload: 'c'
         });
 
+        let db = firebase;
+
         const project = [];
-        req.firebaseServer
-            .database()
+        db.database()
             .ref('projects')
             .once('value')
             .then(datasnapshot => {
@@ -27,7 +30,7 @@ class Contact extends Component {
 
         const links = [];
         const archive = [];
-        await req.firebaseServer
+        await db
             .database()
             .ref('recipients')
             .once('value')
@@ -75,13 +78,9 @@ class Contact extends Component {
         return <Button label="Submit" accent style={{ margin: '20px 45% 0% 45%', width: '10%' }} />;
     }
 
-    componentDidMount() {
-        //this.refs.player.controls = false;
-        //console.log(this.refs.player.getState());
-    }
+    componentDidMount() {}
 
     render() {
-        //console.log(this.state.message);
         return (
             <div style={{ margin: '0% 15% 0% 15%' }}>
                 <NextSeo

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { sha256 } from 'js-sha256';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/database';
 import { Image } from 'cloudinary-react';
 
 import PasswordInput from 'grommet/components/PasswordInput';
@@ -24,9 +25,10 @@ class AdminPage extends Component {
             payload: '~'
         });
 
+        let db = firebase;
+
         const project = [];
-        req.firebaseServer
-            .database()
+        db.database()
             .ref('projects')
             .once('value')
             .then(datasnapshot => {
@@ -37,7 +39,7 @@ class AdminPage extends Component {
 
         const links = [];
         const archive = [];
-        await req.firebaseServer
+        await db
             .database()
             .ref('recipients')
             .once('value')

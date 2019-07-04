@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import * as firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/database';
 import { connect } from 'react-redux';
 import { Image, Transformation } from 'cloudinary-react';
 import NextSeo from 'next-seo';
@@ -21,16 +22,10 @@ class Gallery extends Component {
             payload: 'g'
         });
 
-        let db = null;
-        if (isServer) {
-            db = req.firebaseServer;
-        } else {
-            db = firebase;
-        }
+        let db = firebase;
 
         const project = [];
-        req.firebaseServer
-            .database()
+        db.database()
             .ref('projects')
             .once('value')
             .then(datasnapshot => {
@@ -41,8 +36,7 @@ class Gallery extends Component {
 
         const links = [];
         const archive = [];
-        req.firebaseServer
-            .database()
+        db.database()
             .ref('recipients')
             .once('value')
             .then(datasnapshot => {
