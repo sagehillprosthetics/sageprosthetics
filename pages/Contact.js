@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { getGroup } from '../redux/actions';
 import * as types from '../redux/types.js';
 import NextSeo from 'next-seo';
+import { isBrowser } from 'react-device-detect';
 
 import FormField from 'grommet/components/FormField';
 import Button from 'grommet/components/Button';
@@ -58,8 +59,13 @@ class Contact extends Component {
     state = {
         name: '',
         email: '',
-        message: ''
+        message: '',
+        desktop: ''
     };
+
+    componentDidMount() {
+        this.setState({ desktop: isBrowser });
+    }
 
     renderButtons() {
         if (this.state.name && this.state.email && this.state.message) {
@@ -78,11 +84,9 @@ class Contact extends Component {
         return <Button label="Submit" accent style={{ margin: '20px 45% 0% 45%', width: '10%' }} />;
     }
 
-    componentDidMount() {}
-
     render() {
         return (
-            <div style={{ margin: '0% 15% 0% 15%' }}>
+            <div style={{ margin: this.state.desktop ? '0% 15% 0% 15%' : '0 0px 0 0px' }}>
                 <NextSeo
                     config={{
                         title: 'Contact | Sage Prosthetics',

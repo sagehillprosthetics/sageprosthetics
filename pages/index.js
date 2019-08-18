@@ -13,6 +13,7 @@ import ReactPlayer from 'react-player';
 
 import '../styles.scss';
 import * as types from '../redux/types';
+import { isNullOrUndefined } from 'util';
 
 class LandingPage extends Component {
     state = {
@@ -130,15 +131,22 @@ class LandingPage extends Component {
     };
 
     renderAccordion = () => {
+        console.log(this.state.desktop);
         return (
             <Accordion
                 style={{
                     fontWeight: '400',
-                    margin: '0 20% 0 20%',
+                    margin: this.state.desktop
+                        ? '0 20% 0 20%'
+                        : this.state.expanded
+                        ? '10vh 0px 0px 0px'
+                        : '-16vh 0px 0px 0px',
                     borderWidth: '0px',
                     width: '60%'
                 }}
-                onActive={() => this.setState({ expanded: !this.state.expanded })}
+                onActive={event => {
+                    this.setState({ expanded: !isNullOrUndefined(event) });
+                }}
             >
                 <AccordionPanel
                     heading="Our Process"
@@ -344,7 +352,13 @@ class LandingPage extends Component {
                                         width: '100vw'
                                     }}
                                 >
-                                    <div style={{ width: '100vw', padding: '0px', margin: '0px' }}>
+                                    <div
+                                        style={{
+                                            width: '100vw',
+                                            padding: '0px',
+                                            marginTop: this.state.desktop ? '0px' : '20vh'
+                                        }}
+                                    >
                                         <div
                                             style={{
                                                 position: 'absolute',
@@ -398,7 +412,7 @@ class LandingPage extends Component {
                                                         letterSpacing: '0.05em',
                                                         fontSize: this.state.desktop
                                                             ? '10vh'
-                                                            : '500%'
+                                                            : '300%'
                                                     }}
                                                     className="mainheading"
                                                 >
@@ -412,8 +426,8 @@ class LandingPage extends Component {
                                         style={{
                                             backgroundColor: 'white',
                                             zIndex: '30',
-                                            width: '100%',
-                                            height: this.state.desktop ? '70vh' : '40vh',
+                                            width: this.state.desktop ? '100%' : '130%',
+                                            height: this.state.desktop ? '70vh' : '100vh',
                                             justifyContent: 'center',
                                             alignItems: 'center',
                                             display: 'flex',
@@ -429,7 +443,11 @@ class LandingPage extends Component {
                         }
                     ]}
                     style={{
-                        height: this.state.desktop ? '113vh' : '84vh'
+                        height: this.state.desktop
+                            ? '113vh'
+                            : this.state.expanded
+                            ? '180vh'
+                            : '150vh'
                     }}
                 />
                 <ParallaxBanner
@@ -438,20 +456,17 @@ class LandingPage extends Component {
                             children: (
                                 <div
                                     style={{
-                                        // backgroundImage: url(
-                                        //     '/static/backgroundtile.png'
-                                        // ),
                                         background: '#000000',
-                                        height: this.state.desktop ? '100%' : '78%',
+                                        height: this.state.desktop ? '100%' : '70vw',
                                         width: '100vw'
-                                        //opacity: '0.7'
                                     }}
                                 >
                                     <img
                                         src="/static/video.jpg"
                                         style={{
                                             width: '100vw',
-                                            opacity: '0.7'
+                                            opacity: '0.7',
+                                            marginTop: this.state.desktop ? '0px' : '14vw'
                                         }}
                                         alt="video"
                                     />
@@ -481,7 +496,9 @@ class LandingPage extends Component {
                                         width: '100vw',
                                         color: '#FFFFFF',
                                         textAlign: 'center',
-                                        margin: '15% 0 0 10px'
+                                        margin: this.state.desktop
+                                            ? '15% 0 0 10px'
+                                            : '30vw 0 0 10px'
                                     }}
                                 >
                                     <div
@@ -530,7 +547,7 @@ class LandingPage extends Component {
                         }
                     ]}
                     style={{
-                        height: '600px'
+                        height: this.state.desktop ? '600px' : '70vw'
                     }}
                 />
                 <ParallaxBanner
@@ -561,9 +578,7 @@ class LandingPage extends Component {
                                         flexDirection: 'column',
                                         width: '100vw',
                                         textAlign: 'center',
-                                        margin: this.state.desktop
-                                            ? '15% 0 0 10px'
-                                            : '20vw 0 0 10px'
+                                        margin: this.state.desktop ? '15% 0 0 10px' : '20vw 0 0 0'
                                         //backgroundColor: '#000000'
                                     }}
                                 >
@@ -577,7 +592,8 @@ class LandingPage extends Component {
                                             fontSize: this.state.desktop ? '6vh' : '11vw',
                                             letterSpacing: '0.1em',
                                             fontWeight: '700',
-                                            marginBottom: '3vh'
+                                            marginBottom: '3vh',
+                                            marginTop: this.state.desktop ? '0px' : '40vw'
                                         }}
                                         className="subheading"
                                     >
@@ -587,20 +603,25 @@ class LandingPage extends Component {
                                     <div
                                         style={{
                                             display: 'flex',
-                                            flexDirection: 'row',
+                                            flexDirection: this.state.desktop ? 'row' : 'column',
                                             justifyContent: 'space-around',
-                                            width: '80vw',
+                                            width: this.state.desktop ? '80vw' : '95vw',
                                             alignItems: 'center'
                                         }}
                                     >
                                         <ReactPlayer
-                                            width="35vw"
-                                            height="35vh"
+                                            width={this.state.desktop ? '35vw' : '85vw'}
+                                            height={this.state.desktop ? '35vh' : null}
                                             controls
                                             url="https://ns8-ns-twc-com.akamaized.net/news/CA/2019/02/PKG%20_2019021_3634813_20190219%20ZT%20HIGH%20SCHOOL%20PROSTHETICS%20DIRTY_2182019%208-40-18%20PM.mp4"
                                         />
 
-                                        <div style={{ width: '35vw', textAlign: 'left' }}>
+                                        <div
+                                            style={{
+                                                width: this.state.desktop ? '35vw' : '85vw',
+                                                textAlign: 'left'
+                                            }}
+                                        >
                                             <div>
                                                 LOS ANGELES, CA – A teen is lending a helping hand
                                                 by creating prosthetics for those in need.
@@ -658,20 +679,25 @@ class LandingPage extends Component {
                                     <div
                                         style={{
                                             display: 'flex',
-                                            flexDirection: 'row',
+                                            flexDirection: this.state.desktop ? 'row' : 'column',
                                             justifyContent: 'space-around',
-                                            width: '80vw',
+                                            width: this.state.desktop ? '80vw' : '95vw',
                                             alignItems: 'center'
                                         }}
                                     >
                                         <ReactPlayer
-                                            width="35vw"
-                                            height="35vh"
+                                            width={this.state.desktop ? '35vw' : '85vw'}
+                                            height={this.state.desktop ? '35vh' : null}
                                             controls
                                             url="https://res.cloudinary.com/sageprosthetics/video/upload/v1558071592/something.mov"
                                         />
 
-                                        <div style={{ width: '35vw', textAlign: 'left' }}>
+                                        <div
+                                            style={{
+                                                width: this.state.desktop ? '35vw' : '85vw',
+                                                textAlign: 'left'
+                                            }}
+                                        >
                                             <div>
                                                 NEWPORT BEACH, Calif. (KABC) -- Karishma Raghuram,
                                                 17, is a senior at Sage Hill School in Newport Beach
@@ -716,7 +742,7 @@ class LandingPage extends Component {
                         }
                     ]}
                     style={{
-                        height: this.state.desktop ? '1200px' : '200vw'
+                        height: this.state.desktop ? '1200px' : '480vw'
                     }}
                 />
             </ParallaxProvider>

@@ -15,6 +15,7 @@ import MobileHeader from '../components/MobileHeader';
 
 class Layout extends Component {
     renderFooter() {
+        console.log('browser');
         return (
             <Footer
                 justify="between"
@@ -29,12 +30,33 @@ class Layout extends Component {
                     Sage Prosthetics
                 </Title>
                 <Box direction="row" align="center" pad={{ between: 'medium' }}>
-                    <Paragraph margin="none">© 2018 Sage Prosthetics</Paragraph>
+                    <Paragraph margin="none">© 2019 Sage Prosthetics</Paragraph>
                     <Anchor href="/privacy-policy">Privacy Policy</Anchor>
                     <Anchor href="/contact">Contact</Anchor>
                     <Anchor href="/">About</Anchor>
                 </Box>
             </Footer>
+        );
+    }
+
+    renderMobileFooter() {
+        console.log('Mobile');
+        return (
+            <div
+                style={{
+                    width: '100%',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'center'
+                }}
+            >
+                <Box direction="row" align="center" justify="center">
+                    <Paragraph margin="none">© 2019 Sage Prosthetics</Paragraph>
+                    <Anchor href="/privacy-policy">Privacy Policy</Anchor>
+                    <Anchor href="/contact">Contact</Anchor>
+                    <Anchor href="/">About</Anchor>
+                </Box>
+            </div>
         );
     }
 
@@ -68,7 +90,8 @@ class Layout extends Component {
                         {this.props.children}
                     </div>
 
-                    {this.renderFooter()}
+                    <BrowserView>{this.renderFooter()}</BrowserView>
+                    <MobileView>{this.renderMobileFooter()}</MobileView>
                 </Article>
             </App>
         );

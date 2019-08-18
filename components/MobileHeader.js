@@ -38,7 +38,7 @@ class MobileHeader extends Component {
             this.projects = this.props.projects.map(project => {
                 return {
                     text: project,
-                    link: `/projects/${project}`,
+                    link: `/project/${project}`,
                     page: project
                 };
             });
@@ -64,7 +64,7 @@ class MobileHeader extends Component {
                                 onClick={
                                     object.onClick
                                         ? () => this.setState({ show: object.onClick })
-                                        : null
+                                        : () => this.setState({ show: 0 })
                                 }
                             >
                                 <div
@@ -127,6 +127,7 @@ class MobileHeader extends Component {
                             size="xlarge"
                             onClick={() => this.setState({ show: this.state.show === 0 ? 1 : 0 })}
                             colorIndex="brand"
+                            style={{ marginRight: '30px' }}
                         />
                     </div>
                     {this.state.show !== 0 ? this.renderPanel() : null}

@@ -15,7 +15,7 @@
         "grommet": "^1.11.0",
         "har-validator": "^5.1.3",
         "js-sha256": "^0.9.0",
-        "next": "8.1.1-canary.61",
+        "next": "^9.0.3",
         "next-redux-wrapper": "^2.0.0",
         "next-routes": "^1.4.2",
         "next-seo": "^1.6.0",

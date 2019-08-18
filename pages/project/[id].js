@@ -5,6 +5,8 @@ import * as types from '../../redux/types';
 import firebase from 'firebase/app';
 import 'firebase/database';
 import NextSeo from 'next-seo';
+import { isBrowser } from 'react-device-detect';
+
 import Person from '../../components/Person';
 
 class Project extends Component {
@@ -62,6 +64,8 @@ class Project extends Component {
                 });
             });
 
+        console.log(projects);
+
         store.dispatch({
             type: types.GET_RECIPIENTS,
             payload: { links, archive }
@@ -84,8 +88,13 @@ class Project extends Component {
     }
 
     state = {
-        selectedImage: ''
+        selectedImage: '',
+        desktop: ''
     };
+
+    componentDidMount() {
+        this.setState({ desktop: isBrowser });
+    }
 
     renderGroup() {
         let group = null;
@@ -98,7 +107,7 @@ class Project extends Component {
                         style={{
                             display: 'flex',
                             flexDirection: 'row',
-                            justifyContent: 'space-between',
+                            justifyContent: 'space-around',
                             flexWrap: 'wrap'
                         }}
                     >
@@ -188,9 +197,9 @@ class Project extends Component {
                     style={{
                         display: 'flex',
                         //flexWrap: 'wrap',
-                        flexDirection: 'row',
+                        flexDirection: this.state.desktop ? 'row' : 'column',
                         justifyContent: 'center',
-                        margin: '0 15% 0 15%'
+                        margin: this.state.desktop ? '0 15% 0 15%' : '10px'
                     }}
                 >
                     <Image
