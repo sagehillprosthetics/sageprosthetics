@@ -5,7 +5,6 @@ import * as types from '../../redux/types.js';
 import NextSeo from 'next-seo';
 import firebase from 'firebase/app';
 import 'firebase/database';
-import { isBrowser } from 'react-device-detect';
 
 import ReactPlayer from 'react-player';
 import Quote from 'grommet/components/Quote';
@@ -88,15 +87,6 @@ class Recipient extends Component {
             type: types.GET_GROUP,
             payload: { ...reformat, ...archivereformat }
         });
-    }
-
-    state = {
-        selectedImage: '',
-        desktop: ''
-    };
-
-    componentDidMount() {
-        this.setState({ desktop: isBrowser });
     }
 
     renderGroup() {
@@ -198,9 +188,9 @@ class Recipient extends Component {
                     style={{
                         display: 'flex',
                         //flexWrap: 'wrap',
-                        flexDirection: this.state.desktop ? 'row' : 'column',
+                        flexDirection: this.props.desktop ? 'row' : 'column',
                         justifyContent: 'center',
-                        margin: this.state.desktop ? '0 15% 0 15%' : '10px'
+                        margin: this.props.desktop ? '0 15% 0 15%' : '10px'
                     }}
                 >
                     <Image
@@ -211,7 +201,7 @@ class Recipient extends Component {
                         <Transformation width="300" height="400" crop="scale" />
                     </Image>
                     <div
-                        style={{ marginLeft: '10%', marginTop: this.state.desktop ? '0px' : '2vw' }}
+                        style={{ marginLeft: '10%', marginTop: this.props.desktop ? '0px' : '2vw' }}
                     >
                         {this.props.recipient.text}
                         {this.props.recipient.quote ? (

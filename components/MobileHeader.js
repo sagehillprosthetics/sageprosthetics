@@ -55,7 +55,7 @@ class MobileHeader extends Component {
             iterate = this.projects;
         }
         return (
-            <div style={{ width: '100%' }}>
+            <div style={{ width: '100%', backgroundColor: '#FFFFFF', marginTop: '-10px' }}>
                 {iterate.map(object => {
                     return (
                         <Link href={object.link} key={object.text} passHref>
@@ -106,7 +106,14 @@ class MobileHeader extends Component {
 
     render() {
         return (
-            <div style={{ padding: '30px', height: '20vw', zIndex: 1, width: '100vw' }}>
+            <div
+                style={{
+                    margin: '-2vh 0px 2vh 0px',
+                    height: '20vw',
+                    zIndex: 1,
+                    width: '100vw'
+                }}
+            >
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                     <div
                         style={{

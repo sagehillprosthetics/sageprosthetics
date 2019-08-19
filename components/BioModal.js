@@ -2,7 +2,6 @@ import React from 'react';
 import { Image, Transformation } from 'cloudinary-react';
 import anime from 'animejs';
 import Transition from 'react-transition-group/Transition';
-import { isBrowser } from 'react-device-detect';
 
 import Person from './Person';
 
@@ -40,9 +39,9 @@ const BioModal = props => {
                     <Transition onEnter={modalEnter} timeout={0} in={props.show} onExit={modalExit}>
                         <div
                             style={{
-                                height: isBrowser ? '70vh' : '150vh',
+                                height: props.desktop ? '70vh' : '150vh',
                                 width: '70vw',
-                                marginTop: isBrowser ? 150 : 20 + window.scrollY + 'px',
+                                marginTop: props.desktop ? 150 : 20 + window.scrollY + 'px',
                                 backgroundColor: 'white',
                                 borderRadius: '20px',
                                 boxShadow: 'true',
@@ -60,7 +59,7 @@ const BioModal = props => {
                                 src={props.person.src}
                                 name={props.person.name}
                                 faculty
-                                horizontal={isBrowser}
+                                horizontal={props.desktop}
                             />
                             <h6 style={{ marginTop: '4vh', fontSize: '2vh' }}>
                                 &emsp;&ensp;

@@ -7,7 +7,6 @@ import Paragraph from 'grommet/components/Paragraph';
 import Anchor from 'grommet/components/Anchor';
 import Article from 'grommet/components/Article';
 import { connect } from 'react-redux';
-import { BrowserView, MobileView, isBrowser } from 'react-device-detect';
 
 import '../styles.scss';
 import DesktopHeader from '../components/Header';
@@ -15,7 +14,6 @@ import MobileHeader from '../components/MobileHeader';
 
 class Layout extends Component {
     renderFooter() {
-        console.log('browser');
         return (
             <Footer
                 justify="between"
@@ -40,7 +38,6 @@ class Layout extends Component {
     }
 
     renderMobileFooter() {
-        console.log('Mobile');
         return (
             <div
                 style={{
@@ -61,6 +58,7 @@ class Layout extends Component {
     }
 
     render() {
+        console.log(this.props.desktop);
         return (
             <App style={{ maxWidth: '100vw' }}>
                 <Article
@@ -69,29 +67,26 @@ class Layout extends Component {
                         padding: '0px'
                     }}
                 >
-                    <BrowserView>
+                    {this.props.desktop ? (
                         <DesktopHeader
                             recipients={this.props.recipients}
                             projects={this.props.projects}
                             page={this.props.page}
                             container={this}
                         />
-                    </BrowserView>
-
-                    <MobileView>
+                    ) : (
                         <MobileHeader
                             recipients={this.props.recipients}
                             projects={this.props.projects}
                             page={this.props.page}
                         />
-                    </MobileView>
+                    )}
 
-                    <div style={{ minHeight: isBrowser ? '81vh' : '60vh' }}>
+                    <div style={{ minHeight: this.props.desktop ? '81vh' : '60vh' }}>
                         {this.props.children}
                     </div>
 
-                    <BrowserView>{this.renderFooter()}</BrowserView>
-                    <MobileView>{this.renderMobileFooter()}</MobileView>
+                    {this.props.desktop ? this.renderFooter() : this.renderMobileFooter()}
                 </Article>
             </App>
         );

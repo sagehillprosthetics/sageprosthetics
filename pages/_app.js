@@ -6,10 +6,11 @@ import firebase from 'firebase/app';
 import 'firebase/database';
 import NextSeo from 'next-seo';
 
+import * as types from '../redux/types';
 import '../styles.scss';
 import { initStore } from '../redux/store';
 import Layout from './Layout';
-import * as types from '../redux/types';
+var parser = require('ua-parser-js');
 
 if (!firebase.apps.length) {
     firebase.initializeApp({
@@ -46,33 +47,26 @@ const DEFAULT_SEO = {
     }
 };
 
-// import * as types from '../redux/types';
-//import { initGA, logPageView } from '../components/general/analytics';
-
 //Custom app.js to add Redux and a universal toolbar --> DO NOT RENAME
 export default withRedux(initStore)(
     class MyApp extends App {
         static async getInitialProps({ Component, ctx, req, query, store }) {
-            // store.dispatch({ type: types.GET_RECIPIENTS, payload: 'help' });
-
+            const ua = parser(ctx.req ? ctx.req.headers['user-agent'] : navigator.userAgent);
             return {
-                pageProps: Component.getInitialProps ? await Component.getInitialProps(ctx) : {}
+                pageProps: {
+                    ...(Component.getInitialProps ? await Component.getInitialProps(ctx) : {}),
+                    desktop: ua.device.type != 'mobile'
+                }
             };
         }
 
-        // componentDidMount() {
-        //     initGA();
-        //     logPageView();
-        // }
-
         render() {
             const { Component, pageProps, store } = this.props;
-
             return (
                 <Container>
                     <NextSeo config={DEFAULT_SEO} />
                     <Provider store={store}>
-                        <Layout>
+                        <Layout desktop={pageProps.desktop}>
                             <Component {...pageProps} />
                         </Layout>
                     </Provider>

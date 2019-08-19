@@ -5,7 +5,6 @@ import * as types from '../../redux/types';
 import firebase from 'firebase/app';
 import 'firebase/database';
 import NextSeo from 'next-seo';
-import { isBrowser } from 'react-device-detect';
 
 import Person from '../../components/Person';
 
@@ -85,15 +84,6 @@ class Project extends Component {
             type: types.GET_GROUP,
             payload: { ...reformat, ...archivereformat }
         });
-    }
-
-    state = {
-        selectedImage: '',
-        desktop: ''
-    };
-
-    componentDidMount() {
-        this.setState({ desktop: isBrowser });
     }
 
     renderGroup() {
@@ -197,9 +187,9 @@ class Project extends Component {
                     style={{
                         display: 'flex',
                         //flexWrap: 'wrap',
-                        flexDirection: this.state.desktop ? 'row' : 'column',
+                        flexDirection: this.props.desktop ? 'row' : 'column',
                         justifyContent: 'center',
-                        margin: this.state.desktop ? '0 15% 0 15%' : '10px'
+                        margin: this.props.desktop ? '0 15% 0 15%' : '10px'
                     }}
                 >
                     <Image

@@ -184,6 +184,7 @@ class Group extends Component {
                 >
                     <div className="biomodal">
                         <BioModal
+                            desktop={this.props.desktop}
                             show={this.state.profile !== ''}
                             onToggleModal={() => this.setState({ profile: '' })}
                             person={this.state.profile}

@@ -6,7 +6,6 @@ import 'firebase/database';
 import Card from 'grommet/components/Card';
 import Anchor from 'grommet/components/Anchor';
 import NextSeo from 'next-seo';
-import { isBrowser } from 'react-device-detect';
 
 import { getGroup } from '../redux/actions';
 import * as types from '../redux/types.js';
@@ -73,13 +72,8 @@ class Hand extends Component {
     }
 
     state = {
-        selectedImage: '',
-        desktop: ''
+        selectedImage: ''
     };
-
-    componentDidMount() {
-        this.setState({ isVisible: true, desktop: isBrowser });
-    }
 
     renderHands = () => {
         const images = this.props.designs
@@ -98,7 +92,7 @@ class Hand extends Component {
                             //height: '60vh',
                             border: '3px solid #416989',
                             borderRadius: '10px',
-                            width: this.state.desktop ? '25vw' : '80vw'
+                            width: this.props.desktop ? '25vw' : '80vw'
                         }}
                         key={design.name}
                     >

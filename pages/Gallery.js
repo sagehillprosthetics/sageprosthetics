@@ -6,7 +6,6 @@ import { Image, Transformation } from 'cloudinary-react';
 import NextSeo from 'next-seo';
 
 import { getGroup } from '../redux/actions';
-import serviceAccount from '../firebasekeys.json';
 import * as types from '../redux/types.js';
 import ImageModal from '../components/ImageModal';
 
