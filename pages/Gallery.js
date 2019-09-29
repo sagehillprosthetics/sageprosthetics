@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { Image, Transformation } from 'cloudinary-react';
 import NextSeo from 'next-seo';
 
-import { getGroup } from '../redux/actions';
 import * as types from '../redux/types.js';
 import ImageModal from '../components/ImageModal';
 
@@ -218,5 +217,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    { getGroup }
+    null
 )(Gallery);

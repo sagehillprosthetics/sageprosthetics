@@ -7,7 +7,6 @@ import Card from 'grommet/components/Card';
 import Anchor from 'grommet/components/Anchor';
 import NextSeo from 'next-seo';
 
-import { getGroup } from '../redux/actions';
 import * as types from '../redux/types.js';
 
 class Hand extends Component {
@@ -158,5 +157,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    { getGroup }
+    null
 )(Hand);

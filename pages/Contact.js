@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/database';
-import { connect } from 'react-redux';
-import { getGroup } from '../redux/actions';
 import * as types from '../redux/types.js';
 import NextSeo from 'next-seo';
 
@@ -10,7 +8,7 @@ import FormField from 'grommet/components/FormField';
 import Button from 'grommet/components/Button';
 
 class Contact extends Component {
-    static async getInitialProps({ req, query, store }) {
+    static async getInitialProps({ store }) {
         store.dispatch({
             type: types.CHANGE_PAGE,
             payload: 'c'
@@ -186,13 +184,4 @@ class Contact extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        gallery: state.gallery
-    };
-};
-
-export default connect(
-    mapStateToProps,
-    { getGroup }
-)(Contact);
+export default Contact;

@@ -6,7 +6,6 @@ import anime from 'animejs';
 import Transition from 'react-transition-group/Transition';
 import NextSeo from 'next-seo';
 
-import { getGroup } from '../redux/actions';
 import * as types from '../redux/types.js';
 import Person from '../components/Person';
 import BioModal from '../components/BioModal';
@@ -227,5 +226,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    { getGroup }
+    null
 )(Group);

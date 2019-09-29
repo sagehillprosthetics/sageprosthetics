@@ -3,8 +3,10 @@ import { sha256 } from 'js-sha256';
 import firebase from 'firebase/app';
 import 'firebase/database';
 import { Image } from 'cloudinary-react';
+import { connect } from 'react-redux';
 
 import PasswordInput from 'grommet/components/PasswordInput';
+import TextInput from 'grommet/components/TextInput';
 import Button from 'grommet/components/Button';
 import Tabs from 'grommet/components/Tabs';
 import Tab from 'grommet/components/Tab';
@@ -14,9 +16,10 @@ import CloseIcon from 'grommet/components/icons/base/Close';
 import LinkUpIcon from 'grommet/components/icons/base/LinkUp';
 import LinkDownIcon from 'grommet/components/icons/base/LinkDown';
 
-import * as types from '../redux/types.js';
+import * as types from '../redux/types';
 import CloudinaryInput from '../components/CloudinaryInput';
 import ConfirmModal from '../components/ConfirmModal';
+import { loginUser, logoutUser } from '../redux/actions';
 
 class AdminPage extends Component {
     static async getInitialProps({ req, store }) {
@@ -66,6 +69,7 @@ class AdminPage extends Component {
 
     state = {
         loggedIn: false,
+        email: 'admin@sageprosthetics.org',
         password: '',
         logInError: false,
 
@@ -429,20 +433,6 @@ class AdminPage extends Component {
         }
     };
 
-    submitLogin = async () => {
-        const correct = await this.database
-            .ref('/password')
-            .once('value')
-            .then(snapshot => snapshot.val());
-
-        const password = sha256(this.state.password);
-        if (correct == password) {
-            this.setState({ loggedIn: true, logInError: false, password: '' });
-        } else {
-            this.setState({ logInError: true, password: '' });
-        }
-    };
-
     changePassword = async () => {
         this.setState({ changePasswordState: 'Processing...' });
         const correct = await this.database
@@ -634,7 +624,7 @@ class AdminPage extends Component {
                         </a>
                     </h4>
                     <h4> Cloudinary: sageprosthetics</h4>
-                    <h3 style={{ marginBottom: '5px' }}> Change Password </h3>
+                    {/* <h3 style={{ marginBottom: '5px' }}> Change Password </h3>
                     <PasswordInput
                         value={this.state.oldPassword}
                         onChange={event => this.setState({ oldPassword: event.target.value })}
@@ -669,7 +659,7 @@ class AdminPage extends Component {
                         show={this.state.showModal === 'c'}
                         onConfirm={this.changePassword}
                         message="You are about to change the password. Are you sure?"
-                    />
+                    /> */}
                 </div>
             </Tab>
         );
@@ -859,11 +849,7 @@ class AdminPage extends Component {
                     {this.renderHand()}
                     {this.renderGallery()}
                     {this.renderGroup()}
-                    <Tab
-                        title="Log Out"
-                        style={{ color: 'red' }}
-                        onClick={() => this.setState({ loggedIn: false })}
-                    />
+                    <Tab title="Log Out" style={{ color: 'red' }} onClick={this.props.logoutUser} />
                 </Tabs>
             </div>
         );
@@ -879,20 +865,32 @@ class AdminPage extends Component {
                     marginTop: '10%'
                 }}
             >
-                <h4> Enter Password </h4>
+                <h3> Enter Password </h3>
+                {/* <TextInput
+                    value={this.state.email}
+                    onDOMChange={event => {
+                        console.log(event.target.value);
+                        this.setState({ email: event.target.value });
+                    }}
+                    placeholder="Email"
+                    style={{ width: '20vw', margin: '10px' }}
+                /> */}
                 <PasswordInput
                     value={this.state.password}
                     onChange={event => this.setState({ password: event.target.value })}
+                    style={{ width: '20vw', margin: '10px' }}
+                    placeholder="Password"
                 />
                 <Button
                     label="Log In"
-                    onClick={this.submitLogin}
+                    onClick={() => this.props.loginUser(this.state.email, this.state.password)}
                     primary={true}
-                    disabled={!this.state.password}
+                    disabled={!this.state.password || !this.state.email}
                     style={{ margin: '20px' }}
                 />
-                {this.state.logInError ? (
-                    <h6 style={{ color: 'red' }}> Incorrect Password </h6>
+                {this.props.loading ? <h6> Loading...</h6> : null}
+                {this.props.error ? (
+                    <h6 style={{ color: 'red' }}> Error: {this.props.error} </h6>
                 ) : null}
             </div>
         );
@@ -1149,10 +1147,18 @@ class AdminPage extends Component {
         return (
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <h2> Welcome to the Secret Sage Prosthetics Admin Console</h2>
-                {this.state.loggedIn ? this.renderAdminConsole() : this.renderLogin()}
+                {this.props.isAuthenticated ? this.renderAdminConsole() : this.renderLogin()}
             </div>
         );
     }
 }
 
-export default AdminPage;
+const mapStateToProps = state => {
+    const { error, loading, user, isAuthenticated } = state;
+    return { error, loading, user, isAuthenticated };
+};
+
+export default connect(
+    mapStateToProps,
+    { loginUser, logoutUser }
+)(AdminPage);
