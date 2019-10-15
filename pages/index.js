@@ -8,7 +8,7 @@ import Transition from 'react-transition-group/Transition';
 import Particles from 'react-particles-js';
 import firebase from 'firebase/app';
 import 'firebase/database';
-import ReactPlayer from 'react-player';
+import Carousel from 'grommet/components/Carousel';
 
 import '../styles.scss';
 import * as types from '../redux/types';
@@ -599,142 +599,44 @@ class LandingPage extends Component {
                                     >
                                         SAGE PROSTHETICS IN THE NEWS
                                     </div>
-
-                                    <div
-                                        style={{
-                                            display: 'flex',
-                                            flexDirection: this.props.desktop ? 'row' : 'column',
-                                            justifyContent: 'space-around',
-                                            width: this.props.desktop ? '80vw' : '95vw',
-                                            alignItems: 'center'
-                                        }}
+                                    <Carousel
+                                        style={{ width: this.props.desktop ? '70vw' : '100vw' }}
+                                        autoplay={true}
+                                        autoplaySpeed={5000}
                                     >
-                                        <ReactPlayer
-                                            width={this.props.desktop ? '35vw' : '85vw'}
-                                            height={this.props.desktop ? '35vh' : null}
-                                            controls
-                                            url="https://ns8-ns-twc-com.akamaized.net/news/CA/2019/02/PKG%20_2019021_3634813_20190219%20ZT%20HIGH%20SCHOOL%20PROSTHETICS%20DIRTY_2182019%208-40-18%20PM.mp4"
-                                        />
-
-                                        <div
-                                            style={{
-                                                width: this.props.desktop ? '35vw' : '85vw',
-                                                textAlign: 'left'
-                                            }}
-                                        >
-                                            <div>
-                                                LOS ANGELES, CA – A teen is lending a helping hand
-                                                by creating prosthetics for those in need.
-                                            </div>
-                                            <br />
-                                            <div>
-                                                The hand looks bionic and in many ways, it is. The
-                                                bone structure is a durable, but lightweight plastic
-                                                and sinews braided fishing line. The prosthetic hand
-                                                was built by 17-year-old Karishma Raghuram.
-                                            </div>
-                                            <br />
-                                            <div>
-                                                The intricate design means getting the fit just
-                                                right.
-                                            </div>
-                                            <br />
-                                            <div>
-                                                “We can do so many things with such little
-                                                resources, and it’s amazing to see that at such a
-                                                young age where we’re able to contribute in such a
-                                                major way,” says Raghuram.
-                                            </div>
-                                            <br />
-                                            <div>
-                                                Raghuram is a senior at Sage Hill School in Newport
-                                                Beach, and she is a part the school’s award-winning
-                                                prosthetics program. The school’s 3-D printer is
-                                                capable of a rainbow of colors, but these appendages
-                                                aren’t just for show.
-                                            </div>
-                                            <br />
-
-                                            <a
-                                                href="https://spectrumnews1.com/ca/orange-county/news/2019/02/19/hand-in-hand"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
+                                        {quotes.map((section, index) => (
+                                            <div
+                                                style={{
+                                                    width: this.props.desktop ? '60vw' : '90vw',
+                                                    height: '100%',
+                                                    display: 'flex',
+                                                    flexDirection: 'column',
+                                                    justifyContent: 'space-around'
+                                                }}
+                                                key={index}
                                             >
-                                                {' '}
-                                                Read Full Article Here{' '}
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <div
-                                        style={{
-                                            width: '80vw',
-                                            height: '1px',
-                                            borderRadius: '3px',
-                                            backgroundColor: '#212121',
-                                            margin: '50px 0 45px 0'
-                                        }}
-                                    />
-
-                                    <div
-                                        style={{
-                                            display: 'flex',
-                                            flexDirection: this.props.desktop ? 'row' : 'column',
-                                            justifyContent: 'space-around',
-                                            width: this.props.desktop ? '80vw' : '95vw',
-                                            alignItems: 'center'
-                                        }}
-                                    >
-                                        <ReactPlayer
-                                            width={this.props.desktop ? '35vw' : '85vw'}
-                                            height={this.props.desktop ? '35vh' : null}
-                                            controls
-                                            url="https://res.cloudinary.com/sageprosthetics/video/upload/v1558071592/something.mov"
-                                        />
-
-                                        <div
-                                            style={{
-                                                width: this.props.desktop ? '35vw' : '85vw',
-                                                textAlign: 'left'
-                                            }}
-                                        >
-                                            <div>
-                                                NEWPORT BEACH, Calif. (KABC) -- Karishma Raghuram,
-                                                17, is a senior at Sage Hill School in Newport Beach
-                                                and a member of the schools' prosthetic club.
+                                                <h1
+                                                    style={{
+                                                        textAlign: 'center',
+                                                        fontWeight: '500'
+                                                    }}
+                                                >
+                                                    "{section.quote}"
+                                                </h1>
+                                                <div>
+                                                    <img
+                                                        src={section.src}
+                                                        style={{
+                                                            height: '30px',
+                                                            width: 'auto',
+                                                            marginBottom: '100px'
+                                                        }}
+                                                        alt="Hamilton"
+                                                    ></img>
+                                                </div>
                                             </div>
-                                            <br />
-                                            <div>
-                                                She researches, troubleshoots and builds prosthetics
-                                                for people in need.
-                                            </div>
-                                            <br />
-                                            <div>
-                                                "The intersection of science and technology with
-                                                also community service and helping others is just
-                                                what makes this project unbelievably amazing for
-                                                everyone involved," Raghuram said.
-                                            </div>
-                                            <br />
-                                            <div>
-                                                {' '}
-                                                Since last year, she's already made and sent out
-                                                three 3-D printed prosthetic limbs to people all
-                                                over the world. This year, she's building a very
-                                                special pink and blue arm for a local girl...{' '}
-                                            </div>
-                                            <br />
-
-                                            <a
-                                                href="https://abc7.com/science/cool-kid-karishma-raghuram-builds-prosthetic-limbs/5110086/"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                {' '}
-                                                Read Full Article Here{' '}
-                                            </a>
-                                        </div>
-                                    </div>
+                                        ))}
+                                    </Carousel>
                                 </div>
                             ),
                             amount: 0.1,
@@ -742,13 +644,42 @@ class LandingPage extends Component {
                         }
                     ]}
                     style={{
-                        height: this.props.desktop ? '1200px' : '480vw'
+                        height: this.props.desktop ? '800px' : '180vw'
                     }}
                 />
             </ParallaxProvider>
         );
     }
 }
+const quotes = [
+    {
+        quote:
+            'Medical-grade hands can cost upwards of $10,000. Sage Prosthetics builds them for people who can’t afford them',
+        src: 'https://s7d2.scene7.com/is/image/TWCNews/spectrum-news-1'
+    },
+    {
+        quote: 'It’s greater if that hand is just giving you confidence to be yourself',
+        src: 'https://www.hamilton.edu/assets/images/logo-print.png'
+    },
+    {
+        quote:
+            'The intersection of science and technology with also community service and helping others is just what makes this project unbelievably amazing for everyone involved',
+        src: 'https://upload.wikimedia.org/wikipedia/en/8/8e/KABC-TV_Logo.png'
+    },
+    {
+        quote:
+            'Lerch loves it when parents later tell her how their kids proudly show off their new hands to curious classmates',
+        src: 'https://www.hamilton.edu/assets/images/logo-print.png'
+    },
+    {
+        quote: 'Sage Prosthetics has won awards for their innovation and creativity',
+        src: 'https://upload.wikimedia.org/wikipedia/en/8/8e/KABC-TV_Logo.png'
+    },
+    {
+        quote: 'Bionic or not, it is a superpower in itself to change a life',
+        src: 'https://s7d2.scene7.com/is/image/TWCNews/spectrum-news-1'
+    }
+];
 
 const Box = posed.button({
     hoverable: true,

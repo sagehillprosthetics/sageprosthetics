@@ -624,6 +624,11 @@ class AdminPage extends Component {
                         </a>
                     </h4>
                     <h4> Cloudinary: sageprosthetics</h4>
+                    <h6>
+                        <span style={{ fontWeight: 'bold' }}>Cloudinary Login:</span> text me for
+                        now
+                        {/* Email: timg51237@gmail.com, password: {cloudinaryKeys.password} */}
+                    </h6>
                     {/* <h3 style={{ marginBottom: '5px' }}> Change Password </h3>
                     <PasswordInput
                         value={this.state.oldPassword}

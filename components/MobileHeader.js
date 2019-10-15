@@ -152,6 +152,7 @@ const navlinks = [
     { text: 'Hand Designs', link: '/hand-designs', page: 'h' },
     { text: 'Gallery', link: '/gallery', page: 'g' },
     { text: 'Our Group', link: '/group', page: 't' },
+    { text: 'In the News', link: '/news', page: 'n' },
     { text: 'Contact', link: '/contact', page: 'c' }
 ];
 
