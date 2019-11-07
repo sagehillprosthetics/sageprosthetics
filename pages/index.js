@@ -136,14 +136,18 @@ class LandingPage extends Component {
                 style={{
                     fontWeight: '400',
                     margin: this.props.desktop
-                        ? '0 20% 0 20%'
+                        ? this.state.expanded
+                            ? '0 20% 0 20%'
+                            : '0 20% 0 20%'
                         : this.state.expanded
                         ? '10vh 0px 0px 0px'
                         : '-16vh 0px 0px 0px',
                     borderWidth: '0px',
-                    width: '60%'
+                    width: '60%',
+                    overflow: 'visible'
                 }}
                 onActive={event => {
+                    console.log(event);
                     this.setState({ expanded: !isNullOrUndefined(event) });
                 }}
             >
@@ -156,11 +160,23 @@ class LandingPage extends Component {
                     }}
                 >
                     <div style={styles.dropdown}>
-                        We receive pictures and measurements of our recipients’ arms, and we use
-                        that information to model them a custom hand to maximize the hand’s
-                        effectiveness and comfort. We can also accommodate for color and design
-                        requests. We then print each hand in many parts. After that we carefully
-                        assemble them and ship them to our recipients.
+                        Using pictures of both our recipients’ intact and affected arms and hands,
+                        for measurement purposes. We learn about the functionality (mainly the
+                        wrist/elbow flexion and extension as well as the ability to use any residual
+                        fingers) of their affected limb to choose the best design to maximize their
+                        goals as well as the hand’s effectiveness and comfort. Recipients tell us
+                        their back story and color/design preferences so we can accommodate a wide
+                        variety of desires from flashy superhero themed hands for kids to cosmetic
+                        hands for adults. We then print each hand in many parts in a range of
+                        materials – typically PLA, Pet-G, and flexible TPU. After that we carefully
+                        assemble them, including padding and moleskin for comfort on the inside and
+                        Gel-Tippee grips for the fingertips, and either ship them to our recipients
+                        or do the final custom fitting in person for local recipients able to come
+                        to campus. We keep in touch with our recipients and are happy to make
+                        updated hands in the future as the recipient outgrows the hand or desires
+                        new colors or tweaks to make the design work for them. We can also
+                        incorporate custom parts for activities like holding a pencil, a bow, bike
+                        handlebars, and more!
                     </div>
                 </AccordionPanel>
                 <AccordionPanel heading="Who's making the hands?">
@@ -173,25 +189,27 @@ class LandingPage extends Component {
                         >
                             Sage Hill School
                         </a>{' '}
-                        in Southern California who trying to make a difference. You can learn more
-                        about our team <a href="/group">here</a>.
+                        in Southern California whoare trying to make a difference. You can learn
+                        more about our team <a href="/group">here</a>. We are a chapter of the
+                        non-profit e-NABLE.
                     </div>
                 </AccordionPanel>
                 <AccordionPanel heading="Can I buy one?">
                     <div style={styles.dropdown}>
-                        Nope. Sorry, we typically make hands for recipients who are either unable to
-                        afford or access traditional prosthesis. On a case by case basis, we will
-                        work with recipients who would like a hand under other circumstances, in
-                        particular, those who are within our geographic region.
+                        Nope, the hands are free of charge! We are a non-profit and have generous
+                        funding from our school and community donations.  We typically make hands
+                        for recipients who are either unable to afford or access traditional
+                        prosthesis. On a case by case basis, we will work with recipients who would
+                        like a hand under other circumstances, in particular, those who are within
+                        our geographic region and are open to helping test new designs and better
+                        existing ones.
                     </div>
                 </AccordionPanel>
                 <AccordionPanel heading="How can I become a recipient?">
                     <div style={styles.dropdown}>
                         <a href="/contact">Reach out to us!</a> Tell us your story, and we would be
-                        glad to add you as a recipient. We typically make hands for recipients who
-                        are either unable to afford or access traditional prosthesis. On a case by
-                        case basis, we will work with recipients who would like a hand under other
-                        circumstances, in particular, those who are within our geographic region.
+                        glad to add you as a recipient. We work during the school year (Mid-August
+                        to Mid-May) and hands typically take around 2 months for completion.
                     </div>
                 </AccordionPanel>
                 <AccordionPanel heading="I have a 3D Printer and want to make hands like this, how do I start?">
@@ -215,12 +233,24 @@ class LandingPage extends Component {
                         a recipient to work with.
                         <br />
                         <br />
-                        You should also get involved with the e-NABLE Facebook groups as those
-                        provide valuable information and discussion
+                        You should also get involved with the e-NABLE Facebook groups and the
+                        e-NABLE forum{' '}
+                        <a href="https://hub.e-nable.org/s/e-nable-forum/?contentId=4148">
+                            https://hub.e-nable.org/s/e-nable-forum/?contentId=4148
+                        </a>
                     </div>
                 </AccordionPanel>
                 <AccordionPanel heading="I am an educator/student and want to start a chapter like this. How do I begin?">
                     <div style={styles.dropdown}>Same answer as above!</div>
+                </AccordionPanel>
+                <AccordionPanel heading="Disclaimer">
+                    <div style={styles.dropdown}>
+                        We are not medical professionals. These devices are not intended to replace
+                        a medical prosthetic. Please view them as an assistive device to help with
+                        certain tasks, and inspire confidence in particular with our youngest
+                        recipients. The devices have their limitations which we explain in depth,
+                        along with the care of the device, when we deliver them.
+                    </div>
                 </AccordionPanel>
             </Accordion>
         );
@@ -431,7 +461,8 @@ class LandingPage extends Component {
                                             justifyContent: 'center',
                                             alignItems: 'center',
                                             display: 'flex',
-                                            flexDirection: 'row'
+                                            flexDirection: 'column',
+                                            overflow: 'visible'
                                         }}
                                     >
                                         {this.renderAccordion()}
@@ -444,7 +475,7 @@ class LandingPage extends Component {
                     ]}
                     style={{
                         height: this.props.desktop
-                            ? '113vh'
+                            ? '75em'
                             : this.state.expanded
                             ? '180vh'
                             : '150vh'
@@ -681,6 +712,15 @@ const quotes = [
     }
 ];
 
+const styles = {
+    dropdown: {
+        width: '100%',
+        textAlign: 'left',
+        margin: '10px 10px 0 20px',
+        paddingRight: '20px'
+    }
+};
+
 const Box = posed.button({
     hoverable: true,
     init: {
@@ -770,11 +810,4 @@ const animateHeadingIn = heading => {
     });
 };
 
-const styles = {
-    dropdown: {
-        width: '100%',
-        textAlign: 'left',
-        margin: '10px 10px 0 20px'
-    }
-};
 export default LandingPage;
