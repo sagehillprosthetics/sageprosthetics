@@ -6,10 +6,9 @@ import firebase from 'firebase/app';
 import 'firebase/database';
 import NextSeo from 'next-seo';
 
-import * as types from '../redux/types';
-import '../styles.scss';
 import { initStore } from '../redux/store';
 import Layout from './Layout';
+import '../styles.scss';
 var parser = require('ua-parser-js');
 
 if (!firebase.apps.length) {
