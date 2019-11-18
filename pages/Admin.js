@@ -562,7 +562,8 @@ class AdminPage extends Component {
             const newhand = {
                 src: this.state.handsid,
                 order: largest + 1,
-                link: this.state.handhref
+                link: this.state.handhref,
+                type: 'o'
             };
 
             this.state.handbullets.forEach((point, index) => {
@@ -1163,7 +1164,4 @@ const mapStateToProps = state => {
     return { error, loading, user, isAuthenticated };
 };
 
-export default connect(
-    mapStateToProps,
-    { loginUser, logoutUser }
-)(AdminPage);
+export default connect(mapStateToProps, { loginUser, logoutUser })(AdminPage);

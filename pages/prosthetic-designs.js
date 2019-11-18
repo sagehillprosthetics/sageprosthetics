@@ -28,13 +28,19 @@ class Hand extends Component {
                 });
             });
 
-        const pictures = [];
+        const pictures = {
+            h: [],
+            a: [],
+            s: [],
+            o: []
+        };
         db.database()
             .ref('hands')
             .once('value')
             .then(datasnapshot => {
                 datasnapshot.forEach(child => {
-                    pictures.push({ name: child.key, ...child.val() });
+                    let obj = { name: child.key, ...child.val() };
+                    pictures[obj.type].push(obj);
                 });
             });
 
@@ -74,8 +80,10 @@ class Hand extends Component {
         selectedImage: ''
     };
 
-    renderHands = () => {
-        const images = this.props.designs
+    renderHands = type => {
+        if (!this.props.designs[type]) return null;
+
+        const images = this.props.designs[type]
             .sort((a, b) => b.order - a.order)
             .map(design => {
                 const bulletpoints = Object.keys(design).map(key => {
@@ -133,21 +141,50 @@ class Hand extends Component {
                         }
                     }}
                 />
-                <h2 style={{ textAlign: 'center' }}>Hand Designs</h2>
-                <div
-                    style={{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        flexDirection: 'row',
-                        justifyContent: 'center'
-                    }}
-                >
-                    {this.renderHands()}
-                </div>
+
+                {headers.map(type => (
+                    <div>
+                        <h2 style={{ textAlign: 'center', marginTop: '60px' }}> {type.title} </h2>
+                        <img src={type.src} alt={type.src} style={{ marginBottom: '20px' }} />
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexWrap: 'wrap',
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                                marginBottom: '30px'
+                            }}
+                        >
+                            {this.renderHands(type.render)}
+                        </div>
+                    </div>
+                ))}
             </div>
         );
     }
 }
+
+const headers = [
+    {
+        render: 'h',
+        src: '/static/hand.jpg',
+        title: 'Wrist Powered Hand Designs'
+    },
+    {
+        render: 'a',
+        src: '/static/arm.jpg',
+        title: 'Arm Powered Hand Designs'
+    },
+    {
+        render: 's',
+        src: '/static/shoulder.jpg',
+        title: 'Shoulder Designs'
+    },
+    {
+        render: 'o',
+        title: 'Other Designs'
+    }
+];
 
 const mapStateToProps = state => {
     return {
@@ -155,7 +192,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(
-    mapStateToProps,
-    null
-)(Hand);
+export default connect(mapStateToProps, null)(Hand);
