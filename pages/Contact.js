@@ -1,24 +1,23 @@
 import React, { Component } from 'react';
-import * as firebase from 'firebase';
-//import * as admin from 'firebase-admin';
-import { connect } from 'react-redux';
-import { getGroup } from '../redux/actions';
-import { Image, Transformation } from 'cloudinary-react';
+import firebase from 'firebase/app';
+import 'firebase/database';
 import * as types from '../redux/types.js';
+import NextSeo from 'next-seo';
 
 import FormField from 'grommet/components/FormField';
 import Button from 'grommet/components/Button';
 
 class Contact extends Component {
-    static async getInitialProps({ req, query, store }) {
+    static async getInitialProps({ store }) {
         store.dispatch({
             type: types.CHANGE_PAGE,
             payload: 'c'
         });
 
+        let db = firebase;
+
         const project = [];
-        req.firebaseServer
-            .database()
+        db.database()
             .ref('projects')
             .once('value')
             .then(datasnapshot => {
@@ -28,19 +27,24 @@ class Contact extends Component {
             });
 
         const links = [];
-        await req.firebaseServer
+        const archive = [];
+        await db
             .database()
             .ref('recipients')
             .once('value')
             .then(datasnapshot => {
                 datasnapshot.forEach(child => {
-                    links.push(child.key);
+                    if (child.val().archive == true) {
+                        archive.push(child.key);
+                    } else {
+                        links.push(child.key);
+                    }
                 });
             });
 
         store.dispatch({
             type: types.GET_RECIPIENTS,
-            payload: links
+            payload: { links, archive }
         });
 
         store.dispatch({
@@ -69,23 +73,24 @@ class Contact extends Component {
             );
         }
 
-        return (
-            <Button
-                label="Submit"
-                accent
-                style={{ margin: '20px 45% 0% 45%', width: '10%' }}
-            />
-        );
+        return <Button label="Submit" accent style={{ margin: '20px 45% 0% 45%', width: '10%' }} />;
     }
 
     render() {
-        console.log(this.state.message);
         return (
-            <div style={{ margin: '0% 15% 0% 15%' }}>
-                <title> Contact | Sage Prosthetics </title>
+            <div style={{ margin: this.props.desktop ? '0% 15% 0% 15%' : '0 0px 0 0px' }}>
+                <NextSeo
+                    config={{
+                        title: 'Contact | Sage Prosthetics',
+                        twitter: { title: 'Contact | Sage Prosthetics' },
+                        openGraph: {
+                            title: 'Contact | Sage Prosthetics'
+                        }
+                    }}
+                />
                 <h2 style={{ textAlign: 'center' }}>Contact Us</h2>
                 <form
-                    action="https://formspree.io/timg51237@gmail.com"
+                    action="https://formspree.io/lercht@sagehillschool.org"
                     method="POST"
                     style={{
                         display: 'flex',
@@ -101,25 +106,19 @@ class Contact extends Component {
                                 border: 'none'
                             }}
                             type="text"
-                            onChange={event =>
-                                this.setState({ name: event.target.value })
-                            }
+                            name="name"
+                            onChange={event => this.setState({ name: event.target.value })}
                         />
                     </FormField>
-                    <FormField
-                        label="Email Address"
-                        size="medium"
-                        help="Required"
-                    >
+                    <FormField label="Email Address" size="medium" help="Required">
                         <input
                             style={{
                                 fontWeight: 'lighter',
                                 border: 'none'
                             }}
                             type="email"
-                            onChange={event =>
-                                this.setState({ email: event.target.value })
-                            }
+                            name="email"
+                            onChange={event => this.setState({ email: event.target.value })}
                         />
                     </FormField>
 
@@ -135,9 +134,7 @@ class Contact extends Component {
                             placeholder="Message"
                             name="message"
                             rows={10}
-                            onChange={event =>
-                                this.setState({ message: event.target.value })
-                            }
+                            onChange={event => this.setState({ message: event.target.value })}
                         />
                     </FormField>
 
@@ -160,18 +157,31 @@ class Contact extends Component {
                     /> */}
                 </form>
                 {this.renderButtons()}
+                {/* <Player
+                    playsInline
+                    poster="/static/video.jpg"
+                    src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4"
+                    width={50}
+                    fluid={false}
+                    preload="auto"
+                    muted={true}
+                    autoPlay={true}
+                    ref="player"
+                /> */}
+                {/* <ReactPlayer
+                    url="https://www.youtube.com/watch?v=ysz5S6PUM-U"
+                    playing
+                    controls={false}
+                    muted
+                    config={{
+                        youtube: {
+                            playerVars: { showinfo: 0, controls: 0 }
+                        }
+                    }}
+                /> */}
             </div>
         );
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        gallery: state.gallery
-    };
-};
-
-export default connect(
-    mapStateToProps,
-    { getGroup }
-)(Contact);
+export default Contact;

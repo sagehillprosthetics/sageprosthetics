@@ -37,8 +37,8 @@ const ImageModal = props => {
                     <Image
                         cloudName="sageprosthetics"
                         publicId={props.src}
-                        width="800"
-                        height="600"
+                        width="1000"
+                        height="750"
                         style={{
                             marginTop: 50 + window.scrollY + 'px',
                             zIndex: 200

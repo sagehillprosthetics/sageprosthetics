@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getGroup } from '../redux/actions';
 import { Image, Video, Transformation } from 'cloudinary-react';
-import * as types from '../redux/types.js';
-import Card from 'grommet/components/Card';
-import Anchor from 'grommet/components/Anchor';
-import Quote from 'grommet/components/Quote';
-import Paragraph from 'grommet/components/Paragraph';
+import * as types from '../../redux/types';
+import firebase from 'firebase/app';
+import 'firebase/database';
+import NextSeo from 'next-seo';
+
+import Person from '../../components/Person';
 
 class Project extends Component {
     static async getInitialProps({ req, query, store }) {
         let project = {};
-        const links = [];
+
+        let db = firebase;
 
         const projects = [];
-        req.firebaseServer
-            .database()
+        db.database()
             .ref('projects')
             .once('value')
             .then(datasnapshot => {
@@ -28,8 +28,7 @@ class Project extends Component {
             });
 
         const reformat = {};
-        req.firebaseServer
-            .database()
+        db.database()
             .ref('group')
             .once('value')
             .then(datasnapshot => {
@@ -39,8 +38,7 @@ class Project extends Component {
             });
 
         const archivereformat = {};
-        req.firebaseServer
-            .database()
+        db.database()
             .ref('group-archive')
             .once('value')
             .then(datasnapshot => {
@@ -49,19 +47,27 @@ class Project extends Component {
                 });
             });
 
-        await req.firebaseServer
+        const links = [];
+        const archive = [];
+        await db
             .database()
             .ref('recipients')
             .once('value')
             .then(datasnapshot => {
                 datasnapshot.forEach(child => {
-                    links.push(child.key);
+                    if (child.val().archive == true) {
+                        archive.push(child.key);
+                    } else {
+                        links.push(child.key);
+                    }
                 });
             });
 
+        console.log(projects);
+
         store.dispatch({
             type: types.GET_RECIPIENTS,
-            payload: links
+            payload: { links, archive }
         });
 
         store.dispatch({
@@ -80,10 +86,6 @@ class Project extends Component {
         });
     }
 
-    state = {
-        selectedImage: ''
-    };
-
     renderGroup() {
         let group = null;
         if (this.props.project.group) {
@@ -95,45 +97,13 @@ class Project extends Component {
                         style={{
                             display: 'flex',
                             flexDirection: 'row',
-                            justifyContent: 'space-between',
+                            justifyContent: 'space-around',
                             flexWrap: 'wrap'
                         }}
                     >
                         {this.props.project.group.map(person => {
                             return (
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        alignItems: 'center',
-                                        margin: '1%'
-                                    }}
-                                >
-                                    <Image
-                                        cloudName="sageprosthetics"
-                                        publicId={this.props.group[person]}
-                                        width="120"
-                                        //crop="scale"
-                                    >
-                                        <Transformation
-                                            width="1000"
-                                            height="1000"
-                                            gravity="face"
-                                            radius="500"
-                                            crop="thumb"
-                                        />
-                                    </Image>
-                                    <h4
-                                        style={{
-                                            fontWeight: '600',
-                                            textAlign: 'center',
-                                            margin: '20px',
-                                            width: '150px'
-                                        }}
-                                    >
-                                        {person}
-                                    </h4>
-                                </div>
+                                <Person key={person} name={person} src={this.props.group[person]} />
                             );
                         })}
                     </div>
@@ -164,7 +134,7 @@ class Project extends Component {
                         {pictures
                             ? pictures.map(key => {
                                   return (
-                                      <div style={{ margin: '1%' }}>
+                                      <div style={{ margin: '1%' }} key={key}>
                                           <Image
                                               cloudName="sageprosthetics"
                                               publicId={key}
@@ -179,7 +149,7 @@ class Project extends Component {
                         {videos
                             ? videos.map(key => {
                                   return (
-                                      <div style={{ margin: '1%' }}>
+                                      <div style={{ margin: '1%' }} key={key}>
                                           <Video
                                               cloudName="sageprosthetics"
                                               publicId={key}
@@ -203,17 +173,23 @@ class Project extends Component {
     render() {
         return (
             <div style={{ margin: '0% 5% 0% 5%' }}>
-                <title> {this.props.project.name} | Sage Prosthetics </title>
-                <h2 style={{ textAlign: 'center' }}>
-                    {this.props.project.name}
-                </h2>
+                <NextSeo
+                    config={{
+                        title: this.props.project.name + ` | Sage Prosthetics`,
+                        twitter: { title: this.props.project.name + ' | Sage Prosthetics' },
+                        openGraph: {
+                            title: this.props.project.name + ' | Sage Prosthetics'
+                        }
+                    }}
+                />
+                <h2 style={{ textAlign: 'center' }}>{this.props.project.name}</h2>
                 <div
                     style={{
                         display: 'flex',
                         //flexWrap: 'wrap',
-                        flexDirection: 'row',
+                        flexDirection: this.props.desktop ? 'row' : 'column',
                         justifyContent: 'center',
-                        margin: '0 15% 0 15%'
+                        margin: this.props.desktop ? '0 15% 0 15%' : '10px'
                     }}
                 >
                     <Image
@@ -223,9 +199,7 @@ class Project extends Component {
                     >
                         <Transformation width="300" height="400" crop="scale" />
                     </Image>
-                    <div style={{ marginLeft: '10%' }}>
-                        {this.props.project.text}
-                    </div>
+                    <div style={{ marginLeft: '10%' }}>{this.props.project.text}</div>
                 </div>
                 {this.renderImage()}
                 {this.renderGroup()}

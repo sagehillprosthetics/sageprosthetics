@@ -7,3 +7,8 @@ export const GET_RECIPIENTS = 'get-recipients';
 export const GET_SELECTED_RECIPIENT = 'get-selected-recipient';
 export const GET_PROJECTS = 'get-projects';
 export const GET_SELECTED_PROJECT = 'get-selected-project';
+
+export const LOGIN_USER_ERROR = 'login-user-error';
+export const LOGIN_USER_SUCCESS = 'login-user-success';
+export const LOGIN_USER = 'login-user';
+export const LOGOUT_USER_SUCCESS = 'logout-user-success';

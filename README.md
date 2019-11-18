@@ -1,11 +1,10 @@
 # Sage Prosthetics
 
-## About 
+## About
 
-This repo contains the source code for the Sage Prosthetics website. Sage Prosthetics is a service group at Sage Hill School that provides 3D printed prosthetic hands and arms for underpriveleged children and adults. 
+This repo contains the source code for the Sage Prosthetics website. Sage Prosthetics is a service group at Sage Hill School that provides 3D printed prosthetic hands and arms for underpriveleged children and adults.
 
-Not deployed yet
-
+https://www.sageprosthetics.org
 
 ## Usage
 
@@ -13,10 +12,12 @@ Email me for the firebase keys
 
 Clone the project
 
-### Terminal commands: 
+### Terminal commands:
+
 ```
 yarn
 ```
+
 ```
 yarn run dev
 ```
