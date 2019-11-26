@@ -699,6 +699,11 @@ const quotes = [
     },
     {
         quote:
+            'It’s definitely not high-tech, and they usually last about six or seven months, but a lot of the recipients are younger kids',
+        src: 'https://cdn.worldvectorlogo.com/logos/usc-news.svg'
+    },
+    {
+        quote:
             'Lerch loves it when parents later tell her how their kids proudly show off their new hands to curious classmates',
         src: 'https://www.hamilton.edu/assets/images/logo-print.png'
     },
@@ -709,6 +714,11 @@ const quotes = [
     {
         quote: 'Bionic or not, it is a superpower in itself to change a life',
         src: 'https://s7d2.scene7.com/is/image/TWCNews/spectrum-news-1'
+    },
+    {
+        quote:
+            'Prosthesis recipients often bond with students in the group, especially when they live nearby and can drop by to watch their device be assembled',
+        src: 'https://cdn.worldvectorlogo.com/logos/usc-news.svg'
     }
 ];
 

@@ -252,6 +252,72 @@ class News extends Component {
                         </div>
                     </div>
                 </div>
+                <div
+                    style={{
+                        width: '80vw',
+                        height: '1px',
+                        borderRadius: '3px',
+                        backgroundColor: '#212121',
+                        margin: '50px 0 45px 0'
+                    }}
+                />
+                <h3>
+                    <a
+                        href="https://news.usc.edu/161796/usc-student-lexi-brooks-community-kids-with-limb-differences/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        USC student builds community to celebrate and encourage kids with limb
+                        differences
+                    </a>
+                </h3>
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: this.props.desktop ? 'row' : 'column',
+                        justifyContent: 'space-around',
+                        width: this.props.desktop ? '80vw' : '95vw',
+                        alignItems: 'center'
+                    }}
+                >
+                    <img
+                        src="https://news.usc.edu/files/2019/10/Lexi-Brooks_5-web.jpg"
+                        style={{ width: this.props.desktop ? '35vw' : '85vw', height: 'auto' }}
+                        alt="Tanya Lerch"
+                    />
+
+                    <div
+                        style={{
+                            width: this.props.desktop ? '35vw' : '85vw',
+                            textAlign: 'left'
+                        }}
+                    >
+                        <div>
+                            USC student Lexi Brooks knows how tough and isolating it can be to look
+                            different than everyone else at school.
+                        </div>
+                        <br />
+                        <div>
+                            As a child, she noticed the stares and heard the whispers. Some
+                            classmates even teased her — all because she was born without a left
+                            hand.
+                        </div>
+                        <br />
+                        <div>
+                            Brooks brushed it off, but she felt alone. She yearned to connect with
+                            other kids her age who understood what she was going through. So when
+                            the teenager from Newport Beach reached high school, she decided to
+                            build a supportive community where children and others like her could
+                            come together.
+                        </div>
+                        <br />
+                        <div>
+                            Her idea turned into the nonprofit High Five Project, which has hosted
+                            trips to the beach and other fun events for people with limb
+                            differences. The response from Orange County families floored her...
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }
