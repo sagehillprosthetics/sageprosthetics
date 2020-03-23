@@ -6,7 +6,6 @@ import { Image } from 'cloudinary-react';
 import { connect } from 'react-redux';
 
 import PasswordInput from 'grommet/components/PasswordInput';
-import TextInput from 'grommet/components/TextInput';
 import Button from 'grommet/components/Button';
 import Tabs from 'grommet/components/Tabs';
 import Tab from 'grommet/components/Tab';
@@ -212,7 +211,7 @@ class AdminPage extends Component {
                         padding: '10px'
                     }}
                 >
-                    <h3> Edit Current Recipient</h3>
+                    <h3>Edit Current Recipients</h3>
                     <h4 style={{ marginTop: '20px' }}> Recipients (Not Archived) </h4>
                     <div
                         style={{
@@ -540,71 +539,6 @@ class AdminPage extends Component {
         }
     };
 
-    addHand = async () => {
-        console.log('Adding Hand');
-        console.log(this.state.profilepicture);
-        if (!this.state.handname) {
-            return this.setState({ handmessage: 'Error: Please enter a name' });
-        } else if (!this.state.handsid) {
-            return this.setState({ handmessage: 'Error: Please upload an image' });
-        } else if (!this.state.handbullets) {
-            return this.setState({ handmessage: 'Error: Please add a description' });
-        }
-
-        this.setState({ handmessage: 'Updating Database...' });
-        try {
-            let largest = 0;
-            Object.keys(this.state.hands).forEach(key => {
-                if (this.state.hands[key].order > largest) {
-                    largest = this.state.hands[key].order;
-                }
-            });
-            const newhand = {
-                src: this.state.handsid,
-                order: largest + 1,
-                link: this.state.handhref,
-                type: 'o'
-            };
-
-            this.state.handbullets.forEach((point, index) => {
-                newhand[index] = point;
-            });
-
-            console.log(newhand);
-
-            await this.database.ref(`/hands/${this.state.handname}`).set(newhand);
-
-            this.setState({ handmessage: 'Success' });
-            this.componentDidMount();
-        } catch (e) {
-            this.setState({ handmessage: `Error: ${e.message}` });
-        }
-    };
-
-    renderGallery() {
-        return (
-            <Tab title="Gallery">
-                <div
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        width: '70vw',
-                        margin: '0 15vw 0 15vw',
-                        padding: '10px'
-                    }}
-                >
-                    <CloudinaryInput
-                        onUploadSuccess={this.uploadImageSuccess}
-                        label="Upload Gallery Image"
-                        style={{ margin: '20px' }}
-                    />
-                    {this.state.uploadImageState ? <h6> {this.state.uploadImageState} </h6> : null}
-                </div>
-            </Tab>
-        );
-    }
-
     renderGeneral() {
         return (
             <Tab title="General">
@@ -671,180 +605,6 @@ class AdminPage extends Component {
         );
     }
 
-    renderGroup() {
-        return (
-            <Tab title="Group">
-                <div
-                    style={{
-                        width: '70vw',
-                        margin: '0 15vw 0 15vw',
-                        display: 'flex',
-                        alignItems: 'center',
-                        flexDirection: 'column',
-                        padding: '10px'
-                    }}
-                >
-                    <h3>Edit Current Group Members</h3>
-                    <h4> Faculty </h4>
-                    <div
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'space-around',
-                            flexWrap: 'wrap',
-                            width: '100%'
-                        }}
-                    >
-                        {Object.keys(this.state.facultyList).map((key, index) => {
-                            return (
-                                <React.Fragment>
-                                    <Button
-                                        label={key}
-                                        onClick={() => this.setState({ showModal: key })}
-                                        key={index}
-                                        icon={<CloseIcon />}
-                                    />
-                                    <ConfirmModal
-                                        onToggleModal={() => this.setState({ showModal: '' })}
-                                        show={this.state.showModal === key}
-                                        onConfirm={() => this.remove(key, 'f')}
-                                        message={`You are about to remove ${key} from the Sage Prosthetics roster. Are you sure?`}
-                                    />
-                                </React.Fragment>
-                            );
-                        })}
-                    </div>
-                    {this.state.facultyError ? <h6> {this.state.facultyError} </h6> : null}
-                    <h4 style={{ marginTop: '20px' }}> Students (Not Archived) </h4>
-                    <div
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'space-around',
-                            flexWrap: 'wrap',
-                            width: '100%'
-                        }}
-                    >
-                        {Object.keys(this.state.currentList).map((key, index) => {
-                            return (
-                                <React.Fragment>
-                                    <Button
-                                        label={key}
-                                        onClick={() => this.setState({ showModal: key })}
-                                        key={index}
-                                        icon={<LinkDownIcon />}
-                                        style={{ width: '300px', margin: '10px' }}
-                                    />
-                                    <ConfirmModal
-                                        onToggleModal={() => this.setState({ showModal: '' })}
-                                        show={this.state.showModal === key}
-                                        onConfirm={() => this.switchPerson(key, true)}
-                                        message={`You are about to archive ${key}. Are you sure?`}
-                                    />
-                                </React.Fragment>
-                            );
-                        })}
-                    </div>
-                    <h4 style={{ marginTop: '20px' }}> Archived Students </h4>
-                    <div
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'space-around',
-                            flexWrap: 'wrap',
-                            width: '100%'
-                        }}
-                    >
-                        {Object.keys(this.state.archiveList).map((key, index) => {
-                            return (
-                                <React.Fragment>
-                                    <Button
-                                        label={key}
-                                        onClick={() => this.setState({ showModal: key })}
-                                        key={index}
-                                        icon={<LinkUpIcon />}
-                                        style={{ width: '300px', margin: '10px' }}
-                                    />
-                                    <ConfirmModal
-                                        onToggleModal={() => this.setState({ showModal: '' })}
-                                        show={this.state.showModal === key}
-                                        onConfirm={() => this.switchPerson(key, false)}
-                                        message={`You are about unarchive ${key}. Are you sure?`}
-                                    />
-                                </React.Fragment>
-                            );
-                        })}
-                    </div>
-
-                    <h3 style={{ marginTop: '20px' }}> Add New Group Member </h3>
-
-                    <FormField label="Name" size="medium" help="Required">
-                        <input
-                            style={{
-                                fontWeight: 'lighter',
-                                border: 'none'
-                            }}
-                            type="text"
-                            onChange={event => this.setState({ name: event.target.value })}
-                        />
-                    </FormField>
-                    <FormField>
-                        <RadioButton
-                            id="choice1-1"
-                            name="choice1-1"
-                            label="Student"
-                            checked={this.state.student}
-                            onChange={() => this.setState({ student: true })}
-                        />
-                        <RadioButton
-                            id="choice1-2"
-                            name="choice1-2"
-                            label="Faculty Advisor"
-                            checked={!this.state.student}
-                            onChange={() => this.setState({ student: false })}
-                        />
-                    </FormField>
-
-                    <FormField label="Biography" size="large" help="For Faculty Only">
-                        <textarea
-                            style={{
-                                fontWeight: 'lighter',
-                                height: '60%',
-                                resize: 'none',
-                                border: 'none'
-                            }}
-                            type="text"
-                            name="message"
-                            rows={10}
-                            onChange={event => this.setState({ description: event.target.value })}
-                        />
-                    </FormField>
-                    <CloudinaryInput
-                        onUploadSuccess={({ public_id }) => {
-                            console.log(public_id);
-                            this.setState({ profilepicture: public_id });
-                        }}
-                        label="Upload Profile Picture"
-                        style={{ margin: '20px' }}
-                    />
-                    {this.state.groupmessage ? <h6> {this.state.groupmessage} </h6> : null}
-                    <Button
-                        label="Add Person"
-                        onClick={() => this.setState({ showModal: 'g' })}
-                        primary={true}
-                        style={{ margin: '20px' }}
-                    />
-                    <ConfirmModal
-                        onToggleModal={() => this.setState({ showModal: '' })}
-                        show={this.state.showModal === 'g'}
-                        onConfirm={this.addPerson}
-                        message="You are about to add a person to the Sage Prosthetics roster. Are you sure?"
-                    />
-                </div>
-            </Tab>
-        );
-    }
-
     renderAdminConsole() {
         return (
             <div>
@@ -852,9 +612,6 @@ class AdminPage extends Component {
                     {this.renderGeneral()}
                     {this.renderRecipients()}
                     {this.renderProjects()}
-                    {this.renderHand()}
-                    {this.renderGallery()}
-                    {this.renderGroup()}
                     <Tab title="Log Out" style={{ color: 'red' }} onClick={this.props.logoutUser} />
                 </Tabs>
             </div>
@@ -871,147 +628,8 @@ class AdminPage extends Component {
                     marginTop: '10%'
                 }}
             >
-                <h3> Enter Password </h3>
-                {/* <TextInput
-                    value={this.state.email}
-                    onDOMChange={event => {
-                        console.log(event.target.value);
-                        this.setState({ email: event.target.value });
-                    }}
-                    placeholder="Email"
-                    style={{ width: '20vw', margin: '10px' }}
-                /> */}
-                <PasswordInput
-                    value={this.state.password}
-                    onChange={event => this.setState({ password: event.target.value })}
-                    style={{ width: '20vw', margin: '10px' }}
-                    placeholder="Password"
-                />
-                <Button
-                    label="Log In"
-                    onClick={() => this.props.loginUser(this.state.email, this.state.password)}
-                    primary={true}
-                    disabled={!this.state.password || !this.state.email}
-                    style={{ margin: '20px' }}
-                />
-                {this.props.loading ? <h6> Loading...</h6> : null}
-                {this.props.error ? (
-                    <h6 style={{ color: 'red' }}> Error: {this.props.error} </h6>
-                ) : null}
+                <h3>Access Denied. Please log in.</h3>
             </div>
-        );
-    }
-    renderHand() {
-        return (
-            <Tab title="Hand Designs">
-                <div
-                    style={{
-                        width: '70vw',
-                        margin: '0 15vw 0 15vw',
-                        display: 'flex',
-                        alignItems: 'center',
-                        flexDirection: 'column',
-                        padding: '10px'
-                    }}
-                >
-                    <h3>Edit Current Hand Designs</h3>
-                    <div
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'space-around',
-                            flexWrap: 'wrap',
-                            width: '100%'
-                        }}
-                    >
-                        {Object.keys(this.state.hands).map((key, index) => {
-                            return (
-                                <React.Fragment>
-                                    <Button
-                                        label={key}
-                                        onClick={() => this.setState({ showModal: key })}
-                                        key={index}
-                                        icon={<CloseIcon />}
-                                        style={{ width: '300px', margin: '10px' }}
-                                    />
-                                    <ConfirmModal
-                                        onToggleModal={() => this.setState({ showModal: '' })}
-                                        show={this.state.showModal === key}
-                                        onConfirm={() => this.remove(key, 'h')}
-                                        message={`You are about to remove ${key} from the Sage Prosthetics website. Are you sure?`}
-                                    />
-                                </React.Fragment>
-                            );
-                        })}
-                    </div>
-                    {this.state.facultyError ? <h6> {this.state.facultyError} </h6> : null}
-                    <h3 style={{ marginTop: '20px' }}> Add New Hand Design </h3>
-
-                    <FormField label="Name" size="medium" help="Required">
-                        <input
-                            style={{
-                                fontWeight: 'lighter',
-                                border: 'none'
-                            }}
-                            type="text"
-                            onChange={event => this.setState({ handname: event.target.value })}
-                        />
-                    </FormField>
-
-                    <FormField label="Thingiverse URL" size="medium" help="Required">
-                        <input
-                            style={{
-                                fontWeight: 'lighter',
-                                border: 'none'
-                            }}
-                            type="text"
-                            onChange={event => this.setState({ handhref: event.target.value })}
-                        />
-                    </FormField>
-
-                    <FormField
-                        label="Description"
-                        size="large"
-                        help="Required (please write every bullet point on a new line)"
-                    >
-                        <textarea
-                            style={{
-                                fontWeight: 'lighter',
-                                height: '60%',
-                                resize: 'none',
-                                border: 'none'
-                            }}
-                            type="text"
-                            name="message"
-                            rows={10}
-                            onChange={event =>
-                                this.setState({ handbullets: event.target.value.split('\n') })
-                            }
-                        />
-                    </FormField>
-                    <CloudinaryInput
-                        onUploadSuccess={({ public_id }) => {
-                            console.log(public_id);
-                            this.setState({ handsid: public_id });
-                        }}
-                        label="Upload Hand Design Picture"
-                        style={{ margin: '20px' }}
-                    />
-                    {this.state.handmessage ? <h6> {this.state.handmessage} </h6> : null}
-                    <Button
-                        label="Add Hand Design"
-                        onClick={() => this.setState({ showModal: 'h' })}
-                        primary={true}
-                        style={{ margin: '20px' }}
-                    />
-                    <ConfirmModal
-                        onToggleModal={() => this.setState({ showModal: '' })}
-                        show={this.state.showModal === 'h'}
-                        onConfirm={this.addHand}
-                        message="You are about to add a hand design to the Sage Prosthetics website. Are you sure?"
-                    />
-                </div>
-            </Tab>
         );
     }
 
@@ -1152,7 +770,7 @@ class AdminPage extends Component {
     render() {
         return (
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <h2> Welcome to the Secret Sage Prosthetics Admin Console</h2>
+                <h2> Welcome to the Sage Prosthetics Admin Console</h2>
                 {this.props.isAuthenticated ? this.renderAdminConsole() : this.renderLogin()}
             </div>
         );

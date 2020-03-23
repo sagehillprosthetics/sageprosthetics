@@ -62,14 +62,14 @@ export default withRedux(initStore)(
         render() {
             const { Component, pageProps, store } = this.props;
             return (
-                <Container>
+                <>
                     <NextSeo config={DEFAULT_SEO} />
                     <Provider store={store}>
                         <Layout desktop={pageProps.desktop}>
                             <Component {...pageProps} />
                         </Layout>
                     </Provider>
-                </Container>
+                </>
             );
         }
     }

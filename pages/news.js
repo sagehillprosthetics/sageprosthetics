@@ -2,12 +2,21 @@ import React, { Component } from 'react';
 import { Image, Transformation } from 'cloudinary-react';
 import firebase from 'firebase/app';
 import 'firebase/database';
-import Card from 'grommet/components/Card';
-import Anchor from 'grommet/components/Anchor';
+import { connect } from 'react-redux';
 import NextSeo from 'next-seo';
 import ReactPlayer from 'react-player';
+import Router from 'next/router';
+import axios from 'axios';
+
+import TextInput from 'grommet/components/TextInput';
+import Button from 'grommet/components/Button';
+import FormField from 'grommet/components/FormField';
+import RadioButton from 'grommet/components/RadioButton';
 
 import * as types from '../redux/types.js';
+import ConfirmModal from '../components/ConfirmModal';
+
+const cheerio = require('cheerio');
 
 class News extends Component {
     static async getInitialProps({ req, query, store }) {
@@ -30,8 +39,7 @@ class News extends Component {
 
         const links = [];
         const archive = [];
-        await db
-            .database()
+        db.database()
             .ref('recipients')
             .once('value')
             .then(datasnapshot => {
@@ -44,6 +52,17 @@ class News extends Component {
                 });
             });
 
+        const news = [];
+        await db
+            .database()
+            .ref('news')
+            .once('value')
+            .then(datasnapshot => {
+                datasnapshot.forEach(child => {
+                    news.push(child.val());
+                });
+            });
+
         store.dispatch({
             type: types.GET_RECIPIENTS,
             payload: { links, archive }
@@ -53,273 +72,157 @@ class News extends Component {
             type: types.GET_PROJECTS,
             payload: project
         });
+        store.dispatch({
+            type: types.GET_NEWS,
+            payload: news
+        });
     }
 
     state = {
-        selectedImage: ''
+        url: '',
+        src: '',
+        text: '',
+        title: '',
+        video: false,
+        uploadState: '',
+        fetchState: false
     };
 
-    renderNews() {
-        return (
-            <div
-                style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    flexDirection: 'column',
-                    width: '100vw',
-                    textAlign: 'center',
-                    margin: this.props.desktop ? '20px 0 0 0' : '20vw 0 0 0'
-                }}
-            >
-                <h3>
-                    <a
-                        href="https://www.hamilton.edu/news/story/3d-prosthetics-tanya-namad-lerch"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Because Hamiltonians Lend a Hand: Tanya Namad Lerch ’05
-                    </a>
-                </h3>
-                <div
-                    style={{
-                        display: 'flex',
-                        flexDirection: this.props.desktop ? 'row' : 'column',
-                        justifyContent: 'space-around',
-                        width: this.props.desktop ? '80vw' : '95vw',
-                        alignItems: 'center'
-                    }}
-                >
-                    {/* <ReactPlayer
-                        width={this.props.desktop ? '35vw' : '85vw'}
-                        height={this.props.desktop ? '35vh' : null}
-                        controls
-                        url="https://ns8-ns-twc-com.akamaized.net/news/CA/2019/02/PKG%20_2019021_3634813_20190219%20ZT%20HIGH%20SCHOOL%20PROSTHETICS%20DIRTY_2182019%208-40-18%20PM.mp4"
-                    /> */}
-                    <img
-                        src="https://s3.amazonaws.com/mediacdn.hamilton.edu/images/base/nz76801jpg.jpg"
-                        style={{ width: this.props.desktop ? '35vw' : '85vw', height: 'auto' }}
-                        alt="Tanya Lerch"
-                    />
+    componentDidMount() {
+        this.database = firebase.database();
+    }
 
+    fetchInfo = async () => {
+        axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
+        const data = await axios.get(this.state.url);
+
+        const $ = cheerio.load(`<ul id="fruits">
+        <li class="apple">Apple</li>
+        <li class="orange">Orange</li>
+        <li class="pear">Pear</li>
+      </ul>`);
+        console.log($('.apple', '#fruits').text());
+        console.log(data);
+    };
+
+    addArticle = () => {
+        const { url, src, title } = this.state;
+        const text = this.state.text
+            .split('\n')
+            .map(line => line.trim())
+            .filter(line => line.length >= 1);
+        const newArticle = { url, title, text };
+        newArticle[this.state.video ? 'video' : 'image'] = src;
+        this.updateFirebase('/' + this.props.news.length, newArticle);
+    };
+
+    removeArticle = key => {
+        console.log(key);
+        let newNews = this.props.news.filter((value, index) => index !== key);
+        this.updateFirebase('', newNews);
+    };
+
+    updateFirebase = (item, value) => {
+        this.setState({ uploadState: 'Processing...' });
+        this.database
+            .ref(`/news${item}`)
+            .set(value)
+            .then(() => {
+                this.setState({
+                    uploadState: 'Successfully Updated Database'
+                });
+                Router.replace(`/news`);
+            })
+            .catch(e => this.setState({ uploadState: `Error: ${e.message}` }));
+    };
+
+    renderFirebaseNews() {
+        const renderedNews = [];
+        this.props.news.map((article, key) => {
+            if (key !== 0) {
+                renderedNews.push(
                     <div
                         style={{
-                            width: this.props.desktop ? '35vw' : '85vw',
-                            textAlign: 'left'
+                            width: '80vw',
+                            height: '1px',
+                            borderRadius: '3px',
+                            backgroundColor: '#212121',
+                            margin: '50px 0 45px 0'
                         }}
-                    >
-                        <div>
-                            They can be pink and purple, or Superman red and blue, or have a Mickey
-                            Mouse motif. With them a kid can high five a friend, ride a bike, or
-                            play the ukulele in music class. Teacher Tanya Namad Lerch ’05 and her
-                            high school student volunteers have made prosthetic hands that do all
-                            those things using a 3D printer. They create the free, custom-designed
-                            hands primarily for children and last school year delivered nine of
-                            them.
-                        </div>
-                        <br />
-                        <div>
-                            Lerch teaches math at Sage Hill School in Orange County, Calif., where
-                            she founded and advises Sage Prosthetics. It’s a chapter of e-NABLE, a
-                            nonprofit that promotes using 3D printers and open-source designs to
-                            cheaply and easily make prosthetic hands and arms. Lerch made hands even
-                            before the Sage chapter, roughly 40 all told...
-                        </div>
-                    </div>
-                </div>
-
-                <div
-                    style={{
-                        width: '80vw',
-                        height: '1px',
-                        borderRadius: '3px',
-                        backgroundColor: '#212121',
-                        margin: '50px 0 45px 0'
-                    }}
-                />
-
-                <h3>
-                    <a
-                        href="https://spectrumnews1.com/ca/orange-county/news/2019/02/19/hand-in-hand"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        High School Senior Changing Lives With Prosthetics
-                    </a>
-                </h3>
-                <div
-                    style={{
-                        display: 'flex',
-                        flexDirection: this.props.desktop ? 'row' : 'column',
-                        justifyContent: 'space-around',
-                        width: this.props.desktop ? '80vw' : '95vw',
-                        alignItems: 'center'
-                    }}
-                >
-                    <ReactPlayer
-                        width={this.props.desktop ? '35vw' : '85vw'}
-                        height={this.props.desktop ? '35vh' : null}
-                        controls
-                        url="https://ns8-ns-twc-com.akamaized.net/news/CA/2019/02/PKG%20_2019021_3634813_20190219%20ZT%20HIGH%20SCHOOL%20PROSTHETICS%20DIRTY_2182019%208-40-18%20PM.mp4"
+                        id={key}
                     />
+                );
+            }
+            renderedNews.push(
+                <>
+                    <h3>
+                        <a href={article.url} target="_blank" rel="noopener noreferrer">
+                            {article.title}
+                        </a>
+                    </h3>
                     <div
                         style={{
-                            width: this.props.desktop ? '35vw' : '85vw',
-                            textAlign: 'left'
+                            display: 'flex',
+                            flexDirection: this.props.desktop ? 'row' : 'column',
+                            justifyContent: 'space-around',
+                            width: this.props.desktop ? '80vw' : '95vw',
+                            alignItems: 'center'
                         }}
                     >
-                        <div>
-                            LOS ANGELES, CA – A teen is lending a helping hand by creating
-                            prosthetics for those in need.
-                        </div>
-                        <br />
-                        <div>
-                            The hand looks bionic and in many ways, it is. The bone structure is a
-                            durable, but lightweight plastic and sinews braided fishing line. The
-                            prosthetic hand was built by 17-year-old Karishma Raghuram.
-                        </div>
-                        <br />
-                        <div>The intricate design means getting the fit just right.</div>
-                        <br />
-                        <div>
-                            “We can do so many things with such little resources, and it’s amazing
-                            to see that at such a young age where we’re able to contribute in such a
-                            major way,” says Raghuram...
+                        {article.image ? (
+                            <img
+                                src={article.image}
+                                style={{
+                                    width: this.props.desktop ? '35vw' : '85vw',
+                                    height: 'auto'
+                                }}
+                                alt="Lexi Brooks"
+                            />
+                        ) : (
+                            <ReactPlayer
+                                width={this.props.desktop ? '35vw' : '85vw'}
+                                height={this.props.desktop ? '35vh' : null}
+                                controls
+                                url={article.video}
+                            />
+                        )}
+
+                        <div
+                            style={{
+                                width: this.props.desktop ? '35vw' : '85vw',
+                                textAlign: 'left'
+                            }}
+                        >
+                            {article.text.map((text, index) => (
+                                <>
+                                    {index != 0 ? <br /> : null}
+                                    <div>
+                                        {text}
+                                        {index == article.text.length - 1 ? '...' : null}
+                                    </div>
+                                </>
+                            ))}
+                            {this.props.isAuthenticated ? (
+                                <Button
+                                    label="Remove Article"
+                                    onClick={() => this.setState({ showModal: key })}
+                                />
+                            ) : null}
+                            {this.state.uploadState}
                         </div>
                     </div>
-                </div>
+                    <ConfirmModal
+                        onToggleModal={() => this.setState({ showModal: '' })}
+                        show={this.state.showModal === key}
+                        onConfirm={() => this.removeArticle(key)}
+                        message={`You are about to remove a news article. Are you sure?`}
+                    />{' '}
+                </>
+            );
+        });
 
-                <div
-                    style={{
-                        width: '80vw',
-                        height: '1px',
-                        borderRadius: '3px',
-                        backgroundColor: '#212121',
-                        margin: '50px 0 45px 0'
-                    }}
-                />
-                <h3>
-                    <a
-                        href="https://abc7.com/science/cool-kid-karishma-raghuram-builds-prosthetic-limbs/5110086/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Cool Kid Karishma Raghuram builds prosthetic limbs for people in need
-                    </a>
-                </h3>
-                <div
-                    style={{
-                        display: 'flex',
-                        flexDirection: this.props.desktop ? 'row' : 'column',
-                        justifyContent: 'space-around',
-                        width: this.props.desktop ? '80vw' : '95vw',
-                        alignItems: 'center'
-                    }}
-                >
-                    <ReactPlayer
-                        width={this.props.desktop ? '35vw' : '85vw'}
-                        height={this.props.desktop ? '35vh' : null}
-                        controls
-                        url="https://res.cloudinary.com/sageprosthetics/video/upload/v1558071592/something.mov"
-                    />
-
-                    <div
-                        style={{
-                            width: this.props.desktop ? '35vw' : '85vw',
-                            textAlign: 'left'
-                        }}
-                    >
-                        <div>
-                            NEWPORT BEACH, Calif. (KABC) -- Karishma Raghuram, 17, is a senior at
-                            Sage Hill School in Newport Beach and a member of the schools'
-                            prosthetic club.
-                        </div>
-                        <br />
-                        <div>
-                            She researches, troubleshoots and builds prosthetics for people in need.
-                        </div>
-                        <br />
-                        <div>
-                            "The intersection of science and technology with also community service
-                            and helping others is just what makes this project unbelievably amazing
-                            for everyone involved," Raghuram said.
-                        </div>
-                        <br />
-                        <div>
-                            {' '}
-                            Since last year, she's already made and sent out three 3-D printed
-                            prosthetic limbs to people all over the world. This year, she's building
-                            a very special pink and blue arm for a local girl...
-                        </div>
-                    </div>
-                </div>
-                <div
-                    style={{
-                        width: '80vw',
-                        height: '1px',
-                        borderRadius: '3px',
-                        backgroundColor: '#212121',
-                        margin: '50px 0 45px 0'
-                    }}
-                />
-                <h3>
-                    <a
-                        href="https://news.usc.edu/161796/usc-student-lexi-brooks-community-kids-with-limb-differences/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        USC student builds community to celebrate and encourage kids with limb
-                        differences
-                    </a>
-                </h3>
-                <div
-                    style={{
-                        display: 'flex',
-                        flexDirection: this.props.desktop ? 'row' : 'column',
-                        justifyContent: 'space-around',
-                        width: this.props.desktop ? '80vw' : '95vw',
-                        alignItems: 'center'
-                    }}
-                >
-                    <img
-                        src="https://news.usc.edu/files/2019/10/Lexi-Brooks_5-web.jpg"
-                        style={{ width: this.props.desktop ? '35vw' : '85vw', height: 'auto' }}
-                        alt="Tanya Lerch"
-                    />
-
-                    <div
-                        style={{
-                            width: this.props.desktop ? '35vw' : '85vw',
-                            textAlign: 'left'
-                        }}
-                    >
-                        <div>
-                            USC student Lexi Brooks knows how tough and isolating it can be to look
-                            different than everyone else at school.
-                        </div>
-                        <br />
-                        <div>
-                            As a child, she noticed the stares and heard the whispers. Some
-                            classmates even teased her — all because she was born without a left
-                            hand.
-                        </div>
-                        <br />
-                        <div>
-                            Brooks brushed it off, but she felt alone. She yearned to connect with
-                            other kids her age who understood what she was going through. So when
-                            the teenager from Newport Beach reached high school, she decided to
-                            build a supportive community where children and others like her could
-                            come together.
-                        </div>
-                        <br />
-                        <div>
-                            Her idea turned into the nonprofit High Five Project, which has hosted
-                            trips to the beach and other fun events for people with limb
-                            differences. The response from Orange County families floored her...
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
+        return renderedNews;
     }
 
     render() {
@@ -335,10 +238,136 @@ class News extends Component {
                     }}
                 />
                 <h2 style={{ textAlign: 'center' }}>Sage Prosthetics in the News</h2>
-                {this.renderNews()}
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        flexDirection: 'column',
+                        width: '100vw',
+                        textAlign: 'center',
+                        margin: this.props.desktop ? '20px 0 0 0' : '20vw 0 0 0'
+                    }}
+                >
+                    {this.renderFirebaseNews()}
+
+                    {this.props.isAuthenticated ? (
+                        <>
+                            <div
+                                style={{
+                                    width: '80vw',
+                                    height: '1px',
+                                    borderRadius: '3px',
+                                    backgroundColor: '#212121',
+                                    margin: '50px 0 45px 0'
+                                }}
+                            />
+                            <h3> Add News Article </h3>
+
+                            <TextInput
+                                placeHolder="Enter Article URL"
+                                value={this.state.url}
+                                onDOMChange={event => this.setState({ url: event.target.value })}
+                                style={{ width: '40vw', margin: '-10px 0px 10px 0px' }}
+                            />
+                            {/* <Button label="Autofill Information" onClick={this.fetchInfo} /> */}
+                            <div
+                                style={{
+                                    width: '100%',
+                                    padding: '20px 20% 0% 20%',
+                                    textAlign: 'left'
+                                }}
+                            >
+                                <FormField label="Title" size="small" help="Required">
+                                    <input
+                                        style={{
+                                            fontWeight: 'lighter',
+                                            border: 'none'
+                                        }}
+                                        type="text"
+                                        onChange={event =>
+                                            this.setState({ title: event.target.value })
+                                        }
+                                    />
+                                </FormField>
+                                <FormField
+                                    size="large"
+                                    style={{ width: '100%' }}
+                                    label="Text"
+                                    help="Please put each paragraph on a new line"
+                                >
+                                    <textarea
+                                        style={{
+                                            fontWeight: 'lighter',
+                                            height: '60%',
+                                            resize: 'none',
+                                            border: 'none'
+                                        }}
+                                        type="text"
+                                        rows={10}
+                                        onChange={event =>
+                                            this.setState({ text: event.target.value })
+                                        }
+                                    />
+                                </FormField>
+                                <FormField label="Media URL" size="small" help="Required">
+                                    <input
+                                        style={{
+                                            fontWeight: 'lighter',
+                                            border: 'none'
+                                        }}
+                                        type="text"
+                                        onChange={event =>
+                                            this.setState({ src: event.target.value })
+                                        }
+                                    />
+                                </FormField>
+                                <FormField label="Media Type">
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            flexDirection: 'row',
+                                            justifyContent: 'space-around',
+                                            alignItems: 'center',
+                                            marginBottom: '15px',
+                                            width: '100%'
+                                        }}
+                                    >
+                                        <RadioButton
+                                            label="Video"
+                                            checked={this.state.video}
+                                            onChange={() => this.setState({ video: true })}
+                                        />
+                                        <RadioButton
+                                            label="Image"
+                                            checked={!this.state.video}
+                                            onChange={() => this.setState({ video: false })}
+                                        />
+                                    </div>
+                                </FormField>
+                            </div>
+                            <Button
+                                label="Submit"
+                                onClick={
+                                    this.state.title &&
+                                    this.state.url &&
+                                    this.state.src &&
+                                    this.state.text
+                                        ? this.addArticle
+                                        : null
+                                }
+                                style={{ margin: '20px' }}
+                            />
+                        </>
+                    ) : null}
+                </div>
             </div>
         );
     }
 }
 
-export default News;
+const mapStateToProps = state => {
+    const { news, isAuthenticated } = state;
+    return { news, isAuthenticated };
+};
+
+export default connect(mapStateToProps, null)(News);

@@ -1,26 +1,27 @@
 import React, { Component } from 'react';
 import posed from 'react-pose';
 import { ParallaxProvider, ParallaxBanner } from 'react-scroll-parallax';
-import Accordion from 'grommet/components/Accordion';
-import AccordionPanel from 'grommet/components/AccordionPanel';
 import anime from 'animejs';
+import { connect } from 'react-redux';
 import Transition from 'react-transition-group/Transition';
 import Particles from 'react-particles-js';
 import firebase from 'firebase/app';
 import 'firebase/database';
+import Router from 'next/router';
+
+import Accordion from 'grommet/components/Accordion';
+import AccordionPanel from 'grommet/components/AccordionPanel';
 import Carousel from 'grommet/components/Carousel';
+import Button from 'grommet/components/Button';
+import FormField from 'grommet/components/FormField';
+import CloseIcon from 'grommet/components/icons/base/Close';
 
 import '../styles.scss';
 import * as types from '../redux/types';
+import ConfirmModal from '../components/ConfirmModal';
 import { isNullOrUndefined } from 'util';
 
 class LandingPage extends Component {
-    state = {
-        isVisible: false,
-        expanded: false,
-        desktop: true
-    };
-
     static async getInitialProps({ req, store }) {
         store.dispatch({
             type: types.CHANGE_PAGE,
@@ -36,6 +37,16 @@ class LandingPage extends Component {
             .then(datasnapshot => {
                 datasnapshot.forEach(child => {
                     project.push(child.key);
+                });
+            });
+
+        const quotes = [];
+        db.database()
+            .ref('quotes')
+            .once('value')
+            .then(datasnapshot => {
+                datasnapshot.forEach(child => {
+                    quotes.push(child.val());
                 });
             });
 
@@ -64,11 +75,42 @@ class LandingPage extends Component {
             type: types.GET_PROJECTS,
             payload: project
         });
+
+        store.dispatch({ type: types.GET_QUOTES, payload: quotes });
     }
+
+    state = {
+        isVisible: false,
+        expanded: false,
+        desktop: true,
+        quote: '',
+        src: '',
+        uploadState: ''
+    };
 
     componentDidMount() {
         this.setState({ isVisible: true });
+        this.database = firebase.database();
     }
+
+    updateFirebase = (item, value) => {
+        this.setState({ uploadImageState: 'Processing...' });
+        this.database
+            .ref(item)
+            .set(value)
+            .then(() => {
+                this.setState({
+                    uploadState: 'Successfully Updated Database'
+                });
+                Router.replace(`/`);
+            })
+            .catch(e => this.setState({ uploadState: `Error: ${e.message}` }));
+    };
+
+    removeQuote = key => {
+        this.props.quotes.splice(key, 1);
+        this.updateFirebase('/quotes', this.props.quotes);
+    };
 
     renderParticles = () => {
         return (
@@ -255,6 +297,143 @@ class LandingPage extends Component {
             </Accordion>
         );
     };
+
+    renderQuotes() {
+        return (
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                    width: '100vw',
+                    textAlign: 'center',
+                    margin: this.props.desktop ? '15% 0px 10px 0px' : '20vw 0 0 0'
+                }}
+            >
+                <div
+                    style={{
+                        lineHeight: '85%',
+                        background:
+                            '-webkit-linear-gradient(right, #9357cc 30%,#2989d8 50%,#2cc99d 70%)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        fontSize: this.props.desktop ? '6vh' : '11vw',
+                        letterSpacing: '0.1em',
+                        fontWeight: '700',
+                        marginBottom: '3vh',
+                        marginTop: this.props.desktop ? '0px' : '40vw'
+                    }}
+                    className="subheading"
+                >
+                    SAGE PROSTHETICS IN THE NEWS
+                </div>
+                <Carousel
+                    style={{ width: this.props.desktop ? '70vw' : '100vw' }}
+                    autoplay={true}
+                    autoplaySpeed={5000}
+                >
+                    {this.props.quotes.map((section, index) => (
+                        <div
+                            style={{
+                                width: this.props.desktop ? '60vw' : '90vw',
+                                height: '100%',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'space-around'
+                            }}
+                            key={index}
+                        >
+                            <h1
+                                style={{
+                                    textAlign: 'center',
+                                    fontWeight: '500'
+                                }}
+                            >
+                                "{section.text}"
+                            </h1>
+                            {this.props.isAuthenticated ? (
+                                <Button
+                                    icon={<CloseIcon />}
+                                    label="Remove Quote"
+                                    plain={true}
+                                    onClick={() => this.removeQuote(index)}
+                                />
+                            ) : null}
+                            <div>
+                                <img
+                                    src={section.src}
+                                    style={{
+                                        height: '30px',
+                                        width: 'auto',
+                                        marginBottom: '100px'
+                                    }}
+                                    alt="source"
+                                ></img>
+                            </div>
+                        </div>
+                    ))}
+                </Carousel>
+
+                {this.props.isAuthenticated ? (
+                    <div
+                        style={{
+                            width: '100%',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            padding: '10%',
+                            textAlign: 'left'
+                        }}
+                    >
+                        <h3 style={{ marginTop: '20px' }}> Add New Quote </h3>
+                        <FormField label="Quote" size="medium" help="Required">
+                            <textarea
+                                style={{
+                                    fontWeight: 'lighter',
+                                    height: '60%',
+                                    resize: 'none',
+                                    border: 'none'
+                                }}
+                                type="text"
+                                name="message"
+                                rows={10}
+                                onChange={event => this.setState({ quote: event.target.value })}
+                            />
+                        </FormField>
+                        <FormField label="Image URL" size="medium" help="Required">
+                            <input
+                                style={{
+                                    fontWeight: 'lighter',
+                                    border: 'none'
+                                }}
+                                type="text"
+                                onChange={event => this.setState({ src: event.target.value })}
+                            />
+                        </FormField>
+
+                        {this.state.uploadState ? <h6> {this.state.uploadState} </h6> : null}
+                        <Button
+                            label="Add Quote"
+                            onClick={
+                                this.state.quote && this.state.src
+                                    ? () =>
+                                          this.updateFirebase(
+                                              `quotes/${this.props.quotes.length}`,
+                                              {
+                                                  text: this.state.quote,
+                                                  src: this.state.src
+                                              }
+                                          )
+                                    : null
+                            }
+                            primary={true}
+                            style={{ margin: '20px' }}
+                        />
+                    </div>
+                ) : null}
+            </div>
+        );
+    }
 
     render() {
         console.log(this.props.desktop);
@@ -587,13 +766,9 @@ class LandingPage extends Component {
                             children: (
                                 <div
                                     style={{
-                                        // backgroundImage: url(
-                                        //     '/static/backgroundtile.png'
-                                        // ),
                                         background: '#ffffff',
                                         height: '100%',
                                         width: '100vw'
-                                        //opacity: '0.7'
                                     }}
                                 />
                             ),
@@ -601,126 +776,23 @@ class LandingPage extends Component {
                             slowerScrollRate: true
                         },
                         {
-                            children: (
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        flexDirection: 'column',
-                                        width: '100vw',
-                                        textAlign: 'center',
-                                        margin: this.props.desktop ? '15% 0 0 10px' : '20vw 0 0 0'
-                                        //backgroundColor: '#000000'
-                                    }}
-                                >
-                                    <div
-                                        style={{
-                                            lineHeight: '85%',
-                                            background:
-                                                '-webkit-linear-gradient(right, #9357cc 30%,#2989d8 50%,#2cc99d 70%)',
-                                            WebkitBackgroundClip: 'text',
-                                            WebkitTextFillColor: 'transparent',
-                                            fontSize: this.props.desktop ? '6vh' : '11vw',
-                                            letterSpacing: '0.1em',
-                                            fontWeight: '700',
-                                            marginBottom: '3vh',
-                                            marginTop: this.props.desktop ? '0px' : '40vw'
-                                        }}
-                                        className="subheading"
-                                    >
-                                        SAGE PROSTHETICS IN THE NEWS
-                                    </div>
-                                    <Carousel
-                                        style={{ width: this.props.desktop ? '70vw' : '100vw' }}
-                                        autoplay={true}
-                                        autoplaySpeed={5000}
-                                    >
-                                        {quotes.map((section, index) => (
-                                            <div
-                                                style={{
-                                                    width: this.props.desktop ? '60vw' : '90vw',
-                                                    height: '100%',
-                                                    display: 'flex',
-                                                    flexDirection: 'column',
-                                                    justifyContent: 'space-around'
-                                                }}
-                                                key={index}
-                                            >
-                                                <h1
-                                                    style={{
-                                                        textAlign: 'center',
-                                                        fontWeight: '500'
-                                                    }}
-                                                >
-                                                    "{section.quote}"
-                                                </h1>
-                                                <div>
-                                                    <img
-                                                        src={section.src}
-                                                        style={{
-                                                            height: '30px',
-                                                            width: 'auto',
-                                                            marginBottom: '100px'
-                                                        }}
-                                                        alt="Hamilton"
-                                                    ></img>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </Carousel>
-                                </div>
-                            ),
+                            children: this.renderQuotes(),
                             amount: 0.1,
                             slowerScrollRate: false
                         }
                     ]}
                     style={{
-                        height: this.props.desktop ? '800px' : '180vw'
+                        height: this.props.desktop
+                            ? this.props.isAuthenticated
+                                ? '1500px'
+                                : '800px'
+                            : '180vw'
                     }}
                 />
             </ParallaxProvider>
         );
     }
 }
-const quotes = [
-    {
-        quote:
-            'Medical-grade hands can cost upwards of $10,000. Sage Prosthetics builds them for people who can’t afford them',
-        src: 'https://s7d2.scene7.com/is/image/TWCNews/spectrum-news-1'
-    },
-    {
-        quote: 'It’s greater if that hand is just giving you confidence to be yourself',
-        src: 'https://www.hamilton.edu/assets/images/logo-print.png'
-    },
-    {
-        quote:
-            'The intersection of science and technology with also community service and helping others is just what makes this project unbelievably amazing for everyone involved',
-        src: 'https://upload.wikimedia.org/wikipedia/en/8/8e/KABC-TV_Logo.png'
-    },
-    {
-        quote:
-            'It’s definitely not high-tech, and they usually last about six or seven months, but a lot of the recipients are younger kids',
-        src: 'https://cdn.worldvectorlogo.com/logos/usc-news.svg'
-    },
-    {
-        quote:
-            'Lerch loves it when parents later tell her how their kids proudly show off their new hands to curious classmates',
-        src: 'https://www.hamilton.edu/assets/images/logo-print.png'
-    },
-    {
-        quote: 'Sage Prosthetics has won awards for their innovation and creativity',
-        src: 'https://upload.wikimedia.org/wikipedia/en/8/8e/KABC-TV_Logo.png'
-    },
-    {
-        quote: 'Bionic or not, it is a superpower in itself to change a life',
-        src: 'https://s7d2.scene7.com/is/image/TWCNews/spectrum-news-1'
-    },
-    {
-        quote:
-            'Prosthesis recipients often bond with students in the group, especially when they live nearby and can drop by to watch their device be assembled',
-        src: 'https://cdn.worldvectorlogo.com/logos/usc-news.svg'
-    }
-];
 
 const styles = {
     dropdown: {
@@ -820,4 +892,9 @@ const animateHeadingIn = heading => {
     });
 };
 
-export default LandingPage;
+const mapStateToProps = state => {
+    const { quotes, isAuthenticated } = state;
+    return { quotes, isAuthenticated };
+};
+
+export default connect(mapStateToProps, null)(LandingPage);

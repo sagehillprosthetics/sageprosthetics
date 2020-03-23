@@ -36,3 +36,13 @@ export const logoutUser = () => {
             .catch(e => dispatch({ type: types.LOGIN_USER_ERROR, payload: e.message }));
     };
 };
+
+export const cookieUpdateAuth = user => {
+    console.log(user);
+    console.log('setting cookie login');
+    if (user) {
+        return { type: types.LOGIN_USER_SUCCESS, payload: user };
+    } else {
+        return { type: types.LOGIN_USER_ERROR };
+    }
+};

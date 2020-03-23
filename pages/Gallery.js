@@ -5,11 +5,16 @@ import { connect } from 'react-redux';
 import { Image, Transformation } from 'cloudinary-react';
 import NextSeo from 'next-seo';
 
+import Router from 'next/router';
 import * as types from '../redux/types.js';
 import ImageModal from '../components/ImageModal';
+import CloudinaryInput from '../components/CloudinaryInput';
+import ConfirmModal from '../components/ConfirmModal';
 
 import Anchor from 'grommet/components/Anchor';
+import Button from 'grommet/components/Button';
 import Heading from 'grommet/components/Heading';
+import CloseIcon from 'grommet/components/icons/base/Close';
 import CaretBackIcon from 'grommet/components/icons/base/CaretBack';
 import CaretNextIcon from 'grommet/components/icons/base/CaretNext';
 
@@ -76,31 +81,99 @@ class Gallery extends Component {
 
     state = {
         selectedImage: '',
-        page: 1
+        page: 1,
+        uploadImageState: ''
+    };
+
+    componentDidMount() {
+        this.database = firebase.database();
+    }
+
+    uploadImageSuccess = async ({ public_id }) => {
+        this.setState({ uploadImageState: 'Processing...' });
+        let key = await this.database
+            .ref()
+            .child('gallery')
+            .once('value')
+            .then(snapshot => snapshot.val().length);
+        console.log(key);
+        console.log(public_id);
+        this.database
+            .ref(`/gallery/${key}`)
+            .set(public_id)
+            .then(() => {
+                this.setState({
+                    uploadImageState: 'Successfully Updated Database'
+                });
+                Router.replace('/gallery');
+            })
+            .catch(e => this.setState({ uploadImageState: `Error: ${e.message}` }));
+    };
+
+    removeImage = async src => {
+        let newGallery = {};
+        let count = 0;
+        this.props.gallery.reverse().forEach(image => {
+            if (image !== src) {
+                newGallery[count] = image;
+                count++;
+            }
+        });
+        this.props.gallery.reverse();
+
+        this.database
+            .ref(`/gallery`)
+            .set(newGallery)
+            .then(() => {
+                this.setState({
+                    uploadImageState: 'Successfully Updated Database'
+                });
+                Router.replace('/gallery');
+            })
+            .catch(e => this.setState({ uploadImageState: `Error: ${e.message}` }));
     };
 
     renderImages = () => {
         //const width = window.innerWidth() / 5;
 
         let count = -1;
+
         const images = this.props.gallery.map(src => {
             count++;
             if (count >= (this.state.page - 1) * 20 && count < this.state.page * 20) {
                 return (
                     <div
                         key={src}
-                        onClick={() => this.setState({ selectedImage: src })}
-                        style={{ margin: '1vw' }}
-                        // onMouseOver={() => console.log('mouse over')}
-                        // onMouseOut={() => console.log('mouse down')}
+                        style={{
+                            margin: '1vw',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center'
+                        }}
                     >
                         <Image
                             cloudName="sageprosthetics"
                             publicId={src}
                             width="248"
                             height="186"
-                            //crop="scale"
+                            onClick={() => this.setState({ selectedImage: src })}
                         />
+                        {this.props.isAuthenticated ? (
+                            <>
+                                <Button
+                                    icon={<CloseIcon />}
+                                    onClick={() => this.setState({ showModal: src })}
+                                    label="Remove Image"
+                                    plain={true}
+                                />
+                                <ConfirmModal
+                                    onToggleModal={() => this.setState({ showModal: '' })}
+                                    show={this.state.showModal === src}
+                                    onConfirm={() => this.removeImage(src)}
+                                    message={`You are about to remove an image from the Sage Prosthetics gallery. Are you sure?`}
+                                />{' '}
+                            </>
+                        ) : null}
                     </div>
                 );
             }
@@ -170,6 +243,23 @@ class Gallery extends Component {
                         justifyContent: 'center'
                     }}
                 >
+                    {this.props.isAuthenticated ? (
+                        <div
+                            style={{
+                                width: '248px',
+                                height: '186px',
+                                margin: '1vw'
+                                //backgroundColor: '#7ed4c6'
+                            }}
+                        >
+                            <CloudinaryInput
+                                onUploadSuccess={this.uploadImageSuccess}
+                                label="Upload New Image"
+                                style={{ margin: '20px' }}
+                            />
+                            {this.state.uploadImageState}
+                        </div>
+                    ) : null}
                     {this.renderImages()}
                 </div>
 
@@ -189,6 +279,7 @@ class Gallery extends Component {
                     src={this.state.selectedImage}
                     onToggleModal={() => this.setState({ selectedImage: '' })}
                 />
+
                 <style jsx>{`
                     .text {
                         color: #416989;
@@ -210,12 +301,11 @@ class Gallery extends Component {
 }
 
 const mapStateToProps = state => {
+    const { gallery, isAuthenticated } = state;
     return {
-        gallery: state.gallery
+        gallery,
+        isAuthenticated
     };
 };
 
-export default connect(
-    mapStateToProps,
-    null
-)(Gallery);
+export default connect(mapStateToProps, null)(Gallery);

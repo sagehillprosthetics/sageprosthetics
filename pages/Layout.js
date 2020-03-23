@@ -6,11 +6,14 @@ import Box from 'grommet/components/Box';
 import Paragraph from 'grommet/components/Paragraph';
 import Anchor from 'grommet/components/Anchor';
 import Article from 'grommet/components/Article';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import { connect } from 'react-redux';
 
 import '../styles.scss';
 import DesktopHeader from '../components/Header';
 import MobileHeader from '../components/MobileHeader';
+import { cookieUpdateAuth } from '../redux/actions';
 
 class Layout extends Component {
     renderFooter() {
@@ -57,8 +60,14 @@ class Layout extends Component {
         );
     }
 
+    componentDidMount() {
+        console.log('header check');
+        firebase.auth().onAuthStateChanged(authUser => {
+            this.props.cookieUpdateAuth(authUser);
+        });
+    }
+
     render() {
-        console.log(this.props.desktop);
         return (
             <App style={{ maxWidth: '100vw' }}>
                 <Article
@@ -73,6 +82,7 @@ class Layout extends Component {
                             projects={this.props.projects}
                             page={this.props.page}
                             container={this}
+                            isAuthenticated={this.props.isAuthenticated}
                         />
                     ) : (
                         <MobileHeader
@@ -94,14 +104,13 @@ class Layout extends Component {
 }
 
 const mapStateToProps = state => {
+    const { recipients, projects, page, isAuthenticated } = state;
     return {
-        recipients: state.recipients,
-        projects: state.projects,
-        page: state.page
+        recipients,
+        projects,
+        page,
+        isAuthenticated
     };
 };
 
-export default connect(
-    mapStateToProps,
-    null
-)(Layout);
+export default connect(mapStateToProps, { cookieUpdateAuth })(Layout);

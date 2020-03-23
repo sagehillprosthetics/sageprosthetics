@@ -5,6 +5,7 @@ import Popover from 'react-simple-popover';
 import Title from 'grommet/components/Title';
 import Link from 'next/link';
 
+import Login from '../components/Login';
 class DesktopHeader extends Component {
     state = {
         dropdown: '',
@@ -91,11 +92,11 @@ class DesktopHeader extends Component {
                                     })
                                 }
                                 style={{
-                                    marginTop: '5vh',
-                                    zIndex: 40,
+                                    marginTop: '2vh',
                                     opacity: '1'
-                                    //position: 'absolute'
-                                    //top: window.scrollY + 'px'
+                                }}
+                                containerStyle={{
+                                    zIndex: 50
                                 }}
                             >
                                 <>
@@ -158,9 +159,11 @@ class DesktopHeader extends Component {
                                             })
                                         }
                                         style={{
-                                            marginTop: '16vh',
-                                            zIndex: 40,
+                                            marginTop: '13vh',
                                             opacity: '1'
+                                        }}
+                                        containerStyle={{
+                                            zIndex: 51
                                         }}
                                     >
                                         <>
@@ -226,9 +229,11 @@ class DesktopHeader extends Component {
                                     });
                                 }}
                                 style={{
-                                    marginTop: '5vh',
-                                    zIndex: 40,
+                                    marginTop: '2vh',
                                     opacity: '1'
+                                }}
+                                containerStyle={{
+                                    zIndex: 50
                                 }}
                             >
                                 <>
@@ -272,6 +277,50 @@ class DesktopHeader extends Component {
                                 </li>
                             );
                         })}
+
+                        <li className="nav-item" style={styles.navlink}>
+                            <a
+                                ref="target4"
+                                style={{ color: '#7ed4c6' }}
+                                href="#!"
+                                onClick={() => {
+                                    const help = window.scrollY;
+                                    this.setState({
+                                        dropdown: 'l',
+                                        secondDropdown: ''
+                                    });
+                                    setTimeout(() => window.scrollTo(0, help), 0);
+                                }}
+                            >
+                                <div
+                                    className={this.state.dropdown === 'l' ? 'text active' : 'text'}
+                                >
+                                    {this.props.isAuthenticated ? 'Editing Enabled' : 'Login'}
+                                </div>
+                            </a>
+                            <Popover
+                                placement="bottom"
+                                container={this.props.container}
+                                target={this.refs.target4}
+                                show={this.state.dropdown === 'l'}
+                                onHide={() => {
+                                    this.setState({
+                                        dropdown: '',
+                                        secondDropdown: ''
+                                    });
+                                }}
+                                style={{
+                                    margin: '3vh 3vw 0 0',
+                                    opacity: '1',
+                                    width: '20vw'
+                                }}
+                                containerStyle={{
+                                    zIndex: 50
+                                }}
+                            >
+                                <Login />
+                            </Popover>
+                        </li>
                     </ul>
                 </Box>
                 <style jsx>{`
