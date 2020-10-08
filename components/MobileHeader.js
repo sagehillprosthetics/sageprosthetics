@@ -149,7 +149,7 @@ const transform = [0, 0, 1, 1, 2];
 const navlinks = [
     { text: 'Recipients', link: '#', page: '', onClick: 2 },
     { text: 'Projects', link: '#', page: '', onClick: 4 },
-    { text: 'Hand Designs', link: '/hand-designs', page: 'h' },
+    { text: 'Hand Designs', link: '/prosthetic-designs', page: 'h' },
     { text: 'Gallery', link: '/gallery', page: 'g' },
     { text: 'Our Group', link: '/group', page: 't' },
     { text: 'In the News', link: '/news', page: 'n' },

@@ -52,6 +52,6 @@
         "now-build": "next build"
     },
     "engines": {
-        "node": "10.x"
+        "node": "14.x"
     }
 }
