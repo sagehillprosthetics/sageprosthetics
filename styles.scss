@@ -54,5 +54,18 @@ $fonts-path: 'https://fonts.gstatic.com/s/worksans/v2';
     src: local('Work Sans Bold'), local('WorkSans-Bold'),
         url('#{$fonts-path}/4udXuXg54JlPEP5iKO5AmRampu5_7CjHW5spxoeN3Vs.woff2') format('woff2');
 }
+.iframe-container{
+    position: relative;
+	width: 100%;
+    padding-bottom: 56.25%;
+	height: 0;
+}
+.iframe-container iframe{
+	position: absolute;
+	top:0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
 @import '~grommet/scss/grommet-core/index';
 @import '~grommet/scss/vanilla/_objects.button-vanilla.scss';
