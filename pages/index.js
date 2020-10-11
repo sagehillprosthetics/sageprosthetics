@@ -286,15 +286,15 @@ class LandingPage extends Component {
                     <div style={styles.dropdown}>Same answer as above!</div>
                 </AccordionPanel>
                 <AccordionPanel heading="Here's a great video to learn more about e-NABLE!">
-		            <div class="iframe-container">
-			            <iframe width="560" 
+		    <div class="iframe-container">
+			<iframe width="560" 
                                 height="315" 
                                 src="https://www.youtube.com/embed/UetR48IBXVk" 
                                 frameborder="0" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-			            </iframe>
-		            </div>
-		        </AccordionPanel>
+			</iframe>
+		    </div>
+		</AccordionPanel>
                 <AccordionPanel heading="Disclaimer">
                     <div style={styles.dropdown}>
                         We are not medical professionals. These devices are not intended to replace
