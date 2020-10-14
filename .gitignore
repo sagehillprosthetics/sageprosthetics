@@ -3,3 +3,5 @@
 .DS_Store
 firebasekeys.json
 cloudinarykeys.json
+.env.local
+.vercel

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import App, { Container } from 'next/app';
+import App from 'next/app';
 import withRedux from 'next-redux-wrapper';
 import firebase from 'firebase/app';
 import 'firebase/database';
-import NextSeo from 'next-seo';
+import { DefaultSeo } from 'next-seo';
 
 import { initStore } from '../redux/store';
 import Layout from './Layout';
@@ -18,7 +18,7 @@ if (!firebase.apps.length) {
         databaseURL: 'https://sage-prosthetics.firebaseio.com',
         projectId: 'sage-prosthetics',
         storageBucket: 'sage-prosthetics.appspot.com',
-        messagingSenderId: '62889057271'
+        messagingSenderId: '62889057271',
     });
 }
 
@@ -36,14 +36,14 @@ const DEFAULT_SEO = {
         image: '/static/favicon.png',
         site_name: 'Sage Prosthetics',
         imageWidth: 1200,
-        imageHeight: 1200
+        imageHeight: 1200,
     },
     twitter: {
         title: 'Sage Prosthetics - 3D Printed Custom Prosthetics',
         cardType: 'summary_large_image',
         description:
-            'A student-run service group that uses 3D printing to make custom prosthetics for those in need. All of the prosthetics are made by hand using open-source designs in collaboration with E-Nable.'
-    }
+            'A student-run service group that uses 3D printing to make custom prosthetics for those in need. All of the prosthetics are made by hand using open-source designs in collaboration with E-Nable.',
+    },
 };
 
 //Custom app.js to add Redux and a universal toolbar --> DO NOT RENAME
@@ -54,8 +54,8 @@ export default withRedux(initStore)(
             return {
                 pageProps: {
                     ...(Component.getInitialProps ? await Component.getInitialProps(ctx) : {}),
-                    desktop: ua.device.type != 'mobile'
-                }
+                    desktop: ua.device.type != 'mobile',
+                },
             };
         }
 
@@ -63,7 +63,7 @@ export default withRedux(initStore)(
             const { Component, pageProps, store } = this.props;
             return (
                 <>
-                    <NextSeo config={DEFAULT_SEO} />
+                    <DefaultSeo {...DEFAULT_SEO} />
                     <Provider store={store}>
                         <Layout desktop={pageProps.desktop}>
                             <Component {...pageProps} />

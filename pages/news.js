@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Image, Transformation } from 'cloudinary-react';
 import firebase from 'firebase/app';
 import 'firebase/database';
 import { connect } from 'react-redux';
-import NextSeo from 'next-seo';
+import { NextSeo } from 'next-seo';
 import ReactPlayer from 'react-player';
 import Router from 'next/router';
 import axios from 'axios';
@@ -22,7 +21,7 @@ class News extends Component {
     static async getInitialProps({ req, query, store }) {
         store.dispatch({
             type: types.CHANGE_PAGE,
-            payload: 'n'
+            payload: 'n',
         });
 
         let db = firebase;
@@ -31,8 +30,8 @@ class News extends Component {
         db.database()
             .ref('projects')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     project.push(child.key);
                 });
             });
@@ -42,8 +41,8 @@ class News extends Component {
         db.database()
             .ref('recipients')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     if (child.val().archive == true) {
                         archive.push(child.key);
                     } else {
@@ -57,24 +56,24 @@ class News extends Component {
             .database()
             .ref('news')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     news.push(child.val());
                 });
             });
 
         store.dispatch({
             type: types.GET_RECIPIENTS,
-            payload: { links, archive }
+            payload: { links, archive },
         });
 
         store.dispatch({
             type: types.GET_PROJECTS,
-            payload: project
+            payload: project,
         });
         store.dispatch({
             type: types.GET_NEWS,
-            payload: news
+            payload: news,
         });
     }
 
@@ -85,7 +84,7 @@ class News extends Component {
         title: '',
         video: false,
         uploadState: '',
-        fetchState: false
+        fetchState: false,
     };
 
     componentDidMount() {
@@ -110,14 +109,14 @@ class News extends Component {
         const { url, src, title } = this.state;
         const text = this.state.text
             .split('\n')
-            .map(line => line.trim())
-            .filter(line => line.length >= 1);
+            .map((line) => line.trim())
+            .filter((line) => line.length >= 1);
         const newArticle = { url, title, text };
         newArticle[this.state.video ? 'video' : 'image'] = src;
         this.updateFirebase('/' + this.props.news.length, newArticle);
     };
 
-    removeArticle = key => {
+    removeArticle = (key) => {
         console.log(key);
         let newNews = this.props.news.filter((value, index) => index !== key);
         this.updateFirebase('', newNews);
@@ -130,11 +129,11 @@ class News extends Component {
             .set(value)
             .then(() => {
                 this.setState({
-                    uploadState: 'Successfully Updated Database'
+                    uploadState: 'Successfully Updated Database',
                 });
                 Router.replace(`/news`);
             })
-            .catch(e => this.setState({ uploadState: `Error: ${e.message}` }));
+            .catch((e) => this.setState({ uploadState: `Error: ${e.message}` }));
     };
 
     renderFirebaseNews() {
@@ -148,7 +147,7 @@ class News extends Component {
                             height: '1px',
                             borderRadius: '3px',
                             backgroundColor: '#212121',
-                            margin: '50px 0 45px 0'
+                            margin: '50px 0 45px 0',
                         }}
                         id={key}
                     />
@@ -167,7 +166,7 @@ class News extends Component {
                             flexDirection: this.props.desktop ? 'row' : 'column',
                             justifyContent: 'space-around',
                             width: this.props.desktop ? '80vw' : '95vw',
-                            alignItems: 'center'
+                            alignItems: 'center',
                         }}
                     >
                         {article.image ? (
@@ -175,7 +174,7 @@ class News extends Component {
                                 src={article.image}
                                 style={{
                                     width: this.props.desktop ? '35vw' : '85vw',
-                                    height: 'auto'
+                                    height: 'auto',
                                 }}
                                 alt="Lexi Brooks"
                             />
@@ -191,7 +190,7 @@ class News extends Component {
                         <div
                             style={{
                                 width: this.props.desktop ? '35vw' : '85vw',
-                                textAlign: 'left'
+                                textAlign: 'left',
                             }}
                         >
                             {article.text.map((text, index) => (
@@ -229,12 +228,12 @@ class News extends Component {
         return (
             <div style={{ margin: '0% 0% 0% 0%' }}>
                 <NextSeo
-                    config={{
+                    {...{
                         title: 'News | Sage Prosthetics',
                         twitter: { title: 'News | Sage Prosthetics' },
                         openGraph: {
-                            title: 'News | Sage Prosthetics'
-                        }
+                            title: 'News | Sage Prosthetics',
+                        },
                     }}
                 />
                 <h2 style={{ textAlign: 'center' }}>Sage Prosthetics in the News</h2>
@@ -245,7 +244,7 @@ class News extends Component {
                         flexDirection: 'column',
                         width: '100vw',
                         textAlign: 'center',
-                        margin: this.props.desktop ? '20px 0 0 0' : '20vw 0 0 0'
+                        margin: this.props.desktop ? '20px 0 0 0' : '20vw 0 0 0',
                     }}
                 >
                     {this.renderFirebaseNews()}
@@ -258,7 +257,7 @@ class News extends Component {
                                     height: '1px',
                                     borderRadius: '3px',
                                     backgroundColor: '#212121',
-                                    margin: '50px 0 45px 0'
+                                    margin: '50px 0 45px 0',
                                 }}
                             />
                             <h3> Add News Article </h3>
@@ -266,7 +265,7 @@ class News extends Component {
                             <TextInput
                                 placeHolder="Enter Article URL"
                                 value={this.state.url}
-                                onDOMChange={event => this.setState({ url: event.target.value })}
+                                onDOMChange={(event) => this.setState({ url: event.target.value })}
                                 style={{ width: '40vw', margin: '-10px 0px 10px 0px' }}
                             />
                             {/* <Button label="Autofill Information" onClick={this.fetchInfo} /> */}
@@ -274,17 +273,17 @@ class News extends Component {
                                 style={{
                                     width: '100%',
                                     padding: '20px 20% 0% 20%',
-                                    textAlign: 'left'
+                                    textAlign: 'left',
                                 }}
                             >
                                 <FormField label="Title" size="small" help="Required">
                                     <input
                                         style={{
                                             fontWeight: 'lighter',
-                                            border: 'none'
+                                            border: 'none',
                                         }}
                                         type="text"
-                                        onChange={event =>
+                                        onChange={(event) =>
                                             this.setState({ title: event.target.value })
                                         }
                                     />
@@ -300,11 +299,11 @@ class News extends Component {
                                             fontWeight: 'lighter',
                                             height: '60%',
                                             resize: 'none',
-                                            border: 'none'
+                                            border: 'none',
                                         }}
                                         type="text"
                                         rows={10}
-                                        onChange={event =>
+                                        onChange={(event) =>
                                             this.setState({ text: event.target.value })
                                         }
                                     />
@@ -313,10 +312,10 @@ class News extends Component {
                                     <input
                                         style={{
                                             fontWeight: 'lighter',
-                                            border: 'none'
+                                            border: 'none',
                                         }}
                                         type="text"
-                                        onChange={event =>
+                                        onChange={(event) =>
                                             this.setState({ src: event.target.value })
                                         }
                                     />
@@ -329,7 +328,7 @@ class News extends Component {
                                             justifyContent: 'space-around',
                                             alignItems: 'center',
                                             marginBottom: '15px',
-                                            width: '100%'
+                                            width: '100%',
                                         }}
                                     >
                                         <RadioButton
@@ -365,7 +364,7 @@ class News extends Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     const { news, isAuthenticated } = state;
     return { news, isAuthenticated };
 };

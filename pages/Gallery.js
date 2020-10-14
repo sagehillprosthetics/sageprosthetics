@@ -3,7 +3,7 @@ import firebase from 'firebase/app';
 import 'firebase/database';
 import { connect } from 'react-redux';
 import { Image, Transformation } from 'cloudinary-react';
-import NextSeo from 'next-seo';
+import { NextSeo } from 'next-seo';
 
 import Router from 'next/router';
 import * as types from '../redux/types.js';
@@ -22,7 +22,7 @@ class Gallery extends Component {
     static async getInitialProps({ req, query, store, isServer }) {
         store.dispatch({
             type: types.CHANGE_PAGE,
-            payload: 'g'
+            payload: 'g',
         });
 
         let db = firebase;
@@ -31,8 +31,8 @@ class Gallery extends Component {
         db.database()
             .ref('projects')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     project.push(child.key);
                 });
             });
@@ -42,8 +42,8 @@ class Gallery extends Component {
         db.database()
             .ref('recipients')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     if (child.val().archive == true) {
                         archive.push(child.key);
                     } else {
@@ -57,32 +57,32 @@ class Gallery extends Component {
             .database()
             .ref('gallery')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     pictures.push(child.val());
                 });
             });
 
         store.dispatch({
             type: types.GET_GALLERY,
-            payload: pictures.reverse()
+            payload: pictures.reverse(),
         });
 
         store.dispatch({
             type: types.GET_RECIPIENTS,
-            payload: { links, archive }
+            payload: { links, archive },
         });
 
         store.dispatch({
             type: types.GET_PROJECTS,
-            payload: project
+            payload: project,
         });
     }
 
     state = {
         selectedImage: '',
         page: 1,
-        uploadImageState: ''
+        uploadImageState: '',
     };
 
     componentDidMount() {
@@ -95,7 +95,7 @@ class Gallery extends Component {
             .ref()
             .child('gallery')
             .once('value')
-            .then(snapshot => snapshot.val().length);
+            .then((snapshot) => snapshot.val().length);
         console.log(key);
         console.log(public_id);
         this.database
@@ -103,17 +103,17 @@ class Gallery extends Component {
             .set(public_id)
             .then(() => {
                 this.setState({
-                    uploadImageState: 'Successfully Updated Database'
+                    uploadImageState: 'Successfully Updated Database',
                 });
                 Router.replace('/gallery');
             })
-            .catch(e => this.setState({ uploadImageState: `Error: ${e.message}` }));
+            .catch((e) => this.setState({ uploadImageState: `Error: ${e.message}` }));
     };
 
-    removeImage = async src => {
+    removeImage = async (src) => {
         let newGallery = {};
         let count = 0;
-        this.props.gallery.reverse().forEach(image => {
+        this.props.gallery.reverse().forEach((image) => {
             if (image !== src) {
                 newGallery[count] = image;
                 count++;
@@ -126,11 +126,11 @@ class Gallery extends Component {
             .set(newGallery)
             .then(() => {
                 this.setState({
-                    uploadImageState: 'Successfully Updated Database'
+                    uploadImageState: 'Successfully Updated Database',
                 });
                 Router.replace('/gallery');
             })
-            .catch(e => this.setState({ uploadImageState: `Error: ${e.message}` }));
+            .catch((e) => this.setState({ uploadImageState: `Error: ${e.message}` }));
     };
 
     renderImages = () => {
@@ -138,7 +138,7 @@ class Gallery extends Component {
 
         let count = -1;
 
-        const images = this.props.gallery.map(src => {
+        const images = this.props.gallery.map((src) => {
             count++;
             if (count >= (this.state.page - 1) * 20 && count < this.state.page * 20) {
                 return (
@@ -148,7 +148,7 @@ class Gallery extends Component {
                             margin: '1vw',
                             display: 'flex',
                             flexDirection: 'column',
-                            alignItems: 'center'
+                            alignItems: 'center',
                         }}
                     >
                         <Image
@@ -225,12 +225,12 @@ class Gallery extends Component {
         return (
             <div style={{ margin: '0% 5% 0% 5%' }}>
                 <NextSeo
-                    config={{
+                    {...{
                         title: 'Gallery | Sage Prosthetics',
                         twitter: { title: 'Gallery | Sage Prosthetics' },
                         openGraph: {
-                            title: 'Gallery | Sage Prosthetics'
-                        }
+                            title: 'Gallery | Sage Prosthetics',
+                        },
                     }}
                 />
                 <h2 style={{ textAlign: 'center' }}>Photo Gallery</h2>
@@ -240,7 +240,7 @@ class Gallery extends Component {
                         display: 'flex',
                         flexWrap: 'wrap',
                         flexDirection: 'row',
-                        justifyContent: 'center'
+                        justifyContent: 'center',
                     }}
                 >
                     {this.props.isAuthenticated ? (
@@ -248,7 +248,7 @@ class Gallery extends Component {
                             style={{
                                 width: '248px',
                                 height: '186px',
-                                margin: '1vw'
+                                margin: '1vw',
                                 //backgroundColor: '#7ed4c6'
                             }}
                         >
@@ -268,7 +268,7 @@ class Gallery extends Component {
                         display: 'flex',
                         flexDirection: 'row',
                         justifyContent: 'center',
-                        alignItems: 'center'
+                        alignItems: 'center',
                     }}
                 >
                     {this.renderAnchorTags()}
@@ -300,11 +300,11 @@ class Gallery extends Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     const { gallery, isAuthenticated } = state;
     return {
         gallery,
-        isAuthenticated
+        isAuthenticated,
     };
 };
 

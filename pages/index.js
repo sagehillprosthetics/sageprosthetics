@@ -16,16 +16,14 @@ import Button from 'grommet/components/Button';
 import FormField from 'grommet/components/FormField';
 import CloseIcon from 'grommet/components/icons/base/Close';
 
-import '../styles.scss';
 import * as types from '../redux/types';
-import ConfirmModal from '../components/ConfirmModal';
 import { isNullOrUndefined } from 'util';
 
 class LandingPage extends Component {
     static async getInitialProps({ req, store }) {
         store.dispatch({
             type: types.CHANGE_PAGE,
-            payload: '~'
+            payload: '~',
         });
 
         let db = firebase;
@@ -34,8 +32,8 @@ class LandingPage extends Component {
         db.database()
             .ref('projects')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     project.push(child.key);
                 });
             });
@@ -44,8 +42,8 @@ class LandingPage extends Component {
         db.database()
             .ref('quotes')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     quotes.push(child.val());
                 });
             });
@@ -56,8 +54,8 @@ class LandingPage extends Component {
             .database()
             .ref('recipients')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     if (child.val().archive == true) {
                         archive.push(child.key);
                     } else {
@@ -68,12 +66,12 @@ class LandingPage extends Component {
 
         store.dispatch({
             type: types.GET_RECIPIENTS,
-            payload: { links, archive }
+            payload: { links, archive },
         });
 
         store.dispatch({
             type: types.GET_PROJECTS,
-            payload: project
+            payload: project,
         });
 
         store.dispatch({ type: types.GET_QUOTES, payload: quotes });
@@ -85,7 +83,7 @@ class LandingPage extends Component {
         desktop: true,
         quote: '',
         src: '',
-        uploadState: ''
+        uploadState: '',
     };
 
     componentDidMount() {
@@ -100,14 +98,14 @@ class LandingPage extends Component {
             .set(value)
             .then(() => {
                 this.setState({
-                    uploadState: 'Successfully Updated Database'
+                    uploadState: 'Successfully Updated Database',
                 });
                 Router.replace(`/`);
             })
-            .catch(e => this.setState({ uploadState: `Error: ${e.message}` }));
+            .catch((e) => this.setState({ uploadState: `Error: ${e.message}` }));
     };
 
-    removeQuote = key => {
+    removeQuote = (key) => {
         this.props.quotes.splice(key, 1);
         this.updateFirebase('/quotes', this.props.quotes);
     };
@@ -121,14 +119,14 @@ class LandingPage extends Component {
                     params={{
                         particles: {
                             number: {
-                                value: 100
+                                value: 100,
                             },
                             size: {
                                 value: 4,
-                                random: true
+                                random: true,
                             },
                             color: {
-                                value: '#2cc99d'
+                                value: '#2cc99d',
                             },
                             move: {
                                 enable: true,
@@ -140,31 +138,31 @@ class LandingPage extends Component {
                                 attract: {
                                     enable: false,
                                     rotateX: 0,
-                                    rotateY: 0
-                                }
+                                    rotateY: 0,
+                                },
                             },
                             line_linked: {
                                 distance: 120,
                                 color: '#2cc99d',
                                 opacity: 0.9,
-                                width: 1.3
-                            }
+                                width: 1.3,
+                            },
                         },
                         interactivity: {
                             events: {
                                 onhover: {
                                     enable: true,
-                                    mode: 'repulse'
-                                }
+                                    mode: 'repulse',
+                                },
                             },
                             modes: {
                                 repulse: {
                                     distance: 100,
-                                    duration: 1
-                                }
-                            }
+                                    duration: 1,
+                                },
+                            },
                         },
-                        retina_detect: true
+                        retina_detect: true,
                     }}
                 />
             </Transition>
@@ -186,9 +184,9 @@ class LandingPage extends Component {
                         : '-16vh 0px 0px 0px',
                     borderWidth: '0px',
                     width: '60%',
-                    overflow: 'visible'
+                    overflow: 'visible',
                 }}
-                onActive={event => {
+                onActive={(event) => {
                     console.log(event);
                     this.setState({ expanded: !isNullOrUndefined(event) });
                 }}
@@ -198,7 +196,7 @@ class LandingPage extends Component {
                     style={{
                         borderWidth: '0px',
                         width: '100%',
-                        backgroundColor: 'green'
+                        backgroundColor: 'green',
                     }}
                 >
                     <div style={styles.dropdown}>
@@ -286,15 +284,17 @@ class LandingPage extends Component {
                     <div style={styles.dropdown}>Same answer as above!</div>
                 </AccordionPanel>
                 <AccordionPanel heading="Here's a great video to learn more about e-NABLE!">
-		    <div class="iframe-container">
-			<iframe width="560" 
-                                height="315" 
-                                src="https://www.youtube.com/embed/UetR48IBXVk" 
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-			</iframe>
-		    </div>
-		</AccordionPanel>
+                    <div class="iframe-container">
+                        <iframe
+                            width="560"
+                            height="315"
+                            src="https://www.youtube.com/embed/UetR48IBXVk"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                        ></iframe>
+                    </div>
+                </AccordionPanel>
                 <AccordionPanel heading="Disclaimer">
                     <div style={styles.dropdown}>
                         We are not medical professionals. These devices are not intended to replace
@@ -317,7 +317,7 @@ class LandingPage extends Component {
                     flexDirection: 'column',
                     width: '100vw',
                     textAlign: 'center',
-                    margin: this.props.desktop ? '15% 0px 10px 0px' : '20vw 0 0 0'
+                    margin: this.props.desktop ? '15% 0px 10px 0px' : '20vw 0 0 0',
                 }}
             >
                 <div
@@ -331,7 +331,7 @@ class LandingPage extends Component {
                         letterSpacing: '0.1em',
                         fontWeight: '700',
                         marginBottom: '3vh',
-                        marginTop: this.props.desktop ? '0px' : '40vw'
+                        marginTop: this.props.desktop ? '0px' : '40vw',
                     }}
                     className="subheading"
                 >
@@ -349,14 +349,14 @@ class LandingPage extends Component {
                                 height: '100%',
                                 display: 'flex',
                                 flexDirection: 'column',
-                                justifyContent: 'space-around'
+                                justifyContent: 'space-around',
                             }}
                             key={index}
                         >
                             <h1
                                 style={{
                                     textAlign: 'center',
-                                    fontWeight: '500'
+                                    fontWeight: '500',
                                 }}
                             >
                                 "{section.text}"
@@ -375,7 +375,7 @@ class LandingPage extends Component {
                                     style={{
                                         height: '30px',
                                         width: 'auto',
-                                        marginBottom: '100px'
+                                        marginBottom: '100px',
                                     }}
                                     alt="source"
                                 ></img>
@@ -392,7 +392,7 @@ class LandingPage extends Component {
                             flexDirection: 'column',
                             alignItems: 'center',
                             padding: '10%',
-                            textAlign: 'left'
+                            textAlign: 'left',
                         }}
                     >
                         <h3 style={{ marginTop: '20px' }}> Add New Quote </h3>
@@ -402,22 +402,22 @@ class LandingPage extends Component {
                                     fontWeight: 'lighter',
                                     height: '60%',
                                     resize: 'none',
-                                    border: 'none'
+                                    border: 'none',
                                 }}
                                 type="text"
                                 name="message"
                                 rows={10}
-                                onChange={event => this.setState({ quote: event.target.value })}
+                                onChange={(event) => this.setState({ quote: event.target.value })}
                             />
                         </FormField>
                         <FormField label="Image URL" size="medium" help="Required">
                             <input
                                 style={{
                                     fontWeight: 'lighter',
-                                    border: 'none'
+                                    border: 'none',
                                 }}
                                 type="text"
-                                onChange={event => this.setState({ src: event.target.value })}
+                                onChange={(event) => this.setState({ src: event.target.value })}
                             />
                         </FormField>
 
@@ -431,7 +431,7 @@ class LandingPage extends Component {
                                               `quotes/${this.props.quotes.length}`,
                                               {
                                                   text: this.state.quote,
-                                                  src: this.state.src
+                                                  src: this.state.src,
                                               }
                                           )
                                     : null
@@ -459,12 +459,12 @@ class LandingPage extends Component {
                                         width: '100%',
                                         height: '100%',
                                         background:
-                                            'linear-gradient(160deg, #ffffff, #ffffff, #1d698b)'
+                                            'linear-gradient(160deg, #ffffff, #ffffff, #1d698b)',
                                     }}
                                 />
                             ),
                             amount: 0.1,
-                            slowerScrollRate: false
+                            slowerScrollRate: false,
                         },
                         {
                             children: (
@@ -478,7 +478,7 @@ class LandingPage extends Component {
                                             display: 'flex',
                                             justifyContent: 'center',
                                             width: '100vw',
-                                            opacity: 0
+                                            opacity: 0,
                                         }}
                                         className="printer"
                                     >
@@ -489,7 +489,7 @@ class LandingPage extends Component {
                                                     ? '10.5% 0 17% 0'
                                                     : '70% 0 30% 0',
                                                 width: this.props.desktop ? '50%' : '90%',
-                                                height: this.props.desktop ? '50%' : '90%'
+                                                height: this.props.desktop ? '50%' : '90%',
                                             }}
                                             alt="gradient"
                                         />
@@ -497,7 +497,7 @@ class LandingPage extends Component {
                                 </Transition>
                             ),
                             amount: 0.1,
-                            slowerScrollRate: true
+                            slowerScrollRate: true,
                         },
                         {
                             children: (
@@ -517,7 +517,7 @@ class LandingPage extends Component {
                                             margin: this.props.desktop
                                                 ? '14% 0 0 10px'
                                                 : '30vw 0 0 10px',
-                                            opacity: 0
+                                            opacity: 0,
                                         }}
                                         className="heading"
                                     >
@@ -529,7 +529,7 @@ class LandingPage extends Component {
                                                     '-webkit-linear-gradient(left, #9357cc 0%,#2989d8 50%,#2cc99d 100%)',
                                                 WebkitBackgroundClip: 'text',
                                                 WebkitTextFillColor: 'transparent',
-                                                letterSpacing: '-0.05em'
+                                                letterSpacing: '-0.05em',
                                             }}
                                         >
                                             WE MAKE <br /> HANDS
@@ -538,11 +538,11 @@ class LandingPage extends Component {
                                 </Transition>
                             ),
                             amount: 0.1,
-                            slowerScrollRate: false
-                        }
+                            slowerScrollRate: false,
+                        },
                     ]}
                     style={{
-                        height: this.props.desktop ? '75vh' : '90vh'
+                        height: this.props.desktop ? '75vh' : '90vh',
                     }}
                 />
 
@@ -553,12 +553,12 @@ class LandingPage extends Component {
                                 <div
                                     style={{
                                         width: '100%',
-                                        height: '100%'
+                                        height: '100%',
                                     }}
                                 />
                             ),
                             amount: 0.1,
-                            slowerScrollRate: false
+                            slowerScrollRate: false,
                         },
                         {
                             children: (
@@ -568,21 +568,21 @@ class LandingPage extends Component {
                                         alignItems: 'center',
                                         flexDirection: 'column',
                                         justifyContent: 'center',
-                                        width: '100vw'
+                                        width: '100vw',
                                     }}
                                 >
                                     <div
                                         style={{
                                             width: '100vw',
                                             padding: '0px',
-                                            marginTop: this.props.desktop ? '0px' : '20vh'
+                                            marginTop: this.props.desktop ? '0px' : '20vh',
                                         }}
                                     >
                                         <div
                                             style={{
                                                 position: 'absolute',
                                                 width: '100vw',
-                                                height: '40vh'
+                                                height: '40vh',
                                             }}
                                         >
                                             {this.renderParticles()}
@@ -595,7 +595,7 @@ class LandingPage extends Component {
                                                     ? '13% 0px 10% 10px'
                                                     : '40% 0px 20% 10px',
                                                 zIndex: 30,
-                                                pointerEvents: 'none'
+                                                pointerEvents: 'none',
                                             }}
                                         >
                                             <Transition
@@ -613,7 +613,7 @@ class LandingPage extends Component {
                                                         fontSize: this.props.desktop
                                                             ? '6vh'
                                                             : '350%',
-                                                        letterSpacing: '0.1em'
+                                                        letterSpacing: '0.1em',
                                                     }}
                                                     className="subheading"
                                                 >
@@ -631,7 +631,7 @@ class LandingPage extends Component {
                                                         letterSpacing: '0.05em',
                                                         fontSize: this.props.desktop
                                                             ? '10vh'
-                                                            : '300%'
+                                                            : '300%',
                                                     }}
                                                     className="mainheading"
                                                 >
@@ -651,7 +651,7 @@ class LandingPage extends Component {
                                             alignItems: 'center',
                                             display: 'flex',
                                             flexDirection: 'column',
-                                            overflow: 'visible'
+                                            overflow: 'visible',
                                         }}
                                     >
                                         {this.renderAccordion()}
@@ -659,15 +659,15 @@ class LandingPage extends Component {
                                 </div>
                             ),
                             amount: 0.1,
-                            slowerScrollRate: false
-                        }
+                            slowerScrollRate: false,
+                        },
                     ]}
                     style={{
                         height: this.props.desktop
                             ? '75em'
                             : this.state.expanded
                             ? '180vh'
-                            : '150vh'
+                            : '150vh',
                     }}
                 />
                 <ParallaxBanner
@@ -678,7 +678,7 @@ class LandingPage extends Component {
                                     style={{
                                         background: '#000000',
                                         height: this.props.desktop ? '100%' : '70vw',
-                                        width: '100vw'
+                                        width: '100vw',
                                     }}
                                 >
                                     <img
@@ -686,7 +686,7 @@ class LandingPage extends Component {
                                         style={{
                                             width: '100vw',
                                             opacity: '0.7',
-                                            marginTop: this.props.desktop ? '0px' : '14vw'
+                                            marginTop: this.props.desktop ? '0px' : '14vw',
                                         }}
                                         alt="video"
                                     />
@@ -697,14 +697,14 @@ class LandingPage extends Component {
                                                 height: '100%',
                                                 zIndex: '2',
                                                 background: '#000000',
-                                                opacity: '0.7'
+                                                opacity: '0.7',
                                             }}
                                         />
                                     ) : null}
                                 </div>
                             ),
                             amount: 0.1,
-                            slowerScrollRate: true
+                            slowerScrollRate: true,
                         },
                         {
                             children: (
@@ -718,7 +718,7 @@ class LandingPage extends Component {
                                         textAlign: 'center',
                                         margin: this.props.desktop
                                             ? '15% 0 0 10px'
-                                            : '30vw 0 0 10px'
+                                            : '30vw 0 0 10px',
                                     }}
                                 >
                                     <div
@@ -726,7 +726,7 @@ class LandingPage extends Component {
                                             fontSize: this.props.desktop ? '9vh' : '11vw',
                                             fontWeight: '700',
                                             lineHeight: '100%',
-                                            letterSpacing: '-0.05em'
+                                            letterSpacing: '-0.05em',
                                         }}
                                     >
                                         e-NABLE
@@ -736,7 +736,7 @@ class LandingPage extends Component {
                                             fontSize: this.props.desktop ? '2.5vh' : '3.5vw',
                                             fontWeight: '500',
                                             lineHeight: '110%',
-                                            letterSpacing: '0.2em'
+                                            letterSpacing: '0.2em',
                                         }}
                                     >
                                         Connecting people who make hands <br /> with people who need
@@ -746,7 +746,7 @@ class LandingPage extends Component {
                                         style={{
                                             margin: '40px',
                                             padding: '15px',
-                                            borderWeight: '2px'
+                                            borderWeight: '2px',
                                         }}
                                         href="http://enablingthefuture.org/"
                                         onClick={() =>
@@ -763,11 +763,11 @@ class LandingPage extends Component {
                                 </div>
                             ),
                             amount: 0.1,
-                            slowerScrollRate: false
-                        }
+                            slowerScrollRate: false,
+                        },
                     ]}
                     style={{
-                        height: this.props.desktop ? '600px' : '70vw'
+                        height: this.props.desktop ? '600px' : '70vw',
                     }}
                 />
                 <ParallaxBanner
@@ -778,25 +778,25 @@ class LandingPage extends Component {
                                     style={{
                                         background: '#ffffff',
                                         height: '100%',
-                                        width: '100vw'
+                                        width: '100vw',
                                     }}
                                 />
                             ),
                             amount: 0.1,
-                            slowerScrollRate: true
+                            slowerScrollRate: true,
                         },
                         {
                             children: this.renderQuotes(),
                             amount: 0.1,
-                            slowerScrollRate: false
-                        }
+                            slowerScrollRate: false,
+                        },
                     ]}
                     style={{
                         height: this.props.desktop
                             ? this.props.isAuthenticated
                                 ? '1500px'
                                 : '800px'
-                            : '180vw'
+                            : '180vw',
                     }}
                 />
             </ParallaxProvider>
@@ -809,8 +809,8 @@ const styles = {
         width: '100%',
         textAlign: 'left',
         margin: '10px 10px 0 20px',
-        paddingRight: '20px'
-    }
+        paddingRight: '20px',
+    },
 };
 
 const Box = posed.button({
@@ -818,91 +818,91 @@ const Box = posed.button({
     init: {
         borderColor: '#FFFFFF',
         color: '#ffffff',
-        backgroundColor: 'rgb(0,0,0,0)'
+        backgroundColor: 'rgb(0,0,0,0)',
     },
     hover: {
         color: '#000000',
-        backgroundColor: '#ffffff'
-    }
+        backgroundColor: '#ffffff',
+    },
 });
 
-const animateParticles = particles => {
+const animateParticles = (particles) => {
     return anime({
         targets: particles,
         delay: 500,
         opacity: {
-            value: [0, 1]
+            value: [0, 1],
         },
         easing: 'easeOutQuint',
-        duration: 3000
+        duration: 3000,
     });
 };
 
-const animateMainheadingIn = mainheading => {
+const animateMainheadingIn = (mainheading) => {
     return anime({
         targets: mainheading,
         opacity: {
-            value: [0, 1]
+            value: [0, 1],
         },
         filter: ['blur(7px)', 'blur(0px)'],
         translateY: [500, 0],
         rotate: {
-            value: [90, 0]
+            value: [90, 0],
         },
         easing: 'easeOutQuint',
-        duration: 1000
+        duration: 1000,
     });
 };
 
-const animateSubheadingIn = subheading => {
+const animateSubheadingIn = (subheading) => {
     return anime({
         targets: subheading,
         opacity: {
-            value: [0, 1]
+            value: [0, 1],
         },
         filter: ['blur(7px)', 'blur(0px)'],
         scale: {
-            value: [10, 1]
+            value: [10, 1],
         },
         easing: 'easeOutQuint',
-        duration: 800
+        duration: 800,
     });
 };
 
-const animatePrinterIn = printer => {
+const animatePrinterIn = (printer) => {
     console.log('animating');
     return anime({
         targets: printer,
         opacity: {
-            value: [0, 1]
+            value: [0, 1],
         },
         filter: ['blur(7px)', 'blur(0px)'],
         scale: {
-            value: 1.3
+            value: 1.3,
         },
         easing: 'easeOutQuint',
-        duration: 1800
+        duration: 1800,
     });
 };
 
-const animateHeadingIn = heading => {
+const animateHeadingIn = (heading) => {
     return anime({
         targets: heading,
         opacity: {
-            value: [0, 1]
+            value: [0, 1],
         },
         filter: ['blur(7px)', 'blur(0px)'],
         scale: {
             value: 1.4,
-            duration: 1800
+            duration: 1800,
         },
         translateY: -15,
         easing: 'easeOutQuart',
-        duration: 1900
+        duration: 1900,
     });
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     const { quotes, isAuthenticated } = state;
     return { quotes, isAuthenticated };
 };

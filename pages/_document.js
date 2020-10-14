@@ -1,13 +1,11 @@
 import React from 'react';
-import Document, { Head, Main, NextScript } from 'next/document';
-
-import '../styles.scss';
+import Document, { Html, Head, Main, NextScript } from 'next/document';
 
 //Custom index.HTML document to add the custom stylesheet --> DO NOT RENAME
 export default class MyDocument extends Document {
     render() {
         return (
-            <html>
+            <Html>
                 <Head>
                     <link rel="stylesheet" href="/_next/static/style.css" />
                     <link rel="shortcut icon" type="image/png" href="/static/favicon.png" />
@@ -32,7 +30,7 @@ export default class MyDocument extends Document {
                     <Main />
                     <NextScript />
                 </body>
-            </html>
+            </Html>
         );
     }
 }
