@@ -90,7 +90,7 @@ class Contact extends Component {
                 />
                 <h2 style={{ textAlign: 'center' }}>Contact Us</h2>
                 <form
-                    action="https://formspree.io/lercht@sagehillschool.org"
+                    action="https://formspree.io/f/xpzolndg"
                     method="POST"
                     style={{
                         display: 'flex',
