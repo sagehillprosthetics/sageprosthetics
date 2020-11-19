@@ -4,7 +4,7 @@ import { Image } from 'cloudinary-react';
 import firebase from 'firebase/app';
 import 'firebase/database';
 import Router from 'next/router';
-import NextSeo from 'next-seo';
+import { NextSeo } from 'next-seo';
 
 import Card from 'grommet/components/Card';
 import Anchor from 'grommet/components/Anchor';
@@ -21,7 +21,7 @@ class Hand extends Component {
     static async getInitialProps({ req, query, store }) {
         store.dispatch({
             type: types.CHANGE_PAGE,
-            payload: 'h'
+            payload: 'h',
         });
 
         let db = firebase;
@@ -30,8 +30,8 @@ class Hand extends Component {
         db.database()
             .ref('projects')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     project.push(child.key);
                 });
             });
@@ -40,8 +40,8 @@ class Hand extends Component {
         db.database()
             .ref('prosthetic-designs')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     pictures[child.key] = child.val();
                 });
             });
@@ -52,8 +52,8 @@ class Hand extends Component {
             .database()
             .ref('recipients')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     if (child.val().archive == true) {
                         archive.push(child.key);
                     } else {
@@ -64,17 +64,17 @@ class Hand extends Component {
 
         store.dispatch({
             type: types.GET_RECIPIENTS,
-            payload: { links, archive }
+            payload: { links, archive },
         });
 
         store.dispatch({
             type: types.GET_DESIGNS,
-            payload: pictures
+            payload: pictures,
         });
 
         store.dispatch({
             type: types.GET_PROJECTS,
-            payload: project
+            payload: project,
         });
     }
 
@@ -87,7 +87,7 @@ class Hand extends Component {
         showModal: '',
         activeCategory: '',
         bannersrc: '',
-        bannername: ''
+        bannername: '',
     };
 
     componentDidMount() {
@@ -99,114 +99,114 @@ class Hand extends Component {
                 src: 'hand',
                 order: 0,
                 0: {
-                    '0': 'Wrist powered',
-                    '1': 'Looks ‘robotic/bionic’',
-                    '2': 'Can be customized in multiple colors etc.',
-                    '3': 'Most popular design for functionality',
+                    0: 'Wrist powered',
+                    1: 'Looks ‘robotic/bionic’',
+                    2: 'Can be customized in multiple colors etc.',
+                    3: 'Most popular design for functionality',
                     link: 'https://www.thingiverse.com/thing:1674320',
                     src: 'e19cb5872ea315325192c6ff3a2e3784_preview_featured',
-                    name: 'Phoenix Unlimbited'
+                    name: 'Phoenix Unlimbited',
                 },
                 1: {
-                    '0': 'Printed with flexible filament hinges',
-                    '1': 'Looks the most realistic (can do skin tone such as brown, tan, etc.)',
-                    '2': 'Not as easy to use as the phoenix – not as good grip strength',
-                    '3': 'Wrist powered',
+                    0: 'Printed with flexible filament hinges',
+                    1: 'Looks the most realistic (can do skin tone such as brown, tan, etc.)',
+                    2: 'Not as easy to use as the phoenix – not as good grip strength',
+                    3: 'Wrist powered',
                     link: 'https://www.thingiverse.com/thing:380665',
                     src: 'IMG_20140822_161840_preview_featured',
-                    name: 'Flexy – Hand 2'
+                    name: 'Flexy – Hand 2',
                 },
                 2: {
-                    '0': 'A ‘remix’ of the flexy hand',
-                    '1': 'Supposedly has better grip strength',
-                    '2': 'Still somewhat experimental in design',
-                    '3': 'Wrist powered',
+                    0: 'A ‘remix’ of the flexy hand',
+                    1: 'Supposedly has better grip strength',
+                    2: 'Still somewhat experimental in design',
+                    3: 'Wrist powered',
                     link: 'https://www.thingiverse.com/thing:2715218',
                     src: 845,
-                    name: 'Promimetic Hand'
+                    name: 'Promimetic Hand',
                 },
                 3: {
-                    '0': 'An older model, good functionality (similar to Phoenix)',
-                    '1': 'Wrist powered',
+                    0: 'An older model, good functionality (similar to Phoenix)',
+                    1: 'Wrist powered',
                     link: 'https://www.thingiverse.com/thing:910465',
                     src: 8322,
-                    name: 'Osprey Hand'
+                    name: 'Osprey Hand',
                 },
                 4: {
-                    '0': 'An older model with good functionality, predecessor of Phoenix',
-                    '1': 'Wrist powered',
+                    0: 'An older model with good functionality, predecessor of Phoenix',
+                    1: 'Wrist powered',
                     link: 'https://www.thingiverse.com/thing:596966',
                     src: 390,
-                    name: 'Raptor Reloaded'
-                }
+                    name: 'Raptor Reloaded',
+                },
             },
             'Arm Powered Hand Designs': {
                 order: 1,
                 src: 'arm',
                 0: {
-                    '0': 'Similar to phoenix hand, but elbow powered',
+                    0: 'Similar to phoenix hand, but elbow powered',
                     link: 'https://www.thingiverse.com/thing:1672381',
                     src: 831,
-                    name: 'Unlimbitied Arm'
+                    name: 'Unlimbitied Arm',
                 },
                 1: {
-                    '0': 'connects to arm above the elbow',
-                    '1': 'grip comes from bending the elbow',
-                    '2': 'still in the testing process',
+                    0: 'connects to arm above the elbow',
+                    1: 'grip comes from bending the elbow',
+                    2: 'still in the testing process',
                     link: 'https://www.thingiverse.com/thing:2112768',
                     src: 'Screen-Shot-2018-03-21-at-1.04.48-PM',
-                    name: 'ArmPO V2'
+                    name: 'ArmPO V2',
                 },
                 2: {
-                    '0': 'Elbow powered',
-                    '1': 'Realistic looking',
-                    '2': 'Not as good grip strength',
+                    0: 'Elbow powered',
+                    1: 'Realistic looking',
+                    2: 'Not as good grip strength',
                     link: 'https://www.thingiverse.com/thing:2841296',
                     src: 'llnchrulplonwhah7hvv',
-                    name: 'Kwawu Arm 2'
-                }
+                    name: 'Kwawu Arm 2',
+                },
             },
             'Shoulder Powered Hand Designs': {
                 order: 2,
                 src: 'shoulder',
                 0: {
-                    '0': 'Very experimental design',
-                    '1': 'For recipients without an elbow joint',
-                    '2': 'Attaches to the body with straps, to create a harness',
-                    '3': 'Then attaches to a terminal device such as the Kwawu hand ',
+                    0: 'Very experimental design',
+                    1: 'For recipients without an elbow joint',
+                    2: 'Attaches to the body with straps, to create a harness',
+                    3: 'Then attaches to a terminal device such as the Kwawu hand ',
                     src: 'octqrvia1bypscyhuqpw',
-                    name: 'XO Shoulder by Nate Munro'
-                }
+                    name: 'XO Shoulder by Nate Munro',
+                },
             },
             'Other Designs': {
                 order: 3,
                 0: {
-                    '0': 'For people who have a hand, but can’t move it',
-                    '1': 'Stroke victims, hemispherectomy patients',
+                    0: 'For people who have a hand, but can’t move it',
+                    1: 'Stroke victims, hemispherectomy patients',
                     link: 'https://www.thingiverse.com/thing:2894781',
                     name: 'Frog Hand',
-                    src: 'tfjsoudesvjj81tzxpv5'
+                    src: 'tfjsoudesvjj81tzxpv5',
                 },
                 1: {
-                    '0': 'For people who are just missing a finger',
+                    0: 'For people who are just missing a finger',
                     link: 'https://www.thingiverse.com/thing:1340624',
                     src: 'eqmga4rmxalxcl16ufvs',
-                    name: 'Knick Finger'
+                    name: 'Knick Finger',
                 },
                 2: {
-                    '0': 'Similar to the Knick Finger',
+                    0: 'Similar to the Knick Finger',
                     link: 'https://www.thingiverse.com/thing:1737001',
                     src: 'xpzlvw0j5nelxirlbadz',
-                    name: 'Kinetic Finger'
+                    name: 'Kinetic Finger',
                 },
                 3: {
-                    '0': 'Passive, but great grip strength',
-                    '1': 'Must be attached to custom socket',
+                    0: 'Passive, but great grip strength',
+                    1: 'Must be attached to custom socket',
                     link: 'https://www.thingiverse.com/thing:1908866',
                     src: 'xmi9im6lw08fjjgdhfz0',
-                    name: 'Gripper Thumb'
-                }
-            }
+                    name: 'Gripper Thumb',
+                },
+            },
         };
         //this.updateFirebase('', hands);
     }
@@ -214,11 +214,11 @@ class Hand extends Component {
     addHand = () => {
         const text = this.state.text
             .split('\n')
-            .map(line => line.trim())
-            .filter(line => line.length >= 1);
+            .map((line) => line.trim())
+            .filter((line) => line.length >= 1);
 
         let newOrder = 0;
-        Object.keys(this.props.designs[this.state.activeCategory]).forEach(key => {
+        Object.keys(this.props.designs[this.state.activeCategory]).forEach((key) => {
             if (parseInt(key) > newOrder) {
                 newOrder = parseInt(key);
             }
@@ -230,7 +230,7 @@ class Hand extends Component {
             link: this.state.href,
             name: this.state.name,
             order: newOrder,
-            src: this.state.src
+            src: this.state.src,
         };
 
         console.log(newHand);
@@ -245,20 +245,20 @@ class Hand extends Component {
             .set(value)
             .then(() => {
                 this.setState({
-                    uploadState: 'Successfully Updated Database'
+                    uploadState: 'Successfully Updated Database',
                 });
                 Router.replace(`/prosthetic-designs`);
             })
-            .catch(e => this.setState({ uploadState: `Error: ${e.message}` }));
+            .catch((e) => this.setState({ uploadState: `Error: ${e.message}` }));
     };
 
     renderHands = (hands, key) => {
         const cards = Object.keys(hands)
             .reverse()
-            .filter(key => key !== 'src' && key !== 'order')
-            .map(hand => {
+            .filter((key) => key !== 'src' && key !== 'order')
+            .map((hand) => {
                 const design = hands[hand];
-                const bulletpoints = Object.keys(design).map(key => {
+                const bulletpoints = Object.keys(design).map((key) => {
                     if (!isNaN(parseInt(key))) {
                         return <li key={key}> {design[key]} </li>;
                     }
@@ -271,7 +271,7 @@ class Hand extends Component {
                             //height: '60vh',
                             border: '3px solid #416989',
                             borderRadius: '10px',
-                            width: this.props.desktop ? '25vw' : '80vw'
+                            width: this.props.desktop ? '25vw' : '80vw',
                         }}
                         key={design.name}
                     >
@@ -284,7 +284,7 @@ class Hand extends Component {
                                 height: '100%',
                                 display: 'flex',
                                 flexDirection: 'column',
-                                justifyContent: 'space-around'
+                                justifyContent: 'space-around',
                             }}
                         >
                             <Image
@@ -322,18 +322,18 @@ class Hand extends Component {
         return (
             <div style={{ margin: '0% 5% 0% 5%' }}>
                 <NextSeo
-                    config={{
+                    {...{
                         title: 'Hand Designs | Sage Prosthetics',
                         twitter: { title: 'Hand Designs | Sage Prosthetics' },
                         openGraph: {
-                            title: 'Hand Designs | Sage Prosthetics'
-                        }
+                            title: 'Hand Designs | Sage Prosthetics',
+                        },
                     }}
                 />
 
                 {Object.keys(this.props.designs)
                     .sort((a, b) => this.props.designs[a].order - this.props.designs[b].order)
-                    .map(key => (
+                    .map((key) => (
                         <div>
                             <h2 style={{ textAlign: 'center', marginTop: '60px' }}> {key} </h2>
                             <Image
@@ -347,7 +347,7 @@ class Hand extends Component {
                                     flexWrap: 'wrap',
                                     flexDirection: 'row',
                                     justifyContent: 'center',
-                                    marginBottom: '30px'
+                                    marginBottom: '30px',
                                 }}
                             >
                                 {this.renderHands(this.props.designs[key], key)}
@@ -363,7 +363,7 @@ class Hand extends Component {
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
-                                margin: '10px'
+                                margin: '10px',
                             }}
                         >
                             <h3 style={{ marginTop: '20px' }}> Add New Hand Design </h3>
@@ -371,20 +371,24 @@ class Hand extends Component {
                                 <input
                                     style={{
                                         fontWeight: 'lighter',
-                                        border: 'none'
+                                        border: 'none',
                                     }}
                                     type="text"
-                                    onChange={event => this.setState({ name: event.target.value })}
+                                    onChange={(event) =>
+                                        this.setState({ name: event.target.value })
+                                    }
                                 />
                             </FormField>
                             <FormField label="Thingiverse URL" size="medium">
                                 <input
                                     style={{
                                         fontWeight: 'lighter',
-                                        border: 'none'
+                                        border: 'none',
                                     }}
                                     type="text"
-                                    onChange={event => this.setState({ href: event.target.value })}
+                                    onChange={(event) =>
+                                        this.setState({ href: event.target.value })
+                                    }
                                 />
                             </FormField>
                             <FormField
@@ -397,12 +401,14 @@ class Hand extends Component {
                                         fontWeight: 'lighter',
                                         height: '60%',
                                         resize: 'none',
-                                        border: 'none'
+                                        border: 'none',
                                     }}
                                     type="text"
                                     name="message"
                                     rows={10}
-                                    onChange={event => this.setState({ text: event.target.value })}
+                                    onChange={(event) =>
+                                        this.setState({ text: event.target.value })
+                                    }
                                 />
                             </FormField>
                             <FormField label="Category" size="large" help="Required">
@@ -450,7 +456,7 @@ class Hand extends Component {
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
-                                margin: '10px'
+                                margin: '10px',
                             }}
                         >
                             <h3 style={{ marginTop: '20px' }}> Add New Category </h3>
@@ -458,10 +464,10 @@ class Hand extends Component {
                                 <input
                                     style={{
                                         fontWeight: 'lighter',
-                                        border: 'none'
+                                        border: 'none',
                                     }}
                                     type="text"
-                                    onChange={event =>
+                                    onChange={(event) =>
                                         this.setState({ bannername: event.target.value })
                                     }
                                 />
@@ -492,7 +498,7 @@ class Hand extends Component {
                                 onConfirm={() =>
                                     this.updateFirebase(`/${this.state.bannername}`, {
                                         src: this.state.bannersrc,
-                                        order: Object.keys(this.props.designs).length
+                                        order: Object.keys(this.props.designs).length,
                                     })
                                 }
                                 message="You are about to add a hand design category to the Sage Prosthetics website. Are you sure?"
@@ -505,7 +511,7 @@ class Hand extends Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     const { designs, isAuthenticated } = state;
     return { designs, isAuthenticated };
 };

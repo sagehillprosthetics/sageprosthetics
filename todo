@@ -1,12 +1,11 @@
+Suggestions for improvements
 
-Change hand page layout
+Remove unnecessary console.logs
 
-Change the admin URL
+Remove unnecessary import statements
 
-Split the admin page up
+Upload to Grommet V2 (if possible)
 
-Expand the admin page for next year
+Increase animation speed / restructure code
 
-Fix the animation bug
-
-Add video on the home page
+Implement web parsing for automatically adding news articles

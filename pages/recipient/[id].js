@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Image, Video, Transformation } from 'cloudinary-react';
-import NextSeo from 'next-seo';
+import { NextSeo } from 'next-seo';
 import firebase from 'firebase/app';
 import 'firebase/database';
 import Router from 'next/router';
@@ -29,8 +29,8 @@ class Recipient extends Component {
         db.database()
             .ref('projects')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     project.push(child.key);
                 });
             });
@@ -39,8 +39,8 @@ class Recipient extends Component {
         db.database()
             .ref('group')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     reformat[child.key] = child.val();
                 });
             });
@@ -49,8 +49,8 @@ class Recipient extends Component {
         db.database()
             .ref('group-archive')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     archivereformat[child.key] = child.val();
                 });
             });
@@ -61,8 +61,8 @@ class Recipient extends Component {
             .database()
             .ref('recipients')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     if (child.val().archive == true) {
                         archive.push(child.key);
                     } else {
@@ -77,22 +77,22 @@ class Recipient extends Component {
 
         store.dispatch({
             type: types.GET_RECIPIENTS,
-            payload: { links, archive }
+            payload: { links, archive },
         });
 
         store.dispatch({
             type: types.GET_PROJECTS,
-            payload: project
+            payload: project,
         });
 
         store.dispatch({
             type: types.GET_SELECTED_RECIPIENT,
-            payload: recipient
+            payload: recipient,
         });
         store.dispatch({ type: types.CHANGE_PAGE, payload: recipient.name });
         store.dispatch({
             type: types.GET_GROUP,
-            payload: { ...reformat, ...archivereformat }
+            payload: { ...reformat, ...archivereformat },
         });
     }
 
@@ -101,7 +101,7 @@ class Recipient extends Component {
         textEdit: false,
         text: '',
         selectedMember: '',
-        searchTerm: ''
+        searchTerm: '',
     };
 
     componentDidMount() {
@@ -114,7 +114,7 @@ class Recipient extends Component {
         let array = this.props.recipient[video ? 'videos' : 'pictures'];
         let newArray = {};
         let count = 0;
-        array.forEach(file => {
+        array.forEach((file) => {
             if (file !== key) {
                 newArray[count] = file;
                 count++;
@@ -131,18 +131,18 @@ class Recipient extends Component {
             .set(value)
             .then(() => {
                 this.setState({
-                    uploadImageState: 'Successfully Updated Database'
+                    uploadImageState: 'Successfully Updated Database',
                 });
                 Router.replace(`/recipient/${this.props.recipient.name}`);
             })
-            .catch(e => this.setState({ uploadImageState: `Error: ${e.message}` }));
+            .catch((e) => this.setState({ uploadImageState: `Error: ${e.message}` }));
     };
 
     renderGroup() {
         let dropdown;
         if (this.props.recipient && this.props.group) {
             dropdown = Object.keys(this.props.group).filter(
-                name =>
+                (name) =>
                     (!this.props.recipient.group || !this.props.recipient.group.includes(name)) &&
                     (this.state.searchTerm == '' ||
                         name.toLowerCase().includes(this.state.searchTerm))
@@ -158,7 +158,7 @@ class Recipient extends Component {
                             display: 'flex',
                             flexDirection: 'row',
                             justifyContent: 'left',
-                            alignItems: 'center'
+                            alignItems: 'center',
                         }}
                     >
                         <h3> Group Members </h3>
@@ -169,7 +169,7 @@ class Recipient extends Component {
                                     flexDirection: 'row',
                                     justifyContent: 'left',
                                     alignItems: 'center',
-                                    margin: '0px 0px 20px 20px'
+                                    margin: '0px 0px 20px 20px',
                                 }}
                             >
                                 <Select
@@ -179,7 +179,7 @@ class Recipient extends Component {
                                     onChange={({ value }) =>
                                         this.setState({ selectedMember: value })
                                     }
-                                    onSearch={event =>
+                                    onSearch={(event) =>
                                         this.setState({ searchTerm: event.target.value })
                                     }
                                 />
@@ -203,16 +203,16 @@ class Recipient extends Component {
                             display: 'flex',
                             flexDirection: 'row',
                             justifyContent: 'space-around',
-                            flexWrap: 'wrap'
+                            flexWrap: 'wrap',
                         }}
                     >
-                        {this.props.recipient.group.map(person => {
+                        {this.props.recipient.group.map((person) => {
                             return (
                                 <div
                                     style={{
                                         display: 'flex',
                                         flexDirection: 'column',
-                                        alignItems: 'center'
+                                        alignItems: 'center',
                                     }}
                                 >
                                     <Person
@@ -230,7 +230,7 @@ class Recipient extends Component {
                                                 this.updateFirebase(
                                                     '/group',
                                                     this.props.recipient.group.filter(
-                                                        name => name !== person
+                                                        (name) => name !== person
                                                     )
                                                 )
                                             }
@@ -262,18 +262,18 @@ class Recipient extends Component {
                             display: 'flex',
                             flexDirection: 'row',
                             //justifyContent: 'space-between',
-                            flexWrap: 'wrap'
+                            flexWrap: 'wrap',
                         }}
                     >
                         {pictures
-                            ? pictures.map(key => {
+                            ? pictures.map((key) => {
                                   return (
                                       <div
                                           style={{
                                               margin: '1%',
                                               display: 'flex',
                                               flexDirection: 'column',
-                                              alignItems: 'center'
+                                              alignItems: 'center',
                                           }}
                                           key={key}
                                       >
@@ -309,7 +309,7 @@ class Recipient extends Component {
                             : null}
 
                         {videos
-                            ? videos.map(key => {
+                            ? videos.map((key) => {
                                   return (
                                       <div style={{ margin: '1%' }} key={key}>
                                           <ReactPlayer
@@ -348,7 +348,7 @@ class Recipient extends Component {
                                     display: 'flex',
                                     flexDirection: 'column',
                                     height: '190px',
-                                    justifyContent: 'space-around'
+                                    justifyContent: 'space-around',
                                 }}
                             >
                                 <CloudinaryInput
@@ -386,12 +386,12 @@ class Recipient extends Component {
         return (
             <div style={{ margin: '0% 5% 0% 5%' }}>
                 <NextSeo
-                    config={{
+                    {...{
                         title: this.props.recipient.name + ` | Sage Prosthetics`,
                         twitter: { title: this.props.recipient.name + ' | Sage Prosthetics' },
                         openGraph: {
-                            title: this.props.recipient.name + ' | Sage Prosthetics'
-                        }
+                            title: this.props.recipient.name + ' | Sage Prosthetics',
+                        },
                     }}
                 />
                 <h2 style={{ textAlign: 'center' }}>{this.props.recipient.name}</h2>
@@ -401,7 +401,7 @@ class Recipient extends Component {
                         //flexWrap: 'wrap',
                         flexDirection: this.props.desktop ? 'row' : 'column',
                         justifyContent: 'center',
-                        margin: this.props.desktop ? '0 15% 0 15%' : '10px'
+                        margin: this.props.desktop ? '0 15% 0 15%' : '10px',
                     }}
                 >
                     <Image
@@ -416,7 +416,7 @@ class Recipient extends Component {
                         style={{
                             marginLeft: '10%',
                             marginTop: this.props.desktop ? '0px' : '2vw',
-                            width: '100%'
+                            width: '100%',
                         }}
                     >
                         {this.state.textEdit ? (
@@ -424,12 +424,14 @@ class Recipient extends Component {
                                 <textarea
                                     style={{
                                         fontWeight: 'lighter',
-                                        border: 'none'
+                                        border: 'none',
                                     }}
                                     type="text"
                                     value={this.state.text}
                                     rows={10}
-                                    onChange={event => this.setState({ text: event.target.value })}
+                                    onChange={(event) =>
+                                        this.setState({ text: event.target.value })
+                                    }
                                 />
                             </FormField>
                         ) : (
@@ -453,7 +455,7 @@ class Recipient extends Component {
                                     onClick={() =>
                                         this.setState({
                                             textEdit: !this.state.textEdit,
-                                            text: this.props.recipient.text
+                                            text: this.props.recipient.text,
                                         })
                                     }
                                     style={{ margin: '20px' }}
@@ -483,12 +485,12 @@ class Recipient extends Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     const { selectedRecipient, group, isAuthenticated } = state;
     return {
         recipient: selectedRecipient,
         group,
-        isAuthenticated
+        isAuthenticated,
     };
 };
 

@@ -28,4 +28,4 @@ All data stored on Firebase. Please email me for the keys.
 
 Images are stored on Cloudinary.
 
-Built using Grommet v1, React, and Next.js. Deployed using Now.
+Built using Grommet v1, React, and Next.js. Deployed using Vercel.

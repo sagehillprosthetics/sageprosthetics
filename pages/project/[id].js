@@ -4,7 +4,7 @@ import { Image, Video, Transformation } from 'cloudinary-react';
 import Router from 'next/router';
 import firebase from 'firebase/app';
 import 'firebase/database';
-import NextSeo from 'next-seo';
+import { NextSeo } from 'next-seo';
 
 import CloseIcon from 'grommet/components/icons/base/Close';
 import Button from 'grommet/components/Button';
@@ -26,8 +26,8 @@ class Project extends Component {
         db.database()
             .ref('projects')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     projects.push(child.key);
                     if (child.key === query.id) {
                         project = { ...child.val(), name: child.key };
@@ -39,8 +39,8 @@ class Project extends Component {
         db.database()
             .ref('group')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     reformat[child.key] = child.val();
                 });
             });
@@ -49,8 +49,8 @@ class Project extends Component {
         db.database()
             .ref('group-archive')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     archivereformat[child.key] = child.val();
                 });
             });
@@ -61,8 +61,8 @@ class Project extends Component {
             .database()
             .ref('recipients')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     if (child.val().archive == true) {
                         archive.push(child.key);
                     } else {
@@ -75,22 +75,22 @@ class Project extends Component {
 
         store.dispatch({
             type: types.GET_RECIPIENTS,
-            payload: { links, archive }
+            payload: { links, archive },
         });
 
         store.dispatch({
             type: types.GET_PROJECTS,
-            payload: projects
+            payload: projects,
         });
 
         store.dispatch({
             type: types.GET_SELECTED_PROJECT,
-            payload: project
+            payload: project,
         });
         store.dispatch({ type: types.CHANGE_PAGE, payload: project.name });
         store.dispatch({
             type: types.GET_GROUP,
-            payload: { ...reformat, ...archivereformat }
+            payload: { ...reformat, ...archivereformat },
         });
     }
 
@@ -99,7 +99,7 @@ class Project extends Component {
         textEdit: false,
         text: '',
         selectedMember: '',
-        searchTerm: ''
+        searchTerm: '',
     };
 
     componentDidMount() {
@@ -112,7 +112,7 @@ class Project extends Component {
         let array = this.props.project[video ? 'videos' : 'pictures'];
         let newArray = {};
         let count = 0;
-        array.forEach(file => {
+        array.forEach((file) => {
             if (file !== key) {
                 newArray[count] = file;
                 count++;
@@ -129,18 +129,18 @@ class Project extends Component {
             .set(value)
             .then(() => {
                 this.setState({
-                    uploadImageState: 'Successfully Updated Database'
+                    uploadImageState: 'Successfully Updated Database',
                 });
                 Router.replace(`/project/${this.props.project.name}`);
             })
-            .catch(e => this.setState({ uploadImageState: `Error: ${e.message}` }));
+            .catch((e) => this.setState({ uploadImageState: `Error: ${e.message}` }));
     };
 
     renderGroup() {
         let dropdown;
         if (this.props.project && this.props.group) {
             dropdown = Object.keys(this.props.group).filter(
-                name =>
+                (name) =>
                     (!this.props.project.group || !this.props.project.group.includes(name)) &&
                     (this.state.searchTerm == '' ||
                         name.toLowerCase().includes(this.state.searchTerm))
@@ -156,7 +156,7 @@ class Project extends Component {
                             display: 'flex',
                             flexDirection: 'row',
                             justifyContent: 'left',
-                            alignItems: 'center'
+                            alignItems: 'center',
                         }}
                     >
                         <h3> Group Members </h3>
@@ -167,7 +167,7 @@ class Project extends Component {
                                     flexDirection: 'row',
                                     justifyContent: 'left',
                                     alignItems: 'center',
-                                    margin: '0px 0px 20px 20px'
+                                    margin: '0px 0px 20px 20px',
                                 }}
                             >
                                 <Select
@@ -177,7 +177,7 @@ class Project extends Component {
                                     onChange={({ value }) =>
                                         this.setState({ selectedMember: value })
                                     }
-                                    onSearch={event =>
+                                    onSearch={(event) =>
                                         this.setState({ searchTerm: event.target.value })
                                     }
                                 />
@@ -200,16 +200,16 @@ class Project extends Component {
                             display: 'flex',
                             flexDirection: 'row',
                             justifyContent: 'space-around',
-                            flexWrap: 'wrap'
+                            flexWrap: 'wrap',
                         }}
                     >
-                        {this.props.project.group.map(person => {
+                        {this.props.project.group.map((person) => {
                             return (
                                 <div
                                     style={{
                                         display: 'flex',
                                         flexDirection: 'column',
-                                        alignItems: 'center'
+                                        alignItems: 'center',
                                     }}
                                 >
                                     <Person
@@ -227,7 +227,7 @@ class Project extends Component {
                                                 this.updateFirebase(
                                                     '/group',
                                                     this.props.project.group.filter(
-                                                        name => name !== person
+                                                        (name) => name !== person
                                                     )
                                                 )
                                             }
@@ -258,11 +258,11 @@ class Project extends Component {
                             display: 'flex',
                             flexDirection: 'row',
                             //justifyContent: 'space-between',
-                            flexWrap: 'wrap'
+                            flexWrap: 'wrap',
                         }}
                     >
                         {pictures
-                            ? pictures.map(key => {
+                            ? pictures.map((key) => {
                                   return (
                                       <div style={{ margin: '1%' }} key={key}>
                                           <Image
@@ -297,7 +297,7 @@ class Project extends Component {
                             : null}
 
                         {videos
-                            ? videos.map(key => {
+                            ? videos.map((key) => {
                                   return (
                                       <div style={{ margin: '1%' }} key={key}>
                                           <Video
@@ -344,12 +344,12 @@ class Project extends Component {
         return (
             <div style={{ margin: '0% 5% 0% 5%' }}>
                 <NextSeo
-                    config={{
+                    {...{
                         title: this.props.project.name + ` | Sage Prosthetics`,
                         twitter: { title: this.props.project.name + ' | Sage Prosthetics' },
                         openGraph: {
-                            title: this.props.project.name + ' | Sage Prosthetics'
-                        }
+                            title: this.props.project.name + ' | Sage Prosthetics',
+                        },
                     }}
                 />
                 <h2 style={{ textAlign: 'center' }}>{this.props.project.name}</h2>
@@ -360,7 +360,7 @@ class Project extends Component {
                         //flexWrap: 'wrap',
                         flexDirection: this.props.desktop ? 'row' : 'column',
                         justifyContent: 'center',
-                        margin: this.props.desktop ? '0 15% 0 15%' : '10px'
+                        margin: this.props.desktop ? '0 15% 0 15%' : '10px',
                     }}
                 >
                     <Image
@@ -374,7 +374,7 @@ class Project extends Component {
                         style={{
                             marginLeft: '10%',
                             marginTop: this.props.desktop ? '0px' : '2vw',
-                            width: '100%'
+                            width: '100%',
                         }}
                     >
                         {this.state.textEdit ? (
@@ -382,12 +382,14 @@ class Project extends Component {
                                 <textarea
                                     style={{
                                         fontWeight: 'lighter',
-                                        border: 'none'
+                                        border: 'none',
                                     }}
                                     type="text"
                                     value={this.state.text}
                                     rows={10}
-                                    onChange={event => this.setState({ text: event.target.value })}
+                                    onChange={(event) =>
+                                        this.setState({ text: event.target.value })
+                                    }
                                 />
                             </FormField>
                         ) : (
@@ -401,7 +403,7 @@ class Project extends Component {
                                     onClick={() =>
                                         this.setState({
                                             textEdit: !this.state.textEdit,
-                                            text: this.props.project.text
+                                            text: this.props.project.text,
                                         })
                                     }
                                     style={{ margin: '20px' }}
@@ -431,11 +433,11 @@ class Project extends Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
         project: state.selectedProject,
         group: state.group,
-        isAuthenticated: state.isAuthenticated
+        isAuthenticated: state.isAuthenticated,
     };
 };
 

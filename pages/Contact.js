@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/database';
 import * as types from '../redux/types.js';
-import NextSeo from 'next-seo';
+import { NextSeo } from 'next-seo';
 
 import FormField from 'grommet/components/FormField';
 import Button from 'grommet/components/Button';
@@ -11,7 +11,7 @@ class Contact extends Component {
     static async getInitialProps({ store }) {
         store.dispatch({
             type: types.CHANGE_PAGE,
-            payload: 'c'
+            payload: 'c',
         });
 
         let db = firebase;
@@ -20,8 +20,8 @@ class Contact extends Component {
         db.database()
             .ref('projects')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     project.push(child.key);
                 });
             });
@@ -32,8 +32,8 @@ class Contact extends Component {
             .database()
             .ref('recipients')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     if (child.val().archive == true) {
                         archive.push(child.key);
                     } else {
@@ -44,19 +44,19 @@ class Contact extends Component {
 
         store.dispatch({
             type: types.GET_RECIPIENTS,
-            payload: { links, archive }
+            payload: { links, archive },
         });
 
         store.dispatch({
             type: types.GET_PROJECTS,
-            payload: project
+            payload: project,
         });
     }
 
     state = {
         name: '',
         email: '',
-        message: ''
+        message: '',
     };
 
     renderButtons() {
@@ -80,12 +80,12 @@ class Contact extends Component {
         return (
             <div style={{ margin: this.props.desktop ? '0% 15% 0% 15%' : '0 0px 0 0px' }}>
                 <NextSeo
-                    config={{
+                    {...{
                         title: 'Contact | Sage Prosthetics',
                         twitter: { title: 'Contact | Sage Prosthetics' },
                         openGraph: {
-                            title: 'Contact | Sage Prosthetics'
-                        }
+                            title: 'Contact | Sage Prosthetics',
+                        },
                     }}
                 />
                 <h2 style={{ textAlign: 'center' }}>Contact Us</h2>
@@ -95,7 +95,7 @@ class Contact extends Component {
                     style={{
                         display: 'flex',
                         alignItems: 'center',
-                        flexDirection: 'column'
+                        flexDirection: 'column',
                     }}
                     id="form1"
                 >
@@ -103,22 +103,22 @@ class Contact extends Component {
                         <input
                             style={{
                                 fontWeight: 'lighter',
-                                border: 'none'
+                                border: 'none',
                             }}
                             type="text"
                             name="name"
-                            onChange={event => this.setState({ name: event.target.value })}
+                            onChange={(event) => this.setState({ name: event.target.value })}
                         />
                     </FormField>
                     <FormField label="Email Address" size="medium" help="Required">
                         <input
                             style={{
                                 fontWeight: 'lighter',
-                                border: 'none'
+                                border: 'none',
                             }}
                             type="email"
                             name="email"
-                            onChange={event => this.setState({ email: event.target.value })}
+                            onChange={(event) => this.setState({ email: event.target.value })}
                         />
                     </FormField>
 
@@ -128,13 +128,13 @@ class Contact extends Component {
                                 fontWeight: 'lighter',
                                 height: '60%',
                                 resize: 'none',
-                                border: 'none'
+                                border: 'none',
                             }}
                             type="text"
                             placeholder="Message"
                             name="message"
                             rows={10}
-                            onChange={event => this.setState({ message: event.target.value })}
+                            onChange={(event) => this.setState({ message: event.target.value })}
                         />
                     </FormField>
 

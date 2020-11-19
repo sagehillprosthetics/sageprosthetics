@@ -10,7 +10,6 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import { connect } from 'react-redux';
 
-import '../styles.scss';
 import DesktopHeader from '../components/Header';
 import MobileHeader from '../components/MobileHeader';
 import { cookieUpdateAuth } from '../redux/actions';
@@ -23,7 +22,7 @@ class Layout extends Component {
                 size="small"
                 style={{
                     padding: '0% 1.5% 0% 1.5%',
-                    margin: '2.5vh 0 1.5vh 0'
+                    margin: '2.5vh 0 1.5vh 0',
                 }}
             >
                 <Title>
@@ -47,7 +46,7 @@ class Layout extends Component {
                     width: '100%',
                     display: 'flex',
                     flexDirection: 'row',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
                 }}
             >
                 <Box direction="row" align="center" justify="center">
@@ -62,7 +61,7 @@ class Layout extends Component {
 
     componentDidMount() {
         console.log('header check');
-        firebase.auth().onAuthStateChanged(authUser => {
+        firebase.auth().onAuthStateChanged((authUser) => {
             this.props.cookieUpdateAuth(authUser);
         });
     }
@@ -73,7 +72,7 @@ class Layout extends Component {
                 <Article
                     style={{
                         maxWidth: '100vw',
-                        padding: '0px'
+                        padding: '0px',
                     }}
                 >
                     {this.props.desktop ? (
@@ -103,13 +102,13 @@ class Layout extends Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     const { recipients, projects, page, isAuthenticated } = state;
     return {
         recipients,
         projects,
         page,
-        isAuthenticated
+        isAuthenticated,
     };
 };
 

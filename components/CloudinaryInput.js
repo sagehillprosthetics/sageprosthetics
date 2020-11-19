@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import Button from 'grommet/components/Button';
-import cloudinaryKeys from '../cloudinarykeys.json';
 
 class CloudinaryInput extends Component {
     static defaultProps = {
-        label: 'Upload Image to Cloudinary'
+        label: 'Upload Image to Cloudinary',
     };
 
     processCloudinaryResult = (error, results) => {
@@ -16,9 +15,11 @@ class CloudinaryInput extends Component {
     };
 
     openCloudinaryUploader = () => {
-        const { cloud_name, upload_preset } = cloudinaryKeys;
         cloudinary.openUploadWidget(
-            { cloud_name, upload_preset: upload_preset },
+            {
+                cloud_name: process.env.NEXT_PUBLIC_CLOUD_NAME,
+                upload_preset: process.env.NEXT_PUBLIC_UPLOAD_PRESET,
+            },
             this.processCloudinaryResult
         );
     };

@@ -4,7 +4,7 @@ import 'firebase/database';
 import { connect } from 'react-redux';
 import anime from 'animejs';
 import Transition from 'react-transition-group/Transition';
-import NextSeo from 'next-seo';
+import { NextSeo } from 'next-seo';
 import Router from 'next/router';
 import Button from 'grommet/components/Button';
 import FormField from 'grommet/components/FormField';
@@ -23,7 +23,7 @@ class Group extends Component {
     static async getInitialProps({ req, query, store }) {
         store.dispatch({
             type: types.CHANGE_PAGE,
-            payload: 't'
+            payload: 't',
         });
 
         let db = firebase;
@@ -33,8 +33,8 @@ class Group extends Component {
         db.database()
             .ref('recipients')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     if (child.val().archive == true) {
                         archive.push(child.key);
                     } else {
@@ -47,8 +47,8 @@ class Group extends Component {
         db.database()
             .ref('projects')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     project.push(child.key);
                 });
             });
@@ -57,12 +57,12 @@ class Group extends Component {
         db.database()
             .ref('faculty')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     faculty.push({
                         name: child.key,
                         src: child.val().image,
-                        bio: child.val().bio
+                        bio: child.val().bio,
                     });
                 });
             });
@@ -71,12 +71,12 @@ class Group extends Component {
         db.database()
             .ref('group')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     reformat.push({
                         id: child.key,
                         name: child.key,
-                        src: child.val()
+                        src: child.val(),
                     });
                 });
             });
@@ -86,39 +86,39 @@ class Group extends Component {
             .database()
             .ref('group-archive')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     groupArchive.push({
                         id: child.key,
                         name: child.key,
-                        src: child.val()
+                        src: child.val(),
                     });
                 });
             });
 
         store.dispatch({
             type: types.GET_GROUP_ARCHIVE,
-            payload: groupArchive
+            payload: groupArchive,
         });
 
         store.dispatch({
             type: types.GET_GROUP,
-            payload: reformat
+            payload: reformat,
         });
 
         store.dispatch({
             type: types.GET_RECIPIENTS,
-            payload: { links, archive }
+            payload: { links, archive },
         });
 
         store.dispatch({
             type: types.GET_PROJECTS,
-            payload: project
+            payload: project,
         });
 
         store.dispatch({
             type: types.GET_FACULTY,
-            payload: faculty
+            payload: faculty,
         });
     }
 
@@ -129,7 +129,7 @@ class Group extends Component {
         bio: '',
         image: '',
         showModal: '',
-        profile: ''
+        profile: '',
     };
 
     componentDidMount() {
@@ -142,22 +142,22 @@ class Group extends Component {
             person = await this.database
                 .ref(`/group/${name}`)
                 .once('value')
-                .then(snapshot => snapshot.val());
+                .then((snapshot) => snapshot.val());
 
             await Promise.all([
                 this.database.ref(`/group/${name}`).remove(),
-                this.database.ref(`/group-archive/${name}`).set(person)
+                this.database.ref(`/group-archive/${name}`).set(person),
             ]);
             this.componentDidMount();
         } else {
             person = await this.database
                 .ref(`/group-archive/${name}`)
                 .once('value')
-                .then(snapshot => snapshot.val());
+                .then((snapshot) => snapshot.val());
 
             await Promise.all([
                 this.database.ref(`/group-archive/${name}`).remove(),
-                this.database.ref(`/group/${name}`).set(person)
+                this.database.ref(`/group/${name}`).set(person),
             ]);
             this.componentDidMount();
         }
@@ -169,7 +169,7 @@ class Group extends Component {
         else {
             this.updateFirebase(`faculty/${this.state.name}`, {
                 image: this.state.image,
-                bio: this.state.bio
+                bio: this.state.bio,
             });
         }
     };
@@ -181,11 +181,11 @@ class Group extends Component {
             .set(value)
             .then(() => {
                 this.setState({
-                    uploadState: 'Successfully Updated Database'
+                    uploadState: 'Successfully Updated Database',
                 });
                 Router.replace(`/group`);
             })
-            .catch(e => this.setState({ uploadState: `Error: ${e.message}` }));
+            .catch((e) => this.setState({ uploadState: `Error: ${e.message}` }));
     };
 
     renderFaculty = () => {
@@ -194,7 +194,7 @@ class Group extends Component {
         }
 
         try {
-            const teachers = this.props.faculty.map(teacher => {
+            const teachers = this.props.faculty.map((teacher) => {
                 return (
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <Person
@@ -239,7 +239,7 @@ class Group extends Component {
         }
 
         try {
-            const students = this.props.group.map(student => {
+            const students = this.props.group.map((student) => {
                 return (
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <Person src={student.src} name={student.name} key={student.name} />
@@ -276,7 +276,7 @@ class Group extends Component {
         }
 
         try {
-            const students = this.props.groupArchive.map(student => {
+            const students = this.props.groupArchive.map((student) => {
                 return (
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <Person src={student.src} name={student.name} key={student.name} />
@@ -311,12 +311,12 @@ class Group extends Component {
         return (
             <div style={{ margin: '0% 15% 0% 15%' }}>
                 <NextSeo
-                    config={{
+                    {...{
                         title: 'Our Group | Sage Prosthetics',
                         twitter: { title: 'Our Group | Sage Prosthetics' },
                         openGraph: {
-                            title: 'Our Group | Sage Prosthetics'
-                        }
+                            title: 'Our Group | Sage Prosthetics',
+                        },
                     }}
                 />
                 <h2 style={{ textAlign: 'center' }}> Meet our Service Group </h2>
@@ -330,7 +330,7 @@ class Group extends Component {
                         height: '1.5px',
                         backgroundColor: '#cccccc',
                         borderRadius: '1px',
-                        margin: '10px 0 40px 0'
+                        margin: '10px 0 40px 0',
                     }}
                 />
 
@@ -338,7 +338,7 @@ class Group extends Component {
                     style={{
                         display: 'flex',
                         justifyContent: 'space-around',
-                        flexWrap: 'wrap'
+                        flexWrap: 'wrap',
                     }}
                 >
                     {this.renderStudent()}
@@ -351,7 +351,7 @@ class Group extends Component {
                             style={{
                                 display: 'flex',
                                 justifyContent: 'space-around',
-                                flexWrap: 'wrap'
+                                flexWrap: 'wrap',
                             }}
                         >
                             {this.renderArchivedStudent()}
@@ -364,7 +364,7 @@ class Group extends Component {
                             width: '100%',
                             display: 'flex',
                             flexDirection: 'column',
-                            alignItems: 'center'
+                            alignItems: 'center',
                         }}
                     >
                         <h3 style={{ marginTop: '20px' }}> Add New Group Member </h3>
@@ -373,10 +373,10 @@ class Group extends Component {
                             <input
                                 style={{
                                     fontWeight: 'lighter',
-                                    border: 'none'
+                                    border: 'none',
                                 }}
                                 type="text"
-                                onChange={event => this.setState({ name: event.target.value })}
+                                onChange={(event) => this.setState({ name: event.target.value })}
                             />
                         </FormField>
                         <FormField>
@@ -402,12 +402,12 @@ class Group extends Component {
                                     fontWeight: 'lighter',
                                     height: '60%',
                                     resize: 'none',
-                                    border: 'none'
+                                    border: 'none',
                                 }}
                                 type="text"
                                 name="message"
                                 rows={10}
-                                onChange={event => this.setState({ bio: event.target.value })}
+                                onChange={(event) => this.setState({ bio: event.target.value })}
                             />
                         </FormField>
                         <CloudinaryInput
@@ -458,7 +458,7 @@ class Group extends Component {
     }
 }
 
-const modalEnter = biomodal => {
+const modalEnter = (biomodal) => {
     return anime({
         // targets: biomodal,
         // opacity: {
@@ -469,7 +469,7 @@ const modalEnter = biomodal => {
     });
 };
 
-const modalExit = biomodal => {
+const modalExit = (biomodal) => {
     return anime({
         // targets: biomodal,
         // opacity: {
@@ -480,7 +480,7 @@ const modalExit = biomodal => {
     });
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     const { group, faculty, isAuthenticated, groupArchive } = state;
     return { group, faculty, isAuthenticated, groupArchive };
 };

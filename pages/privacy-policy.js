@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as types from '../redux/types.js';
-import NextSeo from 'next-seo';
+import { NextSeo } from 'next-seo';
 import firebase from 'firebase/app';
 import 'firebase/database';
 
@@ -8,7 +8,7 @@ class PrivacyPolicy extends Component {
     static async getInitialProps({ req, store }) {
         store.dispatch({
             type: types.CHANGE_PAGE,
-            payload: '~'
+            payload: '~',
         });
 
         let db = firebase;
@@ -17,8 +17,8 @@ class PrivacyPolicy extends Component {
         db.database()
             .ref('projects')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     project.push(child.key);
                 });
             });
@@ -29,8 +29,8 @@ class PrivacyPolicy extends Component {
             .database()
             .ref('recipients')
             .once('value')
-            .then(datasnapshot => {
-                datasnapshot.forEach(child => {
+            .then((datasnapshot) => {
+                datasnapshot.forEach((child) => {
                     if (child.val().archive == true) {
                         archive.push(child.key);
                     } else {
@@ -41,12 +41,12 @@ class PrivacyPolicy extends Component {
 
         store.dispatch({
             type: types.GET_RECIPIENTS,
-            payload: { links, archive }
+            payload: { links, archive },
         });
 
         store.dispatch({
             type: types.GET_PROJECTS,
-            payload: project
+            payload: project,
         });
     }
 
@@ -54,12 +54,12 @@ class PrivacyPolicy extends Component {
         return (
             <div style={{ margin: '0 15% 0 15%' }}>
                 <NextSeo
-                    config={{
+                    {...{
                         title: `Privacy Policy | Sage Prosthetics`,
                         twitter: { title: 'Privacy Policy | Sage Prosthetics' },
                         openGraph: {
-                            title: 'Privacy Policy | Sage Prosthetics'
-                        }
+                            title: 'Privacy Policy | Sage Prosthetics',
+                        },
                     }}
                 />
                 <h2 style={{ textAlign: 'center' }}> Privacy Policy </h2>
@@ -301,7 +301,7 @@ class PrivacyPolicy extends Component {
 }
 
 const styles = {
-    list: { maxWidth: '100%', fontWeight: '400' }
+    list: { maxWidth: '100%', fontWeight: '400' },
 };
 
 export default PrivacyPolicy;
