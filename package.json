@@ -7,7 +7,7 @@
         "@app-masters/react-cloudinary-uploader": "^0.1.41",
         "@vercel/next": "^2.6.27",
         "animejs": "^2.2.0",
-        "axios": "^0.19.2",
+        "axios": "^0.21.1",
         "cheerio": "^1.0.0-rc.3",
         "cloudinary": "^1.13.2",
         "cloudinary-react": "^1.0.6",
