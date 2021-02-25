@@ -242,7 +242,7 @@ class LandingPage extends Component {
                 <AccordionPanel heading="Can I buy one?">
                     <div style={styles.dropdown}>
                         Nope, the hands are free of charge! We are a non-profit and have generous
-                        funding from our school and community donations.  We typically make hands
+                        funding from our school and community donations. We typically make hands
                         for recipients who are either unable to afford or access traditional
                         prosthesis. On a case by case basis, we will work with recipients who would
                         like a hand under other circumstances, in particular, those who are within
