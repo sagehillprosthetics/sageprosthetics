@@ -229,9 +229,14 @@ class LandingPage extends Component {
                         >
                             Sage Hill School
                         </a>{' '}
-                        in Southern California whoare trying to make a difference. You can learn
-                        more about our team <a href="/group">here</a>. We are a chapter of the
-                        non-profit e-NABLE.
+                        in Southern California who are trying to make a difference. Our work is
+                        part of a service learning project connected to a school course on 3D 
+                        Printing, Fabrication, and Design. You can learn more about our team
+                        <a href="/group"> here</a>. We are a chapter of the non-profit e-NABLE. 
+                        There are different students each year, but the program has been at 
+                        Sage Hill School since 2016, and our Teacher, Tanya Lerch, started one
+                        of the first e-NABLE school chapters in 2013 at her previous school in 
+                        New York City.
                     </div>
                 </AccordionPanel>
                 <AccordionPanel heading="Can I buy one?">
@@ -254,30 +259,21 @@ class LandingPage extends Component {
                 </AccordionPanel>
                 <AccordionPanel heading="I have a 3D Printer and want to make hands like this, how do I start?">
                     <div style={styles.dropdown}>
-                        <a href="http://enablealliance.org/education/">
-                            http://enablealliance.org/education/
+                        <a href="https://hub.e-nable.org/s/e-nable-forum/wiki/page/view?title=How+to+Get+Started+as+an+e-NABLE+Volunteer">
+                            https://hub.e-nable.org/s/e-nable-forum/wiki/page/view?title=How+to+Get+Started+as+an+e-NABLE+Volunteer
                         </a>
                         <br />
                         <br />
-                        This website is under construction and will be filled with valuable
-                        resources and information for those that are interested in learning more
-                        about getting e-NABLE projects into STEM based learning environments!
+                        This page of the e-NABLE Hub has step-by-step instructions under “How to Get Started as a Volunteer”.
+                        Please read and follow these steps thoroughly. It is a lengthy process involving printing and assembling
+                        test-devices and getting digital badges approving you to make them for others.
                         <br />
                         <br />
-                        For now, go to{' '}
-                        <a href="http://enablingthefuture.org">EnablingTheFuture.org</a> or{' '}
-                        <a href="http://e-nable.org">e-NABLE.org</a> or{' '}
-                        <a href="https://wikifactory.com/+e-NABLE">wikifactory.org/+e-NABLE</a>, get
-                        a badge for making the Phoenix, and you can eventually use{' '}
-                        <a href="https://www.enablewebcentral.com/">EnableWebCentral.com</a> to seek
-                        a recipient to work with.
+                        The e-NABLE Hub has all the information about all devices, forums, and more. You might also consider getting 
+                        involved in the e-NABLE Facebook groups. Once you have started printing and assembling, the answer to just about
+                        every question you can think of is posted on the e-NABLE hub.
                         <br />
                         <br />
-                        You should also get involved with the e-NABLE Facebook groups and the
-                        e-NABLE forum{' '}
-                        <a href="https://hub.e-nable.org/s/e-nable-forum/?contentId=4148">
-                            https://hub.e-nable.org/s/e-nable-forum/?contentId=4148
-                        </a>
                     </div>
                 </AccordionPanel>
                 <AccordionPanel heading="I am an educator/student and want to start a chapter like this. How do I begin?">
