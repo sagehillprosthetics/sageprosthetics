@@ -257,6 +257,19 @@ class LandingPage extends Component {
                         to Mid-May) and hands typically take around 2 months for completion.
                     </div>
                 </AccordionPanel>
+                <AccordionPanel heading="How can Sage Hill students get involved?">
+                    <div class="iframe-container">
+                        <iframe
+                            width="560"
+                            height="315"
+                            src="https://www.youtube.com/embed/snxWWnHtCR4"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                        ></iframe>
+                    </div>
+                </AccordionPanel>
+
                 <AccordionPanel heading="I have a 3D Printer and want to make hands like this, how do I start?">
                     <div style={styles.dropdown}>
                         <a href="https://hub.e-nable.org/s/e-nable-forum/wiki/page/view?title=How+to+Get+Started+as+an+e-NABLE+Volunteer">
