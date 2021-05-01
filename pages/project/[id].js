@@ -304,8 +304,9 @@ class Project extends Component {
                                               cloudName="sageprosthetics"
                                               publicId={key}
                                               resourceType="video"
-                                              controls
+                                              controls="true"
                                               height="300"
+                                              videoCodec="auto"
                                               //crop="scale"
                                           />
                                           {this.props.isAuthenticated ? (
