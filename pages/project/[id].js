@@ -300,7 +300,7 @@ class Project extends Component {
                             ? videos.map((key) => {
                                   return (
                                       <div style={{ margin: '1%' }} key={key}>
-                                          <Video cloudName="sageprosthetics" publicId={key} controls="true">
+                                          <Video cloudName="sageprosthetics" publicId={this.props.project.src + ''} controls="true">
                                               <Transformation height="300"/>
                                           </Video>
                                           {this.props.isAuthenticated ? (
