@@ -362,10 +362,10 @@ class Recipient extends Component {
                                     style={{ margin: '20px' }}
                                 />
                                 <CloudinaryInput
-                                    onUploadSuccess={({ public_id }) =>
+                                    onUploadSuccess={({response }) =>
                                         this.updateFirebase(
                                             `videos/${this.props.recipient.videos.length}`,
-                                            public_id
+                                            response.url
                                         )
                                     }
                                     label="Upload New Video"
