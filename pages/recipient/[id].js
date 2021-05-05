@@ -110,7 +110,7 @@ class Recipient extends Component {
 
     removeFile = (key, video) => {
         this.setState({ uploadImageState: 'Processing...' });
-
+        
         let array = this.props.recipient[video ? 'videos' : 'pictures'];
         let newArray = {};
         let count = 0;
@@ -362,8 +362,8 @@ class Recipient extends Component {
                                     style={{ margin: '20px' }}
                                 />
                                 <CloudinaryInput
-                                    onUploadSuccess={({response }) =>
-                                        this.updateFirebase(
+                                    onUploadSuccess={(response) => 
+                                        this.updateFirebase( 
                                             `videos/${this.props.recipient.videos.length}`,
                                             response.url
                                         )
