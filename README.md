@@ -18,22 +18,17 @@ https://console.firebase.google.com/u/0/project/sage-prosthetics/overview
 
 https://git-scm.com/download/win 
 
-2. Clone this repository:
+1. Clone this repository:
 ```
 cd [where you want the repo (ex: home/user/Desktop)]
 git clone https://github.com/timg512372/sageprosthetics.git
 ```
-2. Install Node Version Manager:
-```
-wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-```
-Note: To exit the installations type `:q` on your keyboard 
-Running either of the above commands downloads a script and runs it. The script clones the nvm repository to `~/.nvm`, and attempts to add the source lines from the snippet below to the correct profile file (`~/.bash_profile`, `~/.zshrc`, `~/.profile`, or `~/.bashrc`).
+2.1 Install Node 12.x by going to this website:
 
-3. Install Node 12.x
-```
-nvm install 12
-```
+* Choose x64 option for windows 
+
+https://nodejs.org/dist/v12.13.0
+
 4. Install and set up yarn
 ```
 npm install --global yarn
