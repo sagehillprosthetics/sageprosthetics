@@ -13,8 +13,12 @@ https://www.sageprosthetics.org
 
 https://console.firebase.google.com/u/0/project/sage-prosthetics/overview
 
-### Instructions (all commands to be typed in terminal)
-1. Clone this repository:
+### Instructions for mac, linux, and windows (all commands to be typed in terminal)
+0. If on windows install git bash (this is where you will run all commands):
+
+https://git-scm.com/download/win 
+
+2. Clone this repository:
 ```
 cd [where you want the repo (ex: home/user/Desktop)]
 git clone https://github.com/timg512372/sageprosthetics.git
