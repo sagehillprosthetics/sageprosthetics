@@ -12,14 +12,42 @@ Email me for the firebase keys
 
 Clone the project
 
+### Instructions (all commands to be typed in terminal)
+1. Clone this repository:
+```
+cd [where you want the repo (ex: home/user/Desktop)]
+git clone https://github.com/timg512372/sageprosthetics.git
+```
+2. Install Node Version Manager:
+```
+wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+```
+Note: To exit the installations type `:q` on your keyboard 
+Running either of the above commands downloads a script and runs it. The script clones the nvm repository to `~/.nvm`, and attempts to add the source lines from the snippet below to the correct profile file (`~/.bash_profile`, `~/.zshrc`, `~/.profile`, or `~/.bashrc`).
+
+3. Install Node 12.x
+```
+nvm install 12
+```
+4. Install and set up yarn
+```
+npm install --global yarn
+yarn
+```
+5. Refer to `Terminal commands`
+
 ### Terminal commands:
 ```
-// if you want to test cloudinary upload
+// Optional: if you want to test cloudinary upload
 export NEXT_PUBLIC_CLOUD_NAME=sageprosthetics
 export NEXT_PUBLIC_UPLOAD_PRESET=slefbggs
 
-// to run in dev mode (for other options refer to package.json)
+// to run in dev mode (for options refer to package.json)
 yarn run dev
+yarn run next
+yarn run build
+yarn run start
+yarn run now-build
 ```
 
 ## Architecture
