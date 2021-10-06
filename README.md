@@ -13,22 +13,13 @@ https://www.sageprosthetics.org
 
 https://console.firebase.google.com/u/0/project/sage-prosthetics/overview
 
-### Instructions for mac, linux, and windows (all commands to be typed in terminal)
-0. If on windows install git bash (this is where you will run all commands):
-
-https://git-scm.com/download/win 
-
+### Instructions for mac and linux (all commands to be typed in terminal)
 1. Clone this repository:
 ```
 cd [where you want the repo (ex: home/user/Desktop)]
 git clone https://github.com/timg512372/sageprosthetics.git
 ```
-2.1 Install Node 12.x by going to this website:
-
-* Install on Windows:
-
-https://nodejs.org/dist/v12.13.0
-
+2 Install Node 12.x
 * Install on Mac and Linux
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
