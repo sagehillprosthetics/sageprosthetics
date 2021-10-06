@@ -45,11 +45,8 @@ export NEXT_PUBLIC_CLOUD_NAME=sageprosthetics
 export NEXT_PUBLIC_UPLOAD_PRESET=slefbggs
 
 // to run in dev mode (for other options refer to package.json)
-yarn run dev
-yarn run next
 yarn run build
-yarn run start
-yarn run now-build
+yarn run dev
 ```
 
 ## Architecture
