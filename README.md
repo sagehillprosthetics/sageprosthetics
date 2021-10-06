@@ -8,7 +8,7 @@ https://www.sageprosthetics.org
 
 ## Usage
 
-Email me for the firebase keys
+Email current webmaster for the cloudinary keys and login information
 
 Clone the project
 
