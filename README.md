@@ -9,7 +9,8 @@ https://www.sageprosthetics.org
 ## Usage
 Ask current webmaster for invite to GitHub repo
 Ask current webmaster for the cloudinary keys and login information
-Email Timothy Guo @ timg51237@gmail.com to add to firebase project
+Email Timothy Guo @ timg51237@gmail.com to add to firebase project:
+https://console.firebase.google.com/u/0/project/sage-prosthetics/overview
 
 ### Instructions (all commands to be typed in terminal)
 1. Clone this repository:
