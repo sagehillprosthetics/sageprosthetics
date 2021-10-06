@@ -7,10 +7,9 @@ This repo contains the source code for the Sage Prosthetics website. Sage Prosth
 https://www.sageprosthetics.org
 
 ## Usage
-
-Email current webmaster for the cloudinary keys and login information
-
-Clone the project
+Ask current webmaster for invite to GitHub repo
+Ask current webmaster for the cloudinary keys and login information
+Email Timothy Guo @ timg51237@gmail.com to add to firebase project
 
 ### Instructions (all commands to be typed in terminal)
 1. Clone this repository:
