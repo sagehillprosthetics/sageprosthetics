@@ -51,7 +51,7 @@ yarn run dev
 
 ## Architecture
 
-All data stored on Firebase. Please email me for the keys.
+All data stored on Firebase. 
 
 Images are stored on Cloudinary.
 
