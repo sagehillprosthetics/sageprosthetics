@@ -7,9 +7,9 @@ This repo contains the source code for the Sage Prosthetics website. Sage Prosth
 https://www.sageprosthetics.org
 
 ## Usage
-Ask current webmaster for invite to GitHub repo
-Ask current webmaster to share google drive folder for the cloudinary key and login information, & documentation
-Email Timothy Guo @ timg51237@gmail.com to add to firebase project:
+* Ask current webmaster for invite to GitHub repo
+* Ask current webmaster to share google drive folder for the cloudinary key, website admin login, & comprehensive documentation
+* Email Timothy Guo @ timg51237@gmail.com to add to firebase project:
 
 https://console.firebase.google.com/u/0/project/sage-prosthetics/overview
 
