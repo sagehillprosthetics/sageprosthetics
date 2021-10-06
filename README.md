@@ -25,13 +25,18 @@ git clone https://github.com/timg512372/sageprosthetics.git
 ```
 2.1 Install Node 12.x by going to this website:
 
-* Choose x64 option for windows 
+* Install on Windows:
 
 https://nodejs.org/dist/v12.13.0
 
+* Install on Mac and Linux
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew install node@12
+```
 4. Install and set up yarn
 ```
-npm install --global yarn
+sudo npm install --global yarn
 yarn
 ```
 5. Download cloudinarykeys.json from shared google drive and move to root folder of project
