@@ -8,8 +8,9 @@ https://www.sageprosthetics.org
 
 ## Usage
 Ask current webmaster for invite to GitHub repo
-Ask current webmaster for the cloudinary keys and login information
+Ask current webmaster to share google drive folder for the cloudinary key and login information, & documentation
 Email Timothy Guo @ timg51237@gmail.com to add to firebase project:
+
 https://console.firebase.google.com/u/0/project/sage-prosthetics/overview
 
 ### Instructions (all commands to be typed in terminal)
@@ -34,7 +35,8 @@ nvm install 12
 npm install --global yarn
 yarn
 ```
-5. Refer to `Terminal commands`
+5. Download cloudinarykeys.json from shared google drive and move to root folder of project
+6. Refer to `Terminal commands`
 
 ### Terminal commands:
 ```
@@ -42,7 +44,7 @@ yarn
 export NEXT_PUBLIC_CLOUD_NAME=sageprosthetics
 export NEXT_PUBLIC_UPLOAD_PRESET=slefbggs
 
-// to run in dev mode (for options refer to package.json)
+// to run in dev mode (for other options refer to package.json)
 yarn run dev
 yarn run next
 yarn run build
