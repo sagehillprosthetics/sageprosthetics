@@ -3,7 +3,7 @@ import Button from 'grommet/components/Button';
 
 const dotenv = require('dotenv')
 dotenv.config()
-var cloudinary = require('cloudinary').v2;
+var cloudinary = require('cloudinary');
 
 class CloudinaryInput extends Component {
     static defaultProps = {
