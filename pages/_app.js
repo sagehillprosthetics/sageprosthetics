@@ -11,9 +11,6 @@ import Layout from './Layout';
 import '../styles.scss';
 var parser = require('ua-parser-js');
 
-const dotenv = require('dotenv')
-dotenv.config()
-
 if (!firebase.apps.length) {
     firebase.initializeApp({
         apiKey: 'AIzaSyDNWlq6ySNKkgBVuTSPT3BHJ3s6gPzMjSc',

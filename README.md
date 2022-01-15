@@ -30,8 +30,9 @@ brew install node@12
 sudo npm install --global yarn
 yarn
 ```
-5. Download cloudinarykeys.json from shared google drive and move to root folder of project
-6. Refer to `Terminal commands`
+5. Run `yarn` command 
+6. Download cloudinarykeys.json from shared google drive and move to root folder of project
+7. Refer to `Terminal commands`
 
 ### Terminal commands:
 ```
