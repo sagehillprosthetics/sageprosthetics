@@ -11,14 +11,17 @@ import Layout from './Layout';
 import '../styles.scss';
 var parser = require('ua-parser-js');
 
+const dotenv = require('dotenv')
+dotenv.config()
+
 if (!firebase.apps.length) {
     firebase.initializeApp({
-        apiKey: 'AIzaSyBn97XtxibfzEfqvY9-xUdJ26xHT7wSIg0',
-        authDomain: 'sage-prosthetics.firebaseapp.com',
-        databaseURL: 'https://sage-prosthetics.firebaseio.com',
-        projectId: 'sage-prosthetics',
-        storageBucket: 'sage-prosthetics.appspot.com',
-        messagingSenderId: '62889057271',
+        apiKey: 'AIzaSyDNWlq6ySNKkgBVuTSPT3BHJ3s6gPzMjSc',
+        authDomain: 'sagehill-prosthetics',
+        databaseURL: 'https://sagehill-prosthetics-default-rtdb.firebaseio.com/',
+        projectId: 'sagehill-prosthetics.firebaseapp.com',
+        storageBucket: 'sagehill-prosthetics.appspot.com',
+        messagingSenderId: 588474158817
     });
 }
 
