@@ -17,8 +17,8 @@ class CloudinaryInput extends Component {
     openCloudinaryUploader = () => {
         cloudinary.openUploadWidget(
             {
-                cloud_name: 'sageprosthetics', 
-                upload_preset: 'preset1'
+                cloudName: process.env.CLOUD_NAME, 
+                uploadPreset: process.env.UPLOAD_PRESET,
             },
             this.processCloudinaryResult
         );
