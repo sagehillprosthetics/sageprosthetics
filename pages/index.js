@@ -329,6 +329,7 @@ class LandingPage extends Component {
                     margin: this.props.desktop ? '15% 0px 10px 0px' : '20vw 0 0 0',
                 }}
             >
+                <a href="/news">
                 <div
                     style={{
                         lineHeight: '85%',
@@ -346,6 +347,7 @@ class LandingPage extends Component {
                 >
                     SAGE PROSTHETICS IN THE NEWS
                 </div>
+                </a>
                 <Carousel
                     style={{ width: this.props.desktop ? '70vw' : '100vw' }}
                     autoplay={true}
