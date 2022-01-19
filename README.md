@@ -1,54 +1,56 @@
-# Sage Prosthetics
+# Sage Prosthetics 
+<p align="center">
+<img src=public/static/favicon.png width="250" height="250">
+</p>
 
 ## About
-
 This repo contains the source code for the Sage Prosthetics website. Sage Prosthetics is a service group at Sage Hill School that provides 3D printed prosthetic hands and arms for underpriveleged children and adults.
 
 https://www.sageprosthetics.org
 
-## Usage
-* Ask current webmaster for invite to GitHub repo
-* Ask current webmaster to share google drive folder for the cloudinary key, website admin login, & comprehensive documentation
-* Email Timothy Guo @ timg51237@gmail.com to add to firebase project:
-
-https://console.firebase.google.com/u/0/project/sage-prosthetics/overview
-
-### Instructions for mac and linux (all commands to be typed in terminal)
+### Website Documentation
+* All documentation for modifying the website can be found in the shared drive (ask current webmaster for invite)
+* Login info: `Login Information` document on google drive
+* Website Documentation: `Documentation` document on google drive
+* [Cloudinary](https://cloudinary.com/) Keys: `.env` document on google drive
+    * Download and put in root directory of `sageprosthetics` folder (see below)
+### Source Code Setup Instructions
+#### Open terminal (bash, zsh, git bash on windows)
 1. Clone this repository:
+```bash
+cd ~/Desktop 
+git clone https://github.com/sagehillprosthetics/sageprosthetics
 ```
-cd [where you want the repo (ex: home/user/Desktop)]
-git clone https://github.com/timg512372/sageprosthetics.git
+2. [Install Node Version Manager](https://github.com/nvm-sh/nvm)
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+
+# This loads nvm
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
 ```
-2 Install Node 12.x
-* Install on Mac and Linux
+3.  Install Node 12.x
+```bash
+nvm install 12
 ```
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew install node@12
-```
-4. Install and set up yarn
-```
-sudo npm install --global yarn
+4. Open IDE of choice (e.g. [Visual Studio Code](https://code.visualstudio.com/download), [Sublime Text](https://www.sublimetext.com/3))
+5. Open `sageprosthetics` folder on your desktop
+6. Setup [yarn](https://yarnpkg.com/)
+* Open terminal and type:
+```bash
+cd ~/Desktop/sageprosthetics
+
 yarn
 ```
-5. Run `yarn` command 
-6. Download cloudinarykeys.json from shared google drive and move to root folder of project
 7. Refer to `Terminal commands`
-
 ### Terminal commands:
+```bash
+yarn run build # build app
+yarn run dev # run app in dev mode
+
+# For other options refer to package.json
 ```
-// Optional: if you want to test cloudinary upload
-export NEXT_PUBLIC_CLOUD_NAME=sageprosthetics
-export NEXT_PUBLIC_UPLOAD_PRESET=slefbggs
-
-// to run in dev mode (for other options refer to package.json)
-yarn run build
-yarn run dev
-```
-
-## Architecture
-
-All data stored on Firebase. 
-
-Images are stored on Cloudinary.
-
-Built using Grommet v1, React, and Next.js. Deployed using Vercel.
+### Architecture
+* All data stored on Firebase. 
+* Images are stored on Cloudinary.
+* Built using Grommet v1, React, and Next.js. Deployed using Vercel.
