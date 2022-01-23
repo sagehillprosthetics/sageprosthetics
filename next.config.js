@@ -9,7 +9,8 @@ module.exports = {
         return {
             ...config,
             node: {
-                fs: 'empty'
+                fs: 'empty',
+                child_process: 'empty',
             },
         };
     },
