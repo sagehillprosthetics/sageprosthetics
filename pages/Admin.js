@@ -542,7 +542,6 @@ class AdminPage extends Component {
         return (
             <div>
                 <Tabs style={{ width: '70vw', margin: '0px 15vw 0px 15vw' }}>
-                    {this.renderGeneral()}
                     {this.renderRecipients()}
                     {this.renderProjects()}
                     <Tab title="Log Out" style={{ color: 'red' }} onClick={this.props.logoutUser} />
