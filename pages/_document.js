@@ -15,7 +15,7 @@ export default class MyDocument extends Document {
                         rel="stylesheet"
                     />
                     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" />
-                    <script src="//widget.cloudinary.com/global/all.js" type="text/javascript" />
+                    <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript" />
 
                     {/* <meta
                         name="google-site-verification"

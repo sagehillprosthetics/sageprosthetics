@@ -6,13 +6,13 @@ class CloudinaryInput extends Component {
         label: 'Upload Image to Cloudinary',
     };
 
-    processCloudinaryResult = (error, results) => {
-        if (results) {
-            const result = results[0];
-            const { secure_url, public_id, path } = result;
-            this.props.onUploadSuccess({ url: secure_url, id: path, public_id });
-        }
-    };
+    // processCloudinaryResult = (error, results) => {
+    //     if (results) {
+    //         const result = results[0];
+    //         const { secure_url, public_id, path } = result;
+    //         this.props.onUploadSuccess({ url: secure_url, id: path, public_id });
+    //     }
+    // };
 
     openCloudinaryUploader = () => {
         cloudinary.openUploadWidget(
@@ -20,7 +20,7 @@ class CloudinaryInput extends Component {
                 cloud_name: "sageprosthetics", 
                 upload_preset: "preset1",
             },
-            this.processCloudinaryResult
+            // this.processCloudinaryResult
         );
     };
 

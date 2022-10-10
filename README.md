@@ -29,9 +29,9 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
 ```
-3.  Install Node 12.x
+3.  Install Node 16.x
 ```bash
-nvm install 12
+nvm install 16
 ```
 4. Open IDE of choice (e.g. [Visual Studio Code](https://code.visualstudio.com/download), [Sublime Text](https://www.sublimetext.com/3))
 5. Open `sageprosthetics` folder on your desktop

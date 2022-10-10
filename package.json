@@ -9,8 +9,9 @@
         "animejs": "^2.2.0",
         "axios": "^0.19.2",
         "cheerio": "^1.0.0-rc.3",
-        "cloudinary": "^1.28.1",
-        "cloudinary-react": "^1.0.6",
+        "cloudinary": "^1.32.0",
+        "cloudinary-react": "^1.8.1",
+        "cloudinary-core": "^2.13.0",
         "dotenv": "^14.2.0",
         "firebase": "^7.9.3",
         "global": "^4.3.2",
@@ -52,6 +53,6 @@
         "now-build": "next build"
     },
     "engines": {
-        "node": "12.x"
+        "node": "16.x"
     }
 }
