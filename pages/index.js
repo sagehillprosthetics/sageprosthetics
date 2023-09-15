@@ -290,7 +290,7 @@ class LandingPage extends Component {
                     </div>
                 </AccordionPanel>
                 <AccordionPanel heading="I am an educator/student and want to start a chapter like this. How do I begin?">
-                    <div style={styles.dropdown}>Same answer as above!</div>
+                    <div style={styles.dropdown}>We recommend exploring the E-Nable hub as linked in the question above. If you or your school is interested in a more hands-on mentorship to get a 3D Design and Fabrication course + 3D prosthetics program up and running at your school, please reach out to Tanya Lerch at Tnamad@gmail.com</div>
                 </AccordionPanel>
                 <AccordionPanel heading="Here's a great video to learn more about e-NABLE!">
                     <div class="iframe-container">
