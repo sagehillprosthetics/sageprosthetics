@@ -334,10 +334,6 @@ class Group extends Component {
                     }}
                 />
 
-                <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                    {this.renderWebdev()}
-                </div>
-
                 <div
                     style={{
                         display: 'flex',
@@ -390,13 +386,6 @@ class Group extends Component {
                                 label="Student"
                                 checked={this.state.student}
                                 onChange={() => this.setState({ student: true })}
-                            />
-                            <RadioButton
-                                id="choice1-1"
-                                name="choice1-1"
-                                label="Webdev"
-                                checked={this.state.student}
-                                onChange={() => this.setState({ student: false })}
                             />
                             <RadioButton
                                 id="choice1-2"
